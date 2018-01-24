@@ -1,0 +1,156 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+
+        .customer-logos {
+            background-color: #eee;
+            z-index: 1;
+            padding: .7rem;
+        }
+
+        .margin{
+            padding: 12px;
+        }
+
+        .tt {
+            padding:1% 30%;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Logo</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="sass.html">Sass</a></li>
+                <li><a href="badges.html">Components</a></li>
+                <li><a href="collapsible.html">JavaScript</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <section id="splash-blue" class="z-depth-1">
+        <div id="map"></div>
+    </section>
+
+    <div class="row interlude customer-logos">
+        <div class="container hide-on-small-only">
+            <div class="center-align">
+                <div class="col s6 m2">
+                    <i class="medium material-icons">keyboard_arrow_left</i>
+                </div>
+                <div class="col s6 m2">
+                    <i class="medium material-icons">insert_chart</i>
+                </div>
+                <div class="col s6 m2">
+                    <i class="medium material-icons">insert_link</i>
+                </div>
+                <div class="col s6 m2">
+                    <i class="medium material-icons">keyboard</i>
+                </div>
+                <div class="col s6 m2">
+                    <div class="margin">
+                    <input id ="btn2" class="content_form aves-effect waves-light btn" type="button" value="clear" />
+                    </div>
+                </div>
+                <div class="col s6 m2">
+                    <i class="medium material-icons">keyboard_arrow_right</i>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12 pb-4 mt-7">
+
+            <div class="tt valign-wrapper content">
+
+                <div class="col s12 m4">
+                    <label>検索ワード</label>
+                    <span class="content_form">
+                            <input id="searchWord" name="searchWord" type="text" placeholder="東京スカイツリー"/>
+                        </span>
+                </div>
+
+                <div class="col s12 m4">
+                    <input id ="searchWordbtn" class="content_form aves-effect waves-light btn" type="button" value="検索する"/>
+                </div>
+
+            </div>
+
+            <div class="tt valign-wrapper content">
+
+                <div class="col s12 m4">
+                        <label>郵便番号</label>
+                        <span class="content_form">
+                            <input id="zip" name="zip" type="text" placeholder="1600002"/>
+                        </span>
+                </div>
+
+                <div class="col s12 m4">
+                    <input id ="btn" class="content_form aves-effect waves-light btn" type="button" value="住所を自動で入力する"/>
+                </div>
+
+            </div>
+
+            <div class="tt valign-wrapper  content">
+                <div class="col s12">
+                    <label>都道府県</label>
+                    <span class="content_form"><input id="state" name="state" type="text" placeholder="東京都" /></span>
+                </div>
+            </div>
+
+            <div class="tt valign-wrapper  content">
+                <div class="col s12">
+                <label>市区町村</label>
+                <span class="content_form">
+                    <input id="city" name="city" type="text" placeholder="新宿区" />
+                </span>
+                </div>
+            </div>
+
+            <div class="tt valign-wrapper content">
+                <div class="col s12">
+                    <label>番地</label>
+                    <span class="content_form"><input id="address1" name="address1" type="text" placeholder="西新宿666" /></span>
+                </div>
+             </div>
+
+            <div class="tt valign-wrapper content">
+                <div class="col s12">
+                    <label>建物名・階・部屋番号</label>
+                    <span class="content_form"><input id="address2" name="address2" type="text" placeholder="ビルヂング666" /></span>
+                </div>
+             </div>
+        </div>
+    </div>
+
+<link rel="stylesheet" href="../node_modules/materialize-css/dist/css/materialize.min.css">
+<script src="../node_modules/materialize-css/dist/js/materialize.min.js"></script>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../js/google/main.js"></script>
+
+</body>
+</html>

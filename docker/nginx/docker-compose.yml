@@ -1,0 +1,16 @@
+version: '2'
+services:
+    nginx:
+        # Dockerfileが格納されているpathを指定
+        build: ./conf
+        ports:
+            - "8080:80"
+        #links:
+        #    - php5
+        # マウントするディレクトリを指定
+        volumes:
+            - /Users/uemotoakira/IdeaProjects/nginx/conf/static_nginx.conf:/etc/nginx/sites-enabled/default
+            - /Users/uemotoakira/IdeaProjects/nginx/html:/var/www/
+            - /Users/uemotoakira/IdeaProjects/nginx/js:/var/www/js
+            - /Users/uemotoakira/IdeaProjects/nginx/node_modules:/var/www/node_modules 
+            
