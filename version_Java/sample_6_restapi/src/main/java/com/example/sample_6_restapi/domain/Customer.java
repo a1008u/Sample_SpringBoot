@@ -29,4 +29,7 @@ public class Customer {
 
     @Column(nullable = false) // カラムを示す
     private String lastName;
+
+    public Customer(String sTest2, String sTest21) {
+    }
 }

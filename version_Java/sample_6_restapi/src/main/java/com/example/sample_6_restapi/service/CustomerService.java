@@ -35,4 +35,8 @@ public class CustomerService {
     public void delete(Integer id) {
         customerRepository.delete(id);
     }
+
+    public void deleteAll() {
+        customerRepository.deleteAll();
+    }
 }
