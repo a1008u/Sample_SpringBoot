@@ -1,0 +1,32 @@
+# Docker は Dockerfile の命令を読み込み、自動的にイメージを構築
+
+# どのイメージを基にするか(FROM node:latest)
+FROM cassandra:latest
+
+# イメージを誰が作ったのかを書いておく場所。(MAINTAINER funashimin)
+MAINTAINER AU <xxxx@xxxx,xxxx>
+
+# CMD: runするときに実行される
+CMD echo "now running..."
+
+# コンテナが外部に公開するポート番号を指定できる。(ポート9042を開ける)
+EXPOSE 9042
+
+# コンテナ起動時に実行するコマンドを一つだけ指定できる。(CMD ["コマンド","オプション1”,"オプション2"…]) runした時にapache起動
+CMD ["/usr/sbin/cassandra", "-D", "FOREGROUND"]
+
+# CMDと似ている。コマンドを一つだけ実行できる。
+# ENTRYPOINT ["java", "-jar", "users-restapi-mysql.jar"]
+#
+# Dockerfile内で使う環境変数を設定する。パスを通したりするのが多い使い方だと思う。(ENV PATH $PATH:（追加したいパス）)
+#
+# イメージに追加するファイルを指定する。(ADD コピー元 コピー先)
+# ADD target/users-restapi-mysql.jar users-restapi-mysql.jar
+#
+#
+# コマンドを実行し、結果をイメージにコミットする。 httpdのインストール
+# RUN yum install -y httpd
+#
+# ホストのindex.htmlをImage内にコピー
+# ADD ./index.html /var/www/html/
+#
