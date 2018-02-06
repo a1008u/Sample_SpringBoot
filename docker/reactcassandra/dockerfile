@@ -13,7 +13,7 @@ CMD echo "now running..."
 EXPOSE 9042
 
 # コンテナ起動時に実行するコマンドを一つだけ指定できる。(CMD ["コマンド","オプション1”,"オプション2"…]) runした時にapache起動
-CMD ["/usr/sbin/cassandra", "-D", "FOREGROUND"]
+#CMD ["/usr/sbin/cassandra", "-D", "FOREGROUND"]
 
 # CMDと似ている。コマンドを一つだけ実行できる。
 # ENTRYPOINT ["java", "-jar", "users-restapi-mysql.jar"]

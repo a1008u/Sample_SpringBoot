@@ -1,1 +1,7 @@
 # Compose とは、複数のコンテナを使う Docker アプリケーションを、定義・実行するツール
+version: '3'
+services:
+  tcassandra:
+    image: cassandra:latest
+    ports:
+    - "9042:9042"
