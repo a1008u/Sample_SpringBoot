@@ -1,12 +1,15 @@
 docker images
 
 /******** webアプリケーション ******/
+docker pull mysql
+
 - db(mysql用 docker hubから利用)
 docker run --name mysql-standalone  \
 	-e MYSQL_ROOT_PASSWORD=password   \
 	-e MYSQL_DATABASE=test  \
 	-e MYSQL_USER=sa  \
 	-e MYSQL_PASSWOED=password  \
+	-v /Users/uemotoakira/Desktop/mys/sql/:/docker-entrypoint-initdb.d \
 	-d mysql:latest 
 
 - アプリ(docker imageを作成して実行する)
@@ -17,7 +20,6 @@ docker run  \
 	--link mysql-standalone:mysql  \
 	-d users-mysql
 
-docker pull mysql
 
 #実行
 docker-compose up --build
@@ -40,3 +42,31 @@ docker run -p 8080:80 --name static_nginx \
 // docker-composeをしようする場合
 docker-compose up
 
+------------------------------------------------------------------------------
+//dbをimage化する
+docker run --name mysql-standalone-restapi  \
+	-e MYSQL_ROOT_PASSWORD=password   \
+	-e MYSQL_DATABASE=test  \
+	-e MYSQL_USER=sa  \
+	-e MYSQL_PASSWOED=password  \
+	-v /Users/uemotoakira/Desktop/mys/sql/:/docker-entrypoint-initdb.d \
+	-d mysql:latest 
+
+// appをimage化する
+docker run  \
+	-p 2222:2222  \
+	--name restapi2-mysql  \
+	--link sample6restapi_mysql-standalone-restapi_1:mysql  \
+	-d restapi2-mysql
+
+#実行(appをイメージ化、その後、dockerを起動する)
+cd /Users/uemotoakira/IdeaProjects/Sample_SpringBoot/version_Java/sample_6_restapi
+docker build . -t users-restapi-mysql
+docker-compose up --build
+
+
+cd /Users/uemotoakira/IdeaProjects/Sample_SpringBoot/docker/docker-mysql-spring-boot 
+docker build . -t users-mysql
+docker-compose up --build
+
+------------------------------------------------------------------------------

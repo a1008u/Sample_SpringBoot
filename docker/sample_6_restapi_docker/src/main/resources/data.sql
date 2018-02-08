@@ -1,1 +1,1 @@
-INSERT INTO customers(first_name, last_name) VALUES('Nobita', 'Nobi');
+vINSERT INTO customers(first_name, last_name) VALUES('Nobita', 'Nobi');
