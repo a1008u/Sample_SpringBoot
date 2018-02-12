@@ -1,0 +1,88 @@
+buildscript {
+	ext {
+		kotlinVersion = '1.2.20'
+		springBootVersion = '1.5.11.BUILD-SNAPSHOT'
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+	}
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+compileKotlin {
+	kotlinOptions {
+		freeCompilerArgs = ["-Xjsr305=strict"]
+		jvmTarget = "1.8"
+	}
+}
+compileTestKotlin {
+	kotlinOptions {
+		freeCompilerArgs = ["-Xjsr305=strict"]
+		jvmTarget = "1.8"
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+configurations {
+	all*.exclude module : 'spring-boot-starter-logging'
+}
+
+
+dependencies {
+
+	// language
+	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+
+	// web
+	compile ('org.springframework.boot:spring-boot-starter-web'){}
+
+	// JPA
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.5.10.RELEASE'
+
+	// Actuator
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+
+	// Starter for building hypermedia-based RESTful web application with Spring MVC and Spring HATEOAS
+	// Provides a hypermedia-based “discovery page” for the other endpoints. Requires Spring HATEOAS to be on the classpath.
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-hateoas', version: '1.5.10.RELEASE'
+
+	// log
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '1.5.10.RELEASE'
+	compile group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4', version: '1.16'
+
+	// security
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '1.5.10.RELEASE'
+
+	// jackson
+	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.9.4'
+	compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: '1.2.21'
+
+	// swagger
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.8.0'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.8.0'
+	compile group: 'io.springfox', name: 'springfox-core', version: '2.8.0'
+
+	runtime('com.h2database:h2')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}

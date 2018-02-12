@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Spring Bootはlogbackのデフォルト設定 -->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <!-- 格納先-->
+    <Property name="logname">logs</Property>
+
+
+    <!--設定開発用 -->
+    <springProfile name="dev">
+        <!--log4jdbc-log4j2 -->
+        <logger name="jdbc.sqltiming" level="INFO" />
+        <logger name="jdbc.connection" level="DEBUG" />
+        <logger name="jdbc.resultsettable" level="ERROR" />
+    </springProfile>
+
+    <!--設定本番用 -->
+    <springProfile name="prd">
+        <!--log4jdbc-log4j2 -->
+        <logger name="jdbc.sqltiming" level="INFO" />
+        <logger name="jdbc.connection" level="WARN" />
+        <logger name="jdbc.resultsettable" level="INFO" />
+    </springProfile>
+
+    <!-- 共通ロガー(log4jdbc-log4j2) -->
+    <logger name="jdbc.sqlonly"        level="DEBUG"/>
+    <logger name="jdbc.audit"          level="INFO"/>
+    <logger name="jdbc.resultset"      level="ERROR"/>
+
+</configuration>
+
+
+<!--
+logbackとは
+SLF4J(Simple Logging Facade for Java)のAPIを経由して利用するjavaのロギングライブラリ
+
+◆◆◆jdbc.sqltiming
+jdbc.sqltimingはバインド変数に値が設定された状態のSQL文と、SQLの実行時間を出力するためのロガーです。
+値がバインドされた形式のSQLが出力されるので、DBアクセスツールに貼りつけて実行する事ができるようになっています。
+
+◆◆◆jdbc.sqlonly
+jdbc.sqlonlyはバインド変数に値が設定された状態のSQL文を、出力するためのロガーです。
+上記のjdbc.sqltimingとの違いは、実行時間が出力されないという点です。
+
+◆◆◆jdbc.audit
+jdbc.auditはResultSetインタフェースを除く、JDBCインタフェースのメソッド呼び出し（引数と、返り値）を出力するためのロガーです。
+JDBC関連で問題が発生した時の解析に有効なログですが、出力されるログの量が多いです。
+
+◆◆◆jdbc.connection
+jdbc.connectionはConnectionの接続/切断イベントと使用中の接続数を出力するためのロガーです。
+接続リークが発生時の解析に有効なログではあるのですが、接続リークの問題がなければ、出力する必要はありません。
+
+◆◆◆jdbc.resultset
+jdbc.resultsetはResultSetインタフェースに対するメソッド呼び出し（引数と、返り値）を出力するためのロガーです。
+取得結果が、想定と異なった時の解析に有効なログですが、出力されるログの量が多いです。
+
+◆◆◆jdbc.resultsettable
+jdbc.resultsettableはResultSetの中身を確認しやすい形式にフォーマットして出力するためのロガーです。
+取得結果が、想定と異なった時の解析に有効なログですが、出力されるログの量が多いです
+
+==================================================
+◆◆◆ログレベル
+ログレベルはログの重要度を表します。
+重要度の高い順に、下記の種類があります。
+- error
+- warn
+- info
+- debug
+- trace
+ロガーは自身に設定されているログレベルより高いレベルのログを出力対象とします。
+例えばログレベルが「info」のロガーの場合、
+「error」,「warn」,「info」のレベルを持つログは出力されますが、
+「debug」,「trace」は出力されません。
+==================================================
+
+ロギング設定
+Webアプリケーションであれば「spring-boot-starter-web」を追加するだけで「spring-boot-starter-logging」が推移的依存で追加される。
+ライブラリ：
+spring-boot-starter-web
+
+application.properties:
+logging.level.org.springframework.web=DEBUG
+logging.level.org.hibernate=ERROR
+logging.file=test.log
+
+
+====================
+Logbackの設定
+クラス名：logback.xml or logback-spring.xml
+
+
+
+-->
