@@ -17,20 +17,6 @@ services:
       - MYSQL_USER=sa #新規ユーザの作成
       - MYSQL_PASSWORD=password #新規ユーザのパスワード設定
 
-  # app
-  spring-boot-jpa-docker-webapp:
-    image: users-restapi-mysql
-    depends_on:
-      - mysql-standalone-restapi #連携するシステムを指定
-    ports:
-      - "2222:2222"
-    environment:
-      - DATABASE_HOST=mysql-standalone-restapi
-      - DATABASE_USER=sa
-      - DATABASE_PASSWORD=password
-      - DATABASE_NAME=test
-      - DATABASE_PORT=3306
-
 # volumeにlocal（DRIVER）を作成して、volume Nameを「mysql-data」とする。
 volumes:
   mysql-data:

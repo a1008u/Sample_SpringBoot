@@ -20,19 +20,19 @@ import java.util.List;
  * クライアントに提供すべき情報をリソースとして抽出し、
  * リソースに対する「CRUD操作」をHTTPを使って「Web API」としてクライアントに公開する。
  *
- * API名       HTTPメソッド リソース・パス　　　　　HTTPレスポンス・ステータス メソッド名      返り値の型
- * 顧客全件取得　GET         /api/customers      200 OK                  getCustomers   List<Customer>
- * 顧客１件取得　GET         /api/customers/{id} 200 O　　　　　　　　　　　getCustomer    Customer
- * 顧客新規作成　POST        /api/customers      201 CREATE　　　　　　　　postCustomers  Customer
- * 顧客１件更新　PUT         /api/customers/{id} 200 OK                  putCustomer    Customer
- * 顧客１件削除　DELETE      /api/customers/{id} 204 NO CONTENT          deleteCustomer void
+ * API名       HTTPメソッド リソース・パス　　　　　       HTTPレスポンス・ステータス メソッド名      返り値の型
+ * 顧客全件取得　GET         /api/customers/list        200 OK                  getCustomers   List<Customer>
+ * 顧客１件取得　GET         /api/customers/{id}        200 O　　　　　　　　　　　getCustomer    Customer
+ * 顧客新規作成　POST        /api/customers             201 CREATE　　　　　　　　postCustomers  Customer
+ * 顧客１件更新　PUT         /api/customers/update/{id} 200 OK                  putCustomer    Customer
+ * 顧客１件削除　DELETE      /api/customers/delete/{id} 204 NO CONTENT          deleteCustomer void
  *
  * @RestController
  * エンドポイントとなるControllerクラス
  *
  * @RequestMapping("api/customers")
  * RESTWebサービスにアクセスするためのパスのルートを設定する。
- * また、メソッド単位でパスを設定sた場合は、@RequestMappingをルートにして「相対パス」となる。
+ * また、メソッド単位でパスを設定した場合は、@RequestMappingをルートにして「相対パス」となる。
  *
  */
 @RestController
@@ -42,23 +42,23 @@ public class CustomerRestController {
     CustomerService customerService;
 
     /**
-     * コンソール上で表示：curl http://localhost:8080/api/customers
-     * ブラウザ上で表示：http://localhost:8080/api/customers
-     * swagger上で表示：localhost:8080/swagger-ui.html
+     * コンソール上で表示：curl http://localhost:2222/api/customers/list
+     * ブラウザ上で表示：http://localhost:2222/api/customers/list
+     * swagger上で表示：localhost:2222/swagger-ui.html
      * @return　List<Customer>　シリアライズされて、HTTPレスポンスのボディに設定される（JavaオブジェクトはJSON形式でシリアライズ）
      */
-    @GetMapping
+    @GetMapping(path = "/list")
     List<Customer> getCustomers() {
         List<Customer> customers = customerService.findAll();
         return customers;
     }
 
     /**
-     * コンソール上で表示：curl http://localhost:8080/api/customers/page
-     * コンソール上で表示：curl http://localhost:8080/api/customers/page?page=0&size=3
-     * コンソール上で表示：curl http://localhost:8080/api/customers/page?page=1&size=3
-     * ブラウザ上で表示：http://localhost:8080/api/customers/page
-     * swagger上で表示：localhost:8080/swagger-ui.html
+     * コンソール上で表示：curl http://localhost:2222/api/customers/page
+     * コンソール上で表示：curl http://localhost:2222/api/customers/page?page=0&size=3
+     * コンソール上で表示：curl http://localhost:2222/api/customers/page?page=1&size=3
+     * ブラウザ上で表示：http://localhost:2222/api/customers/page
+     * swagger上で表示：localhost:2222/swagger-ui.html
      *
      * @param pageable
      * @return
@@ -75,9 +75,9 @@ public class CustomerRestController {
 
     /**
      * ＊＊idには任意の数字を指定してくだい
-     * コンソール上で表示：curl http://localhost:8080/api/customers/id
-     * ブラウザ上で表示：http://localhost:8080/api/customers/id
-     * swagger上で表示：localhost:8080/swagger-ui.html
+     * コンソール上で表示：curl http://localhost:2222/api/customers/{id}
+     * ブラウザ上で表示：http://localhost:2222/api/customers/{id}
+     * swagger上で表示：localhost:2222/swagger-ui.html
      *
      * @param id
      * @return　Customer
@@ -95,14 +95,14 @@ public class CustomerRestController {
 
     /**
      * POSTでアクセスすると、実行される
-     * ブラウザ上で表示：http://localhost:8080/api/customers/id TODO 修正
-     * swagger上で表示：localhost:8080/swagger-ui.html
+     * ブラウザ上で表示：http://localhost:2222/api/customers TODO 修正
+     * swagger上で表示：localhost:2222/swagger-ui.html
      *
      * @param customer
      * @param uriBuilder
      * @return
      */
-    // コンソール上で表示：curl -X POST --header "Content-Type: application/json" --header "Accept: */*" -d "{\"firstName\": \"test\",\"lastName\": \"string\" }" "http://localhost:8080/api/customers"
+    // コンソール上で表示：curl -X POST --header "Content-Type: application/json" --header "Accept: */*" -d "{\"firstName\": \"test\",\"lastName\": \"string\" }" "http://localhost:2222/api/customers"
     @PostMapping
     ResponseEntity<Customer> postCustomers(@RequestBody Customer customer
                                            , UriComponentsBuilder uriBuilder) {
@@ -115,15 +115,15 @@ public class CustomerRestController {
     }
 
     /**
-     * コンソール上で表示：curl http://localhost:8080/api/customers/1 -i -xpost -H "Content-Type: application/json" -d "{\"firstName\":\"Nobio\",\"lastName\":\"\Nobi\"}"
-     * ブラウザ上で表示：http://localhost:8080/api/customers TODO 修正
-     * swagger上で表示：localhost:8080/swagger-ui.html
+     * コンソール上で表示：curl http://localhost:2222/api/customers/update/{id} -i -xpost -H "Content-Type: application/json" -d "{\"firstName\":\"Nobio\",\"lastName\":\"\Nobi\"}"
+     * ブラウザ上で表示：http://localhost:2222/api/customers/update/{id}
+     * swagger上で表示：localhost:2222/swagger-ui.html
      *
      * @param id
      * @param customer
      * @return
      */
-    @PutMapping(path = "{id}")
+    @PutMapping(path = "/update/{id}")
     Customer putCustomer(@PathVariable Integer id
                          , @RequestBody Customer customer) {
 
@@ -132,14 +132,14 @@ public class CustomerRestController {
     }
 
     /**
-     * コンソール上で表示：curl http://localhost:8080/api/customers/1 -i -XDELETE
-     * ブラウザ上で表示：http://localhost:8080/api/customers TODO 修正
-     * swagger上で表示：localhost:8080/swagger-ui.html
+     * コンソール上で表示：curl http://localhost:2222/api/customers/delete/{id} -i -XDELETE
+     * ブラウザ上で表示：http://localhost:2222/api/customers/delete/{id}
+     * swagger上で表示：localhost:2222/swagger-ui.html
      *
      * @ResponseStatus(HttpStatus.NO_CONTENT) 204 No Contentを返す
      * @param id
      */
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteCustomer(@PathVariable Integer id) {
         customerService.delete(id);
