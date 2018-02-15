@@ -2,14 +2,20 @@ package com.example.sample_spirng_data_jpa.service
 
 import com.example.sample_spirng_data_jpa.domain.Employee
 import com.example.sample_spirng_data_jpa.model.EmployeeForm
+import com.example.sample_spirng_data_jpa.model.EmployeeInterface
 import com.example.sample_spirng_data_jpa.repository.EmployeeRepository
+import org.reflections.Reflections.collect
 import org.springframework.beans.BeanUtils
 import org.springframework.data.domain.Example
 import org.springframework.data.domain.ExampleMatcher
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
+import java.util.concurrent.Future
 import java.util.stream.Collectors
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
 
 
 /**
@@ -95,6 +101,40 @@ class EmployeeService(private val employeeRepository: EmployeeRepository){
 
     fun readByBirthdayGreaterThan(employeeForm: EmployeeForm): List<Employee>
             = employeeRepository.readByBirthdayGreaterThan(employeeForm.birthday)
+
+    /**
+     * 永続化コンテキストから切り離すことで、エンティティーオブジェクトが永続化コンテキスト内に残り続けることを避けパフォーマンスアップ
+     */
+    @PersistenceContext
+    lateinit var entityManager: EntityManager
+    fun getByFirstName(empemployeeForm: EmployeeForm):List<EmployeeForm>{
+
+        val employeeStream = employeeRepository.getByFirstName(empemployeeForm.firstName)
+
+        return employeeStream
+                .map { e -> entityManager.detach(e) }
+                .collect(Collectors.toList()) as List<EmployeeForm>? ?: Arrays.asList(EmployeeForm())
+    }
+
+    /**
+     * 非同期処理（あまり意味がない処理になっている。。。）
+     */
+    fun queryByFirstName(employeeForm: EmployeeForm):List<EmployeeForm>{
+
+        val employeeListFuture :Future<List<Employee>> = employeeRepository.queryByFirstName(employeeForm.firstName)
+        return employeeListFuture
+                .get()
+                .stream()
+                .map { e -> entityManager.detach(e) }
+                .collect(Collectors.toList()) as List<EmployeeForm>? ?: Arrays.asList(EmployeeForm())
+    }
+
+    /**
+     * 再モデリング
+     */
+    fun getFirstByFirstName(employeeForm: EmployeeForm): EmployeeInterface {
+        return employeeRepository.getFirstByFirstName(employeeForm.firstName)
+    }
 
 
     // 更新 ------------------------------------------------------------------
