@@ -42,7 +42,7 @@ data class Employee(@Id @GeneratedValue(strategy = GenerationType.IDENTITY) var 
                     ,@Column(nullable = false) @Enumerated(EnumType.STRING) val sex: Sex = Sex.male
                     ,@Column(length = 100) val tel: String = "998887777"
                     ,@Column val birthday:Date =  Date.valueOf("0001-01-01")
-                    ,@Column val mailAddress:String = "test@test"
+                    ,@Column var mailAddress:String = "test@test"
                     ,@Column(precision = 10, scale = 2) val salary:BigDecimal = 999.99.toBigDecimal())
 
 
