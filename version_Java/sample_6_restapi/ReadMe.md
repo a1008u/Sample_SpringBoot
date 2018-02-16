@@ -11,7 +11,24 @@ docker ps
 docker exec -it sample6restapi_mysql-standalone-restapi_1 bash
 
 # MySQL起動
-mysql -u root -p
+mysql -u sa -p
+
+#セッション統計情報の表示
+show status;
+
+#バージョンを確認
+$ mysql --version
+
+#データベース一覧を表示
+show databases;
+
+#テーブル一覧を表示
+show tables;
+
+#直接入力する場合
+INSERT INTO customers(first_name, last_name) VALUES('service', 'service4');
+INSERT INTO customers(first_name, last_name) VALUES('service2', 'service3');
+
 -------------------------------------------------------------
 
 

@@ -2,6 +2,8 @@ package com.example.sample_6_restapi.restapi;
 
 import com.example.sample_6_restapi.domain.Customer;
 import com.example.sample_6_restapi.service.CustomerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +38,7 @@ import java.util.List;
  * また、メソッド単位でパスを設定した場合は、@RequestMappingをルートにして「相対パス」となる。
  *
  */
+@Api(description = "Customerに関するAPI")
 @RestController
 @RequestMapping("api/customers")
 public class CustomerRestController {
@@ -47,6 +51,10 @@ public class CustomerRestController {
      * swagger上で表示：localhost:2222/swagger-ui.html
      * @return　List<Customer>　シリアライズされて、HTTPレスポンスのボディに設定される（JavaオブジェクトはJSON形式でシリアライズ）
      */
+    @ApiOperation(value = "Customerを全て取得"
+            , notes = "Customerを全て取得して、Listで返却します"
+            , response = Customer.class
+            , responseContainer = "List")
     @GetMapping(path = "/list")
     List<Customer> getCustomers() {
         List<Customer> customers = customerService.findAll();
