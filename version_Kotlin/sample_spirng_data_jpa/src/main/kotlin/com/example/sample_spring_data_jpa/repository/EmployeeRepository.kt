@@ -80,6 +80,7 @@ interface EmployeeRepository: JpaRepository<Employee,Int> {
     // 再モデリング
     fun getFirstByFirstName(firstName: String): EmployeeInterface
 
+    //fun getFirstByFirstName(firstName: String): List<EmployeeInterface>
 
     // Page --------------------------------------------------------------
 

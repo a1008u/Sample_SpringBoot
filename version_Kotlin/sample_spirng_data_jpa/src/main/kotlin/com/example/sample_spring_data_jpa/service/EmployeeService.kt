@@ -89,7 +89,7 @@ class EmployeeService(private val employeeRepository: EmployeeRepository){
 
 
     // フィールドを指定した検索メソッド(主キー以外の検索方法1)
-    fun fjindAllExample(employeeDto: EmployeeDto):List<Employee>{
+    fun findAllExample(employeeDto: EmployeeDto):List<Employee>{
        return Employee().run {
            BeanUtils.copyProperties(employeeDto, this)
            employeeRepository.findAll(Example.of(this))
@@ -102,11 +102,15 @@ class EmployeeService(private val employeeRepository: EmployeeRepository){
             .map{ e -> EmployeeDto.toDto(requireNotNull(e)) }
             .toList()
 
-    fun readByFirstNameAndSex(employeeDto: EmployeeDto): List<Employee>
-            = employeeRepository.readByFirstNameAndSex(employeeDto.firstName, employeeDto.sex)
+    fun readByFirstNameAndSex(employeeDto: EmployeeDto): List<EmployeeDto> = employeeRepository
+            .readByFirstNameAndSex(employeeDto.firstName, employeeDto.sex)
+            .map{ e -> EmployeeDto.toDto(requireNotNull(e)) }
+            .toList()
 
-    fun readByBirthdayGreaterThan(employeeDto: EmployeeDto): List<Employee>
-            = employeeRepository.readByBirthdayGreaterThan(employeeDto.birthday)
+    fun readByBirthdayGreaterThan(employeeDto: EmployeeDto): List<EmployeeDto> = employeeRepository
+            .readByBirthdayGreaterThan(employeeDto.birthday)
+            .map{ e -> EmployeeDto.toDto(requireNotNull(e)) }
+            .toList()
 
     /**
      * 永続化コンテキストから切り離すことで、エンティティーオブジェクトが永続化コンテキスト内に残り続けることを避けパフォーマンスアップ
@@ -138,8 +142,9 @@ class EmployeeService(private val employeeRepository: EmployeeRepository){
     /**
      * 再モデリング
      */
-    fun getFirstByFirstName(employeeDto: EmployeeDto): EmployeeInterface {
-        return employeeRepository.getFirstByFirstName(employeeDto.firstName)
+    fun getFirstByFirstName1(employeeDto: EmployeeDto): EmployeeInterface {
+        return employeeRepository
+                .getFirstByFirstName(employeeDto.firstName)
     }
 
 
@@ -151,21 +156,29 @@ class EmployeeService(private val employeeRepository: EmployeeRepository){
      *  - トランザクション終了時
      */
 
-    fun updateAllMailaddress() {
-
-        val employeeAll = findAll()
-        findAll().forEach{e ->print("初回です  $e")}
-        employeeAll.forEach { employee -> employee.mailAddress = "change@change" }
-        findAll().forEach{e ->print("updateしました  $e")}
-        employeeAll.forEach { employee -> employee.mailAddress = "change@change" }
-        findAll().forEach{e ->print("updateしていない(同じ値なので)  $e")}
-        employeeAll.forEach { employee -> employee.mailAddress = "update@update" }
+    fun updateFirstName(targetFirstName:String, employeeDtoList: List<EmployeeDto>) : Int{
+        val countI = employeeDtoList
+                .map { e -> employeeRepository.updateFirstName(targetFirstName, e.firstName)}
+                .count()
         employeeRepository.flush()
-        findAll().forEach{e ->print("updateしました  $e")}
-
-        // トランザクション管理を@Transactionalで行なっているのでupdateされる
-        employeeAll.forEach { employee -> employee.mailAddress = "tttttt@aaaaaa" }
+        return countI
     }
+
+//    fun updateAllMailaddress() {
+//
+//        val employeeAll = findAll()
+//        findAll().forEach{e ->print("初回です  $e")}
+//        employeeAll.forEach { employee -> employee.mailAddress = "change@change" }
+//        findAll().forEach{e ->print("updateしました  $e")}
+//        employeeAll.forEach { employee -> employee.mailAddress = "change@change" }
+//        findAll().forEach{e ->print("updateしていない(同じ値なので)  $e")}
+//        employeeAll.forEach { employee -> employee.mailAddress = "update@update" }
+//        employeeRepository.flush()
+//        findAll().forEach{e ->print("updateしました  $e")}
+//
+//        // トランザクション管理を@Transactionalで行なっているのでupdateされる
+//        employeeAll.forEach { employee -> employee.mailAddress = "tttttt@aaaaaa" }
+//    }
 
     // 挿入 ------------------------------------------------------------------
     /**
@@ -176,13 +189,9 @@ class EmployeeService(private val employeeRepository: EmployeeRepository){
      *  - リポジトリーのflushメソッド実行時　即時
      *  - トランザクション終了時
      */
-    fun saveEmployee(employeeDto: EmployeeDto) {
+    fun saveEmployee(employeeDto: EmployeeDto) =
+            EmployeeDto.toDto(requireNotNull(employeeRepository.save(EmployeeDto.fromDto(employeeDto))))
 
-        Employee().apply {
-            BeanUtils.copyProperties(employeeDto, this)
-            employeeRepository.save(this)
-        }
-    }
 
     // 削除 ------------------------------------------------------------------
     /**
