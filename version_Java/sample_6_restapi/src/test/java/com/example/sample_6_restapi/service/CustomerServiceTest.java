@@ -2,6 +2,7 @@ package com.example.sample_6_restapi.service;
 
 
 import com.example.sample_6_restapi.domain.Customer;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -29,12 +31,13 @@ import static org.junit.Assert.assertThat;
 @ActiveProfiles("unit")
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @SpringBootTest
+@Sql
 public class CustomerServiceTest {
 
     @Autowired
     CustomerService customerService;
 
-    @Before
+    @After
     public void doBefore() {
         // 初期化
         customerService.deleteAll();
@@ -47,19 +50,14 @@ public class CustomerServiceTest {
         List<Customer> listCustomer = customerService.findAll();
 
         // Exercise & Verify
+        assertThat(listCustomer.size(), is(2));
+
         listCustomer.forEach(B(0, (customer, i)-> {
 
-            if(0==i) {
-                assertThat(customer.getId(), is(2));
-                assertThat(customer.getFirstName(), is("service"));
-                assertThat(customer.getLastName(), is("service1"));
-            }
+            assertThat(customer.getFirstName(), is("service"));
 
-            if(1==i) {
-                assertThat(customer.getId(), is(1));
-                assertThat(customer.getFirstName(), is("service"));
-                assertThat(customer.getLastName(), is("service4"));
-            }
+            String target = (0==i)? "service1" :"service4";
+            assertThat(customer.getLastName(), is(target));
 
         }));
     }
@@ -70,6 +68,7 @@ public class CustomerServiceTest {
         List<Customer> listCustomer = customerService.findAll();
 
         // Exercise & Verify
+        assertThat(listCustomer.size(), is(2));
         listCustomer.forEach(B(0, (customer, i)-> {
 
             if(0==i) {
@@ -108,7 +107,7 @@ public class CustomerServiceTest {
         assertThat(pageCustomer.getSize(), is(6)); // 1ページのデータ数
         assertThat(pageCustomer.getNumber(), is(0)); // 現在のページ
         assertThat(pageCustomer.getTotalPages(), is(1)); // 全ページ数
-        assertThat(pageCustomer.getTotalElements(), is(1L)); // 全データ数
+        assertThat(pageCustomer.getTotalElements(), is(3L)); // 全データ数
 
         pageCustomer.getContent()
                 .forEach(B(0, (customer, i) -> {
@@ -118,16 +117,16 @@ public class CustomerServiceTest {
                                 assertThat(customer.getLastName(), is(LastName));
                             }
 
-                            if(0==i) {
+                            if(1==i) {
                                 assertThat(customer.getId(), is(not(3)));
                                 assertThat(customer.getFirstName(), is(notNullValue()));
                                 assertThat(customer.getLastName(), is(notNullValue()));
                             }
 
-                            if(1==i) {
+                            if(2==i) {
                                 assertThat(customer.getId(), is(1));
-                                assertThat(customer.getFirstName(), is("eeeee"));
-                                assertThat(customer.getLastName(), is("ddddd"));
+                                assertThat(customer.getFirstName(), is("service"));
+                                assertThat(customer.getLastName(), is("service4"));
                             }
                         }
                 ));
@@ -201,6 +200,4 @@ public class CustomerServiceTest {
         int counter[] = { start };
         return obj -> consumer.accept(obj, counter[0]++);
     }
-
-
 }

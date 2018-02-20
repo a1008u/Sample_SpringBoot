@@ -1,24 +1,23 @@
-package com.example.sample_6_restapi.restapi;//package com.example.sample_6_restapi.restapi;
-
+package com.example.sample_6_restapi.restapi;
 
 import com.example.sample_6_restapi.domain.Customer;
+import com.example.sample_6_restapi.service.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,93 +31,94 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * RestControllerのスタブはPostManを利用して行う
  */
 
-
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-@ActiveProfiles("unit")
-@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@Sql
+@WebMvcTest(CustomerRestController.class)
 public class CustomerRestControllerTest{
     @Autowired
     MockMvc mvc;
 
+    @MockBean
+    private CustomerService customerService;
+
     /**
-     * スタブ
+     * Mock
      * @throws Exception
      */
     @Test
     public void getCustomers_list_動作確認() throws Exception {
-        String result1= mvc.perform(get("/api/customers/list"))
-                .andExpect(status().is2xxSuccessful())
-                .andReturn().getResponse().getContentAsString();
 
-        String result2 = mvc.perform(get("/api/customers/list"))
-                .andExpect(status().is2xxSuccessful())
-                .andReturn().getResponse().getContentAsString();
-        assertEquals(result1, result2);
+        List<Customer> customerList = new ArrayList<>();
+        customerList.add(new Customer(1,"t1","t2"));
+        when(customerService.findAll()).thenReturn(customerList);
+
+        mvc.perform(get("/api/customers/list"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("[{\"id\":1,\"firstName\":\"t1\",\"lastName\":\"t2\"}]")));
     }
 
     /**
-     * スタブ
+     * mock
+     * @throws Exception
+     */
+//    @Test
+//    public void getCustomers_page_動作確認() throws Exception {
+//
+//        String result1= mvc.perform(get("/api/customers/page"))
+//                .andExpect(status().is2xxSuccessful())
+//                .andReturn().getResponse().getContentAsString();
+//
+//        String result2 = mvc.perform(get("/api/customers/page"))
+//                .andExpect(status().is2xxSuccessful())
+//                .andReturn().getResponse().getContentAsString();
+//        assertEquals(result1.length(), result2.length());
+//    }
+
+    /**
+     * mock
      * @throws Exception
      */
     @Test
-    public void getCustomers_page_動作確認() throws Exception {
-        String result1= mvc.perform(get("/api/customers/page"))
-                .andExpect(status().is2xxSuccessful())
-                .andReturn().getResponse().getContentAsString();
-
-        String result2 = mvc.perform(get("/api/customers/page"))
-                .andExpect(status().is2xxSuccessful())
-                .andReturn().getResponse().getContentAsString();
-        assertEquals(result1, result2);
-    }
-
-    @Test
     public void getCustome_動作確認() throws Exception {
-        mvc.perform(get("/api/customers/{id}","1"))
-           .andExpect(status().is2xxSuccessful())
-           .andExpect(content().string(containsString("1")))
-           .andExpect(content().string(not(containsString("4."))));
+        String id = "1";
+        Customer customer = new Customer(Integer.parseInt(id),"t1","t2");
+        when(customerService.findOne(Integer.parseInt(id))).thenReturn(customer);
+
+        mvc.perform(get("/api/customers/{id}", id).contentType(MediaType.APPLICATION_JSON_UTF8))
+           .andExpect(status().isOk())
+           .andExpect(content().string(containsString("{\"id\":1,\"firstName\":\"t1\",\"lastName\":\"t2\"}")));
     }
 
     @Autowired
     ObjectMapper mapper;
     @Test
     public void postCustomers_動作確認() throws Exception {
+
+        String id = "1";
+        Customer customer = new Customer(Integer.parseInt(id),"t1","t2");
+        when(customerService.create(customer)).thenReturn(customer);
+
         mvc.perform(post("/api/customers")
-                    .param("firstName", "s")
-                    .param("lastName", "a")
-                    .content(mapper.writeValueAsString(new Customer(1,"s","a")))
-                    .contentType(MediaType.APPLICATION_JSON_UTF8)
-                    )
-            .andExpect(status().is2xxSuccessful())
-            .andExpect(content().string(containsString("s")))
-            .andExpect(content().string(containsString("a")))
-            .andExpect(content().string(not(containsString("6."))));
+                .content(mapper.writeValueAsString(customer))
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().string(containsString("{\"id\":1,\"firstName\":\"t1\",\"lastName\":\"t2\"}")));
     }
 
     @Test
     public void putCustomer() throws Exception {
 
-        String firstName = "test1";
-        String lastName = "test1";
+        String id = "1";
+        Customer customer = new Customer(Integer.parseInt(id),"t1","t2");
+        when(customerService.update(customer)).thenReturn(customer);
 
         mvc.perform(put("/api/customers/update/{id}","1")
-                .param("firstName", firstName)
-                .param("lastName", lastName)
-                .content(mapper.writeValueAsString(new Customer(1,firstName,lastName)))
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .content(mapper.writeValueAsString(customer))
+                    .contentType(MediaType.APPLICATION_JSON_UTF8)
                 )
-            .andExpect(status().is2xxSuccessful())
-            .andExpect(content().string(containsString(firstName)))
-            .andExpect(content().string(containsString(lastName)))
-            .andExpect(content().string(not(containsString("6."))));
-
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().string(containsString("{\"id\":1,\"firstName\":\"t1\",\"lastName\":\"t2\"}")));
     }
 
-    //    まだ動かない
     @Test
     public void deleteCustomer() throws Exception {
         String firstName = "test1";
