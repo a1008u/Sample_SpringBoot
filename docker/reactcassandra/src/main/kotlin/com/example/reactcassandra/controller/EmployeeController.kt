@@ -78,7 +78,7 @@ class EmployeeController(private val employeeService: EmployeeService
     @DeleteMapping("/employee/{id}")
     fun deleteEmployee(@PathVariable id: String): ResponseEntity<String> {
         val delete = employeeService.deleteEmployee(id).block()
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build<String >()
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build<String>()
     }
 
 }
