@@ -27,37 +27,31 @@ class EmployeeController(private val employeeService: EmployeeService) {
     // 検索 ------------------------------
 
     @GetMapping(path = ["/employee/all"])
-    internal fun getAllEmployee(): MutableList<Employee>? = employeeService.getemployeementList()
+    internal fun getAllEmployee(): List<EmployeeDto> = employeeService.getemployeementList()
 
     @GetMapping(path = ["/employee/{no}"])
-    internal fun getEmployee(@PathVariable no:Int): Employee = employeeService.getemployeement(no)
+    internal fun getEmployee(@PathVariable no:Int): EmployeeDto = employeeService.getemployeement(no)
 
     @GetMapping(path = ["/department/all"])
-    internal fun getAllDepartment(): MutableList<Department>? = employeeService.getdepartmentList()
+    internal fun getAllDepartment(): List<DepartmentDto> = employeeService.getdepartmentList()
 
     @GetMapping(path = ["/department/{no}"])
-    internal fun getDepartment(@PathVariable no:Int): Department= employeeService.getdepartment(no)
+    internal fun getDepartment(@PathVariable no:Int): DepartmentDto= employeeService.getdepartment(no)
 
     // 挿入 ------------------------------
     @PostMapping(path = ["/employee/insert"])
-    fun insertEmployee(@RequestBody employeeDto: EmployeeDto, uriBuilder: UriComponentsBuilder): ResponseEntity<Employee>? {
+    fun insertEmployee(@RequestBody employeeDto: EmployeeDto, uriBuilder: UriComponentsBuilder): ResponseEntity<Employee> {
         val created = employeeService.saveEmployee(employeeDto)
-        val location = uriBuilder.path("api/employee/{no}").buildAndExpand(created.no).toUri()
+        val location = requireNotNull(uriBuilder.path("api/employee/{no}").buildAndExpand(created.no).toUri())
         return ResponseEntity.created(location).body(created)
     }
 
 
     @PostMapping(path = ["/department/insert"])
-    fun insertDepartment(@RequestBody departmentDto: DepartmentDto, uriBuilder: UriComponentsBuilder): ResponseEntity<String>? {
-
-//        employeeService.getdepartment(employeeDto.departmentCode).apply {
-//            employeeDto.departmentCode = code
-//            employeeDto.departmentName = name
-//        }
+    fun insertDepartment(@RequestBody departmentDto: DepartmentDto, uriBuilder: UriComponentsBuilder): ResponseEntity<Department> {
         val created = employeeService.saveDeparatment(departmentDto)
-        return ResponseEntity.ok().build<String>()
-//        val location = uriBuilder.path("api/employee/{no}").buildAndExpand(created.no).toUri()
-//        return ResponseEntity.created(location).body(created)
+        val location = requireNotNull(uriBuilder.path("api/department/{no}").buildAndExpand(created.code).toUri())
+        return ResponseEntity.created(location).body(created)
     }
 
     // 更新 ------------------------------

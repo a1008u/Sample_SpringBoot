@@ -15,11 +15,16 @@ class EmployeeService(
         private val employeeRepository: EmployeeRepository
         , private val departmentRepository: DepartmentRepository) {
 
-     fun getemployeementList() = requireNotNull(employeeRepository.findAll())
-     fun getdepartmentList() = requireNotNull(departmentRepository.findAll())
+     fun getemployeementList(): List<EmployeeDto> = requireNotNull(employeeRepository.findAll())
+             .map { e -> EmployeeDto.toDto(e) }
+             .toList()
 
-    fun getemployeement(id: Int) = requireNotNull(employeeRepository.findOne(id))
-    fun getdepartment(id: Int) = requireNotNull(departmentRepository.findOne(id))
+     fun getdepartmentList() = requireNotNull(departmentRepository.findAll())
+             .map { d -> DepartmentDto.toDto(d) }
+             .toList()
+
+    fun getemployeement(id: Int) = EmployeeDto.toDto(requireNotNull(employeeRepository.findOne(id)))
+    fun getdepartment(id: Int) = DepartmentDto.toDto(requireNotNull(departmentRepository.findOne(id)))
 
 //    fun getEmployeeList(employee: Employee): List<Employee> {
 //        return employeeRepository.findAll(Specifications
@@ -33,20 +38,20 @@ class EmployeeService(
 
     @Transactional
     fun saveEmployee(employeeDto: EmployeeDto): Employee {
-        val emp = requireNotNull(departmentRepository.findOne(employeeDto.departmentCode)).run {
-                    EmployeeDto.fromDto(employeeDto, this)
-                  }
+        val emp =  EmployeeDto.fromDto(employeeDto)
         return employeeRepository.save(emp)
     }
 
     @Transactional
-    fun saveDeparatment(departmentdto: DepartmentDto): Department {
-        val dep: Department = DepartmentDto.fromDto(departmentdto)
-        return departmentRepository.save(dep)
+    fun saveDeparatment(departmentdto: DepartmentDto): Department{
+
+        val department = DepartmentDto.fromDto(departmentdto)
+        return departmentRepository.save(department)
     }
 
+
     @Transactional
-    fun updateEmployee(targetFirstName:String, employeeDtoList: List<Employee>) : Int{
+    fun updateEmployee(targetFirstName:String, employeeDtoList: List<EmployeeDto>) : Int{
         val countI = employeeDtoList
                 .map { e -> employeeRepository.updateFirstName(targetFirstName, e.firstName)}
                 .count()

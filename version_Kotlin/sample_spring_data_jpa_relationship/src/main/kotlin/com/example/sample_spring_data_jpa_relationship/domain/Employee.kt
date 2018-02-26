@@ -80,7 +80,7 @@ data class Employee(
         //,@OneToOne(mappedBy = "employee") val authentication: Authentication
         @ManyToOne(cascade = [(CascadeType.ALL)], fetch = FetchType.EAGER)//(optional = false)
         @JoinColumn(name = "department_code")
-        //@JsonManagedReference // 双方向のDepartmentを表示させる
+//        @JsonManagedReference // 双方向のDepartmentを表示させる
         val department: Department = Department()
 //                    ,@ManyToMany val authorizationList: List<Authorization>
 //                    ,@ManyToMany // 主キーを使った方法
@@ -105,19 +105,18 @@ enum class Sex {
 
 
 data class EmployeeDto(
-        var id:Int = 0,
+        var no:Int = 0,
         var firstName:String = "test"
-        ,var lastName:String = "test"
-        ,@Enumerated(EnumType.STRING) var sex: Sex = Sex.male
-        ,@Length(max = 100) var tel: String = "998887777"
-        ,var birthday: Date =  Date.valueOf("0001-01-01")
-        ,var mailAddress:String = "test@test"
-        ,@Digits(integer = 10, fraction = 2) var salary: BigDecimal = 999.99.toBigDecimal()
-        ,var departmentCode:Int = 0
-        ,var departmentName:String ="salesDepartment"
+        , var lastName:String = "test"
+        , @Enumerated(EnumType.STRING) var sex: Sex = Sex.male
+        , @Length(max = 100) var tel: String = "998887777"
+        , var birthday: Date =  Date.valueOf("0001-01-01")
+        , var mailAddress:String = "test@test"
+        , @Digits(integer = 10, fraction = 2) var salary: BigDecimal = 999.99.toBigDecimal()
+        , var department: TmpDepartment = TmpDepartment()
 ){
         companion object {
-                fun fromDto(dto: EmployeeDto,ddd:Department) : Employee {
+                fun fromDto(dto: EmployeeDto) : Employee {
                         return Employee(Int.MAX_VALUE
                                 , dto.firstName
                                 , dto.lastName
@@ -126,7 +125,7 @@ data class EmployeeDto(
                                 , dto.birthday
                                 , dto.mailAddress
                                 , dto.salary
-                                , ddd)
+                                , Department(dto.department.code, dto.department.name))
                 }
 
                 fun toDto(employee: Employee) = EmployeeDto(employee.no
@@ -137,8 +136,16 @@ data class EmployeeDto(
                         , employee.birthday
                         , employee.mailAddress
                         , employee.salary
-                        , employee.department.code
-                        , employee.department.name)
+                        , TmpDepartment(employee.department.code, employee.department.name))
 
         }
 }
+class TmpEmployee(var no:Int = 0,
+                  var firstName:String = "test"
+                  ,var lastName:String = "test"
+                  ,@Enumerated(EnumType.STRING) var sex: Sex = Sex.male
+                  ,@Length(max = 100) var tel: String = "998887777"
+                  ,var birthday: Date =  Date.valueOf("0001-01-01")
+                  ,var mailAddress:String = "test@test"
+                  ,@Digits(integer = 10, fraction = 2) var salary: BigDecimal = 999.99.toBigDecimal())
+

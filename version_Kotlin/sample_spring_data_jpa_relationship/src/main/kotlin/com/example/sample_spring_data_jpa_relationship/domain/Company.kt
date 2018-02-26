@@ -19,7 +19,8 @@ data class Company(
     var products: List<Product> = emptyList(),
 	
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	var id: Long = 0
 ){
 	override fun toString(): String{

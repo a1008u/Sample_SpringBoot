@@ -43,8 +43,8 @@ data class Department(
 
         @OneToMany(mappedBy = "department", cascade = [(CascadeType.ALL)], fetch = FetchType.EAGER)
         @OrderBy("firstName, birthday DESC")
-        //@JsonBackReference // 無限ループを避けるため、こちらは双方向のEmployeeを表示させない
-        val employee: List<Employee> = emptyList()
+//        @JsonBackReference // 無限ループを避けるため、こちらは双方向のEmployeeを表示させない
+        var employee: List<Employee> = emptyList()
 ){
         override fun toString(): String{
                 return "{student: ${this.name}}}"
@@ -54,18 +54,22 @@ data class Department(
 data class DepartmentDto(
         var code: Int = 0,
         var name:String = "unregisterd",
-        var empList: List<Employee> = emptyList()
+        var empList: List<TmpEmployee> =  arrayListOf()
 ){
         companion object {
                 fun fromDto(dto: DepartmentDto) = Department(
                         dto.code
                         , dto.name
-                        , dto.empList
-                        )
+                        , dto.empList.map { e -> Employee(e.no,e.firstName,e.lastName,e.sex,e.tel,e.birthday,e.mailAddress,e.salary)}.toList()
+                )
+
                 fun toDto(department: Department) = DepartmentDto(
                         department.code
                         , department.name
-                        , department.employee
-                        )
+                        , department.employee.map { e-> TmpEmployee(e.no,e.firstName,e.lastName,e.sex,e.tel,e.birthday,e.mailAddress,e.salary)}.toList()
+                )
         }
 }
+
+class TmpDepartment(val code:Int = 0, val name:String = "test")
+
