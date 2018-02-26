@@ -134,11 +134,11 @@ class EmployeeServiceTest{
         val empDtoList =  employeeService.readByFirstName(employeeDto)
 
         val updateInt = employeeService.updateFirstName("tom", empDtoList)
-        assertThat(updateInt, `is`(2))
+        assertThat(updateInt, `is`(3))
 
         val employeeDto2 = EmployeeDto(1,"tom","Nobi",Sex.male, "08011112222", Date.valueOf("1980-03-21"),"Nobi@mail.com",100.34.toBigDecimal())
         val changeNameList = employeeService.readByFirstName(employeeDto2)
-        assertThat(changeNameList.size,`is`(2))
+        assertThat(changeNameList.size,`is`(3))
     }
 
     // save -------------------------------------

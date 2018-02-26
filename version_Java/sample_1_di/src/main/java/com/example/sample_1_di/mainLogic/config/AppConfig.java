@@ -49,8 +49,8 @@ public class AppConfig {
      * @return typeA_MainLogic
      */
     @Bean
-    MainLogic mainLogic() {
-        return new typeA_MainLogic();
+    MainLogic mainLogic(ArgumentResolver argumentResolver, Calculator calculator) {
+        return new typeA_MainLogic(argumentResolver, calculator);
     }
 
 }

@@ -14,7 +14,6 @@ import java.util.*
 
 @SpringBootApplication
 class Sample1DiApplication{
-
     companion object {
         @Bean
         fun calculator(): Calculator = addCalculator()
@@ -25,10 +24,11 @@ class Sample1DiApplication{
         @Bean
         fun mainLogic(): MainLogic = typeA_MainLogic( ScannerArgumentResolver(), addCalculator())
     }
-
 }
 
 fun main(args: Array<String>) {
+
+
 
     val context = SpringApplication.run(Sample1DiApplication::class.java, *args)
     val Logic = context.getBean(typeA_MainLogic::class.java)
@@ -41,9 +41,16 @@ fun main(args: Array<String>) {
     val scanner = Scanner(System.`in`)
     val type = scanner.nextInt()
 
-    when (type) {
-        1 -> Logic.exeMain(context)
-        2 -> Logic.exeMain()
+    // 引数なし
+    when {
+        type == 1 -> Logic.exeMain(context)
+        type == 2 -> Logic.exeMain()
     }
+
+//    // 引数あり
+//    when (type) {
+//        1 -> Logic.exeMain(context)
+//        2 -> Logic.exeMain()
+//    }
 
 }

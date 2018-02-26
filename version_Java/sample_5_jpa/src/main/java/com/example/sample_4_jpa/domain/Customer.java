@@ -30,3 +30,5 @@ public class Customer {
     @Column(nullable = false) // カラムを示す
     private String lastName;
 }
+
+

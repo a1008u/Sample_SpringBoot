@@ -1,6 +1,7 @@
 package com.example.sample_spring_data_jpa_relationship.Service
 
 import com.example.sample_spring_data_jpa_relationship.domain.Department
+import com.example.sample_spring_data_jpa_relationship.domain.DepartmentDto
 import com.example.sample_spring_data_jpa_relationship.domain.Employee
 import com.example.sample_spring_data_jpa_relationship.domain.EmployeeDto
 import com.example.sample_spring_data_jpa_relationship.repository.DepartmentRepository
@@ -31,14 +32,16 @@ class EmployeeService(
 //    }
 
     @Transactional
-    fun saveEmployee(employeeDto: EmployeeDto): Department {
+    fun saveEmployee(employeeDto: EmployeeDto): Employee {
+        val emp = requireNotNull(departmentRepository.findOne(employeeDto.departmentCode)).run {
+                    EmployeeDto.fromDto(employeeDto, this)
+                  }
+        return employeeRepository.save(emp)
+    }
 
-        val dep =requireNotNull(departmentRepository.findOne(employeeDto.departmentCode))
-
-        val emp =EmployeeDto.fromDto(employeeDto, dep)
-
-        dep.employee = arrayListOf(emp)
-
+    @Transactional
+    fun saveDeparatment(departmentdto: DepartmentDto): Department {
+        val dep: Department = DepartmentDto.fromDto(departmentdto)
         return departmentRepository.save(dep)
     }
 

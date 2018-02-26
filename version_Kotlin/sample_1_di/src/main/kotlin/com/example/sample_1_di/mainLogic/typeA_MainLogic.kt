@@ -22,9 +22,8 @@ class typeA_MainLogic(private val argumentResolver: ArgumentResolver,
         // 計算
         val result = context.getBean(Calculator::class.java).run {this.calc(argument.a, argument.b)}
 
-        println("result = " + result)
+        println("result = $result" )
     }
-
 
 }
 

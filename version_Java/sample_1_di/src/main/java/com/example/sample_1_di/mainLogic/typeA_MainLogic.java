@@ -18,14 +18,24 @@ public class typeA_MainLogic implements MainLogic {
      * 　すると、「DIコンテナ」は自動的に「@Autowired」アノテーションを付けた 「フィールド」に対して、
      * 　合致する型のオブジェクトを管理内のオブジェクトから探し出して、インジェクションすること。
      *
-     *　@Autowiredアノテーション
+     *　@Acutowiredアノテーション
      * 「DIコンテナ」が「インジェクション」すべき「フィールド」であることを示す。
+     *
+     *     @Autowired
+     *     ArgumentResolver argumentResolver;
+     *     @Autowired
+     *     Calculator calculator;
+     *
      */
-    @Autowired
-    ArgumentResolver argumentResolver;
+
+    private final ArgumentResolver argumentResolver;
+    private final Calculator calculator;
 
     @Autowired
-    Calculator calculator;
+    public typeA_MainLogic(ArgumentResolver argumentResolver, Calculator calculator) {
+        this.argumentResolver = argumentResolver;
+        this.calculator = calculator;
+    }
 
     /**
      * DI(オートワイヤリング)を用いた実装

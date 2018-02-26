@@ -21,8 +21,14 @@ import org.springframework.data.domain.Pageable;
  */
 @SpringBootApplication
 public class Sample4JpaApplication implements CommandLineRunner {
+
+	// コンストラクタでDI
+	private final CustomerRepository customerRepository;
+
 	@Autowired
-	CustomerRepository customerRepository;
+	public Sample4JpaApplication(CustomerRepository customerRepository) {
+		this.customerRepository = customerRepository;
+	}
 
 	@Override
 	public void run(String... strings) throws Exception {

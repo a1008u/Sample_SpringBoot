@@ -78,9 +78,9 @@ data class Employee(
         val salary: BigDecimal = 000.000.toBigDecimal(),
 
         //,@OneToOne(mappedBy = "employee") val authentication: Authentication
-        @ManyToOne(fetch = FetchType.EAGER)//(optional = false)
-        @JoinColumn(name = "department_code", insertable = false, updatable = false)
-        @JsonManagedReference // 双方向のDepartmentを表示させる
+        @ManyToOne(cascade = [(CascadeType.ALL)], fetch = FetchType.EAGER)//(optional = false)
+        @JoinColumn(name = "department_code")
+        //@JsonManagedReference // 双方向のDepartmentを表示させる
         val department: Department = Department()
 //                    ,@ManyToMany val authorizationList: List<Authorization>
 //                    ,@ManyToMany // 主キーを使った方法

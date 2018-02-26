@@ -39,15 +39,22 @@ class EmployeeController(private val employeeService: EmployeeService) {
     internal fun getDepartment(@PathVariable no:Int): Department= employeeService.getdepartment(no)
 
     // 挿入 ------------------------------
-
     @PostMapping(path = ["/employee/insert"])
-    fun insert(@RequestBody employeeDto: EmployeeDto, uriBuilder: UriComponentsBuilder): ResponseEntity<String>? {
+    fun insertEmployee(@RequestBody employeeDto: EmployeeDto, uriBuilder: UriComponentsBuilder): ResponseEntity<Employee>? {
+        val created = employeeService.saveEmployee(employeeDto)
+        val location = uriBuilder.path("api/employee/{no}").buildAndExpand(created.no).toUri()
+        return ResponseEntity.created(location).body(created)
+    }
+
+
+    @PostMapping(path = ["/department/insert"])
+    fun insertDepartment(@RequestBody departmentDto: DepartmentDto, uriBuilder: UriComponentsBuilder): ResponseEntity<String>? {
 
 //        employeeService.getdepartment(employeeDto.departmentCode).apply {
 //            employeeDto.departmentCode = code
 //            employeeDto.departmentName = name
 //        }
-        val created = employeeService.saveEmployee(employeeDto)
+        val created = employeeService.saveDeparatment(departmentDto)
         return ResponseEntity.ok().build<String>()
 //        val location = uriBuilder.path("api/employee/{no}").buildAndExpand(created.no).toUri()
 //        return ResponseEntity.created(location).body(created)

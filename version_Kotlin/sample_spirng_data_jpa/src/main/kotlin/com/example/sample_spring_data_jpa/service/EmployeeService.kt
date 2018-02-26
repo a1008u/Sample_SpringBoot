@@ -157,11 +157,10 @@ class EmployeeService(private val employeeRepository: EmployeeRepository){
      */
 
     fun updateFirstName(targetFirstName:String, employeeDtoList: List<EmployeeDto>) : Int{
-        val countI = employeeDtoList
+        return employeeDtoList
                 .map { e -> employeeRepository.updateFirstName(targetFirstName, e.firstName)}
+                .map { employeeRepository.flush()}
                 .count()
-        employeeRepository.flush()
-        return countI
     }
 
 //    fun updateAllMailaddress() {
