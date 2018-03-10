@@ -1,0 +1,239 @@
+#######-----------------------------------------------------------------------------------
+## Dockerの基本コマンドについて
+#######-----------------------------------------------------------------------------------
+### --------------------------------------------------------------------------------------
+##  【Dockerイメージの操作について】
+# イメージの取得(docker pull)
+# docker pull [オプション] イメージ名[:タグ名]
+docker pull centos:7
+docker pull -a centos #全てのバージョンを取得
+docker pull registry.hub.docker.com/centos:7 # レジストリ指定
+
+# イメージの一覧表示(docker images)
+# docker images [オプション][リポジトリ名]
+docker images
+
+# ステータスについて
+# REPOSITORY  :Dockerイメージの名前
+# TAG         :Dockerイメージタグ名
+# IMAGEID     :DockerイメージのID
+# CREATED     :作成日
+# VIRTUAL SIZE:サイズ
+
+# イメージの詳細確認(docker inspect)
+# docker inspect [オプション]コンテナorイメージ識別子
+docker inspect nginx
+docker inspect --format="{{.Os}}" nginx #詳細の検索
+
+# イメージのタグ設定(docker tag)
+# <Docker Hubのユーザ名>/イメージ名:[タグ名]
+docker tag nginx:latest test/nginx:1.0
+
+# イメージの検索(docker search)
+# docker search [オプション]検索キーワード
+docker search centos
+
+# オプション
+# --automated=false Automated Buildのみを表示
+# （GitHubやBitbucketに配置したDockerfileをもとにDocker Hubが自動で生成したDockerイメージ）
+
+# ステータスについて
+# NAME        : Dockerイメージの名前
+# DESCRIPTION : Dockerイメージの説明
+# STARS       : お気に入りの数
+# OFFICIAL    : 公式イメージかどうか
+# AUTOMATED   : Dockerfileをもとに自動生成されたイメージかどうか
+
+# イメージの削除(docker rmi)
+# docker rmi [オプション]イメージ名[イメージ名]
+docker rmi nginx
+
+# Docker Hubへのログイン(docker login)
+# docker logins[オプション][サーバ名]
+
+# イメージのアップロード(docker push)
+# docker push イメージ名[:タグ名]
+docker push test/nginx:1.0
+
+# Docker Hubからログアウト(docker logout)
+# docker logout[サーバ名]
+
+###  -------------------------------------------------------------------------------------
+##【Dockerコンテナの生成/起動/停止】
+# docker create -> docker start -> docker stop -> docker rm
+# (docker run (create + start))
+
+# コンテナの生成/起動（docker run）
+# docker run [オプション]イメージ名[:タグ名][引数]
+docker run -it --name "test1" centos /bin/cal  # -i:コンテナの標準入力を開く -t:tty(端末デバイス)を使う
+docker run -it --name "test2" centos /bin/bash
+
+# バックグラウンド（-d）で実行 (docker logsコマンで起動結果を確認する)
+docker run -d centos /bin/ping localhost 
+# docker logs -t [CONTAINER IDを設定] バックグラウンドの実行確認
+
+# restartの設定(no, on-failure, on-failure 回数, always)
+docker run -it --restart=always centos /bin/bash
+
+# コンテナのネットワーク設定
+# docker run [オプション] イメージ名[:タグ名][引数]
+docker run -d -p 8080:80 httpd
+docker run --dns=192.168.1.1 httpd
+docker run -it --mac-address="92:d0:c6:0a:29:33" centos
+docker run -it --add-host=test.com:192.168.1.1 centos # cat /etc/hostsで確認
+
+# オプション
+# --add-host=[ホスト名:IPアドレス]
+# --dns=[IPアドレス]
+# --expose=[ポート番号]
+# --mac-address=[MACアドレス]
+# --net=[bride|none|container:<name|id>|host] #コンテナのネットワーク指定
+# -h ="ホスト名" #コンテナ自身のhost名を指定する
+# -p [ホストのポート番号]:[コンテナのポート番号]
+# --link=[コンテナ名:エイリアス]
+
+# リソースを指定してコンテナを生成/実行
+# docker run [リソースオプション] イメージ名[:タグ名][引数]
+docker run --cup-shares=512 --memory=512m centos
+docker run -v /c/User/asa/WebPage:var/www/html httpd #ホストOSとコンテナ内のディレクトリを共有したいときは、volumeオプションを設定(CドライブのUsers/asa/WebPageディレクトリを、コンテナの/var/www/htmlディレクトリと共有する)
+
+# コンテナを生成/起動する環境を指定
+# docker run[環境設定オプション]イメージ名[:タグ名][引数]
+docker run -it -e foo=bar centos /bin/bash # setコマンドで確認
+docker run -it --env-file=env_list centos /bin/bash # setコマンドで確認(env_listはホストで定義ファイルとして作成する)
+docker run -it -w=/tmp/work centos /bin/bash #作業ディレクトリを指定する
+
+### 稼働コンテナの一覧表示(docker ps)
+# docker ps [オプション]
+# -a
+# --before=""
+# -f'[key]=[value]' : 表示するコンテナのフィルタリングを行う
+# --format'[key]=[value]':表示フォーマットを指定する
+# -l
+# --no-trunc=false
+# -q
+# -s
+# --since=""
+
+docker ps -a
+docker ps -a -f 'name=test1'
+# ステータスについて
+# CONTAINER ID
+# IMAGE                   
+# COMMAND : コンテナで実行されているコマンド             
+# CREATED             
+# STATUS  : コンテナの状態（restarting|running|paused|exited）                  
+# PORTS   : 割り当てられたポート
+# NAMES
+
+# formatのオプション（出力形式の指定）
+# .ID
+# .Image
+# .Command
+# .CreatedAt
+# .RunningFor
+# .Ports
+# .Status
+# .Size
+# .Labels
+# .Label
+
+# コンテナの稼動確認(docker stats)
+# docker stats [コンテナ識別子]
+docker stats nginx
+
+# ステータスについて (Ctrl+Cで終了させる)
+# CONTAINER ID        
+# NAME                
+# CPU %               
+# MEM USAGE / LIMIT   
+# MEM %               
+# NET I/O             
+# BLOCK I/O           
+# PIDS
+
+# コンテナの起動(docker start)
+# docker start[オプション]コンテナ識別子[コンテナ識別子]
+docker start 153545e30616 
+
+# コンテナの停止(docker stop)
+# docker stop [オプション]コンテナ識別子[コンテナ識別子]
+docker stop -t 2 153545e30616 # 2秒後に停止
+
+# コンテナの再起動(docker restart)
+# docker restart[オプション]コンテナ識別子[コンテナ識別子]
+docker restart -t 2 153545e30616 # 2秒後に再起動
+
+# コンテナの削除(docker rm)
+# docker rm[オプション]コンテナ識別子[コンテナ識別子]
+docker rm 153545e30616
+docker rm -f 'docker ps -a -q' # -fで稼働中のコンテナも強制的に削除（今回は起動中のもの全て）
+
+# コンテナの中断/再開(docker pause/docker unpause)
+# docker pause コンテナ識別子[コンテナ識別子]
+docker pause nginx
+docker unpause nginx # pauseの解除
+
+###  -------------------------------------------------------------------------------------
+## 【稼動しているDockerコンテナの操作】
+# 稼動コンテナへの接続(docker attach)
+docker atttach 153545e30616 # 接続　抜ける場合はCtrl + q
+
+# 稼動コンテナでプロセス実行（docker exec）
+# docker exec [オプション]コンテナ識別子　実行するコマンド [引数]
+docker exec -it  cocky_nightingale /bin/ping localhost
+
+# 稼動コンテナのプロセス確認(docker top)
+docker top cocky_nightingale
+
+# 稼動コンテナのポート転送確認(docker port)
+docker port cocky_nightingale
+
+# コンテナの名前変更(docker rename)
+# docker rename 変更前　変更後
+docker rename cocky_nightingale test_centos
+
+# コンテナ内のファイルをコピー（docker cp）
+# docker cp コンテナ識別子:コンテナ内のファイルパス　ホストのディレクトリパス
+# docker cp ホストのファイル コンテナ識別子:コンテナ内のファイルパス
+docker cp test_centos:/etc/passwd /tmp/etc #コンテナからホストへ
+docker cp ./local.txt test:/tmp/test.txt # ホストからコンテナへ
+
+# コンテナ操作の差分確認（docker diff）
+# docker diff コンテナ識別子
+
+# 変更区分
+# A：ファイル追加
+# D：ファイル削除
+# C：ファイル更新
+
+###  -------------------------------------------------------------------------------------
+## 【Dockerの情報確認】
+
+# Dockerのバージョン確認(docker version)
+docker version
+
+# Dockerの実行環境の確認(docker info)
+docker info
+
+###  -------------------------------------------------------------------------------------
+##【コンテナからイメージ作成(docker commit)　】
+#docker commit[オプション]コンテナ識別子[イメージ名[:タグ名]]
+docker commit -a "AUTHOR" test_centos image/testcentos:1.0
+docker inspect image/testcentos:1.0 
+
+# コンテナをtarファイル出力(docker export)
+# docker export コンテナ識別子
+docker export test_centos > testcentos.tar
+tar -tvf testcentos.tar # tarの確認
+
+# tarファイルからイメージ作成(docker import)
+# docker import ファイルまたはURL - [イメージ名[:タグ名]]
+
+# イメージの保存(docker save)
+# docker save [オプション]保存ファイル名[イメージ名]
+docker save -o testcentos.tar test_centos
+
+# イメージの読み込み(docker load)
+#docker load [オプション]
+docker load -i testcentos.tar
