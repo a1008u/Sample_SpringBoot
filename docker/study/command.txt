@@ -177,7 +177,7 @@ docker unpause nginx # pauseの解除
 ###  -------------------------------------------------------------------------------------
 ## 【稼動しているDockerコンテナの操作】
 # 稼動コンテナへの接続(docker attach)
-docker atttach 153545e30616 # 接続　抜ける場合はCtrl + q
+docker attach 153545e30616 # 接続　抜ける場合はCtrl + q
 
 # 稼動コンテナでプロセス実行（docker exec）
 # docker exec [オプション]コンテナ識別子　実行するコマンド [引数]

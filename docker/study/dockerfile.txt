@@ -1,0 +1,167 @@
+###  -------------------------------------------------------------------------------------
+## 【Dockerfileの基本】
+# Dockerfileの用途
+# Docker上で動作させるコンテナの構成情報を記述するファイル（Dockerfileからイメージを作成する）
+
+# Dockerfileの基本
+# Dockerfileはテキスト形式のファイル(拡張子はなし)
+# Dockerfileの書式
+# 命令　引数
+
+# 命令について
+# FROM : ベースイメージの指定
+# MAINTAINER : Dockerfileの作成者情報
+# RUN : コマンド実行
+# CMD : デーモン実行
+# LABEL : ラベル設定
+# EXPOSE : ポートのエクスポート
+# ENV : 環境変数の設定
+# ADD : ファイル/ディレクトリの追加
+# COPY : ファイルのコピー
+# VOLUME : ボリュームのマウント
+# ENTRYPOINT : デーモン実行
+# USER : ユーザ指定
+# WORKDIR : 作業ディレクトリの指定
+# ONBUILD : ビルド完了後に実行される命令
+
+# Dockerfileの作成
+# FROM [イメージ名]
+# FROM [イメージ名]:[タグ名]
+# FROM [イメージ名]@[ダイジェスト]
+
+# Dockerfileの記載
+###------------------
+# ベースイメージの設定
+FROM centos:centos7
+###------------------
+
+
+# Dockerfileの作成者
+# MAINTAINER [Dockerfile作成者]
+
+# Dockerfileの記載
+###------------------
+# MAINTAINERの設定
+MAINTAINER testuser
+###------------------
+
+# DockerfileからDockerイメージの作成
+# docker build -t [生成するイメージ名]:[タグ名][Dockerfileの場所]
+docker build -t sample:1.0 ./
+
+# Dockerイメージのレイヤー構造
+# Dockerfileの記載
+###------------------
+# STEP:0 Centos(ベースイメージ)
+FROM centos:centos7
+
+# STEP:1 Apacheのインストール
+RUN yum install -y httpd
+
+# STEP:2 ファイルのコピー
+COPY index.html /var/www/html
+
+# STEP:3 Apacheの起動
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+###------------------
+
+###  -------------------------------------------------------------------------------------
+## 【コマンド/デーモンの実行】
+# コマンドの実行(RUN命令)
+# RUN [実行したいコマンド]
+RUN yum -y install httpd # Shell形式での記述
+RUN ["/bin/bash", "-c", "yum -y install httpd"] # Exec形式での記述
+# docker history sample:1.0 (Docderfile利用時に何が実行されたか確認する)
+
+
+# デーモンの実行(CMD命令)
+# CMD [実行したいコマンド]
+CMD /usr/sbin/httpd -D FOREGROUND # Shell形式での記述
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"] # Exec形式での記述
+
+# Dockerfileの記載(ENTRYOINT命令のパラメータとしての記述)
+###------------------
+# STEP:0 Centos(ベースイメージ)
+FROM centos:centos7
+
+# MAINTAINERの記載
+MAINTAINER testuser
+
+# httpdのインストール
+RUN ["yum", "install", "-y", "httpd"]
+
+# httpdの実行
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+###------------------
+
+# デーモンの実行(ENTRYPOINT命令)
+# ENTRYPOINT命令で指定したコマンドは、DockerfileからビルドしたイメージからDockerコンテナを起動するため、docker runコマンドを実行した時に実行される
+# ENTRYPOINT [実行したいコマンド]
+ENTRYPOINT /usr/sbin/httpd -D FOREGROUND # Shell形式での記述
+ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"] # Exec形式での記述
+ENTRYPOINT /usr/sbin/nginx -g "daemon off" # Shell形式での記述(nginx)
+
+#### ENTRYPOINTとCMD命令の違い
+## CMD命令
+#   docker runコマンド実行じにデーモンとして実行するコマンドを指定すると、コンテナ実行時にDockerfileよりもコマンドを優先する。
+## ENTRYPOINT命令
+#   コンテナ実行時に起動させたいデーモンを強制的に指定する。
+
+# ビルド完了後に実行される命令（ONBUILD命令）
+# Dockerfile(ONBUILD記載) -> baseimage -> Dcokerfile(baseimage利用) -> newimage(このタイミングでONBUILDコマンドが実行される)
+# ONBUILD [実行したいコマンド]
+ONBUILD RUN echo "ONBUILDはsampleイメージのDockerfileに記載しています"
+
+# ONBUILDサンプルの例について
+# Dockerfile.base -> web-base(baseイメージ作成)
+tar cvf website.tar website.html # htmlをtarに固める
+docker build -t web-base -f Dockerfile.base .
+docker build -t web-iamge .
+docker run -d -p 80:80 web-iamge
+docker inspect --format="{{.Config.OnBuild}}" web-base
+# アクセス localhost:80/website.html
+
+
+###  -------------------------------------------------------------------------------------
+## 【環境/ネットワークの設定】
+# 環境変数の設定(ENV命令)
+# 作業ディレクトリの指定(WORKDIR命令)
+# ユーザの指定(USER命令)
+# ラベルの指定(LABEL命令)
+# ポートの設定(EXPOSE命令)
+
+###  -------------------------------------------------------------------------------------
+## 【ファイルシステムの設定】
+# ファイル/ディレクトリの追加(ADD命令)
+# ファイルのコピー(COPY命令)
+# ボリュームのマウント(VOLUM命令)
+
+
+###  -------------------------------------------------------------------------------------
+## 【Dockerイメージの自動生成/公開】
+# Automated Buildの流れ
+# GitHubへの公開
+# Docker Hubのリンク設定 
+# Dockerfileのビルド
+# Dockerイメージの確認
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
