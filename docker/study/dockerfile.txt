@@ -125,26 +125,117 @@ docker inspect --format="{{.Config.OnBuild}}" web-base
 ###  -------------------------------------------------------------------------------------
 ## 【環境/ネットワークの設定】
 # 環境変数の設定(ENV命令)
+# ENV [キー名] [値]
+ENV myName "TESTTESTUSER"
+ENV myOrder GIN Whisky Calvados
+ENV myNickName "TUSER"
+
+# ENV [キー名]=[値]
+ENV myName="TESTTESTUSER" \
+	myOrder=GIN Whisky Calvados \
+	myNickName="TUSER"
+
 # 作業ディレクトリの指定(WORKDIR命令)
+# WORKDID [作業ディレクトリのパス]
+WORKDIR /fisrt
+WORKDIR second
+WORKDIR third
+RUN ["pwd"]
+
+docker build -t testworkid .
+
 # ユーザの指定(USER命令)
+# USER [ユーザ名/UID]
+RUN ["adduser", "asa"]
+RUN ["whoami"]
+USER asa
+RUN ["whoami"]
+
 # ラベルの指定(LABEL命令)
-# ポートの設定(EXPOSE命令)
+# LABEL キー名 = 値
+LABEL title="WebAPServerImage"
+LABEL version="1.0"
+LABEL description="This image is WebAPServer for SpringBoot"
+
+docker build -t sample2 .
+docker inspect --format="{{.Config.Labels}}" sample2 #sample2イメージのラベルを確認
+
+# ポートの設定(EXPOSE命令) コンテナの公開するポート番号を指定する
+EXPOSE 8080
 
 ###  -------------------------------------------------------------------------------------
 ## 【ファイルシステムの設定】
 # ファイル/ディレクトリの追加(ADD命令)
-# ファイルのコピー(COPY命令)
-# ボリュームのマウント(VOLUM命令)
+# ADD ホストのファイルパス Dockerイメージのファイルパス
+# ADD ["ホストのファイルパス" "Dockerイメージのファイルパス"]
+ADD host.html /docker_dir/ #ホストのhtmlファイルをdockerの指定のディレクトリにコピー
 
+# 利用方法
+WORKDIR /docker_dir
+ADD website.html web/
+
+# ファイルのコピー(COPY命令)
+# COPY ホストのファイルパス Dockerイメージのファイルパス
+# COPY ["ホストのファイルパス" "Dockerイメージのファイルパス"]
+
+# ボリュームのマウント(VOLUM命令)
+# VOLUME ["/マウントポイント"]
+
+# 利用方法------------------------------------------
+# Dockerfileの記載(ENTRYOINT命令のパラメータとしての記述)
+###------------------
+# STEP:0 Centos(ベースイメージ)
+FROM centos:centos7
+
+# MAINTAINERの記載
+MAINTAINER testuser
+
+# ボリュームの作成（Apache httpdのログを管理したいので、デフォルトのログ保存先を指定）
+RUN ["mkdir", "var/log/httpd"]
+VOLUME /var/log/httpd
+###------------------
+
+docker build -t log-image .
+docker run -it --name log-container log-image
+
+# Dockerfileの記載(ENTRYOINT命令のパラメータとしての記述)
+###------------------
+# STEP:0 Centos(ベースイメージ)
+FROM centos:centos7
+
+# MAINTAINERの記載
+MAINTAINER testuser
+
+# httpdのインストール
+RUN ["yum", "-y", "install", "httpd"]
+
+# httpdの実行
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+###------------------
+
+docker build -t web-image .
+docker run -d --name web-container -p 80:80 --volumes-from log-container web-image
+# -p 80:80 ホストとコンテナをつなぐ
+# --volumes-from log-container log-containerで指定したコンテナの[Data Volume]を全部マウントしてコンテナを起動
+		
+docker start -ia log-container
 
 ###  -------------------------------------------------------------------------------------
 ## 【Dockerイメージの自動生成/公開】
 # Automated Buildの流れ
-# GitHubへの公開
-# Docker Hubのリンク設定 
-# Dockerfileのビルド
-# Dockerイメージの確認
+# 
 
+# GitHubへの公開
+# 
+
+# Docker Hubのリンク設定 
+# 
+
+# Dockerfileのビルド
+# 
+
+# Dockerイメージの確認
+# 
 
 
 
