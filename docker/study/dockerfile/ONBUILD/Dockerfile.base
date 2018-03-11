@@ -1,0 +1,27 @@
+###------------------
+# ベースイメージの設定
+FROM centos:centos7
+MAINTAINER testuser
+###------------------
+
+###------------------
+# 追加　
+RUN echo ONBUILDのサンプルです
+RUN ["echo", "ONBUILDのサンプルです"]
+RUN ["/bin/bash", "-c", "echo 'ONBUILDのサンプルです'"]
+###------------------
+
+###------------------
+# 追加　
+# httpdのインストール
+RUN ["yum", "install", "-y", "httpd"]
+
+# Webコンテンツの配置（ADDコマンドより配置後に解凍される)
+ONBUILD ADD website.tar /var/www/html/
+
+# httpdの実行
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+###------------------
+
+
+

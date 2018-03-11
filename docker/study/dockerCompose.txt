@@ -1,0 +1,23 @@
+###  -------------------------------------------------------------------------------------
+## 【DockerによるWebシステム構築の基礎知識】
+# Web3層システムアーキテクチャ（WebServer APServer DBServer）
+# 永続データの管理（データのバックアップ/リストア　ログの収集）
+
+# Dockerコンテナ間のリンク
+# docker run --link 接続したいコンテナ名:エイリアス名 イメージ名 実行コマンド
+docker run -d --name dbserver postgres
+# dbserver:pg 「dbserver」コンテナにエイリアス名「pg」をリンク先として指定する
+docker run -it --name appserver --link dbserver:pg centos /bin/bash
+
+set |grep PG
+ping $PG_PORT_5432_TCP_ADDR
+cat /etc/hosts
+
+## 【Docker Composeのインストール】
+## 【構成ファイル(docker-compose.yml)の構文】
+## 【Docker Composeコマンド】
+## 【Docker Composeを使ったWordPressシステムの構築】
+
+docker run -d --name dbserver -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
+docker run -it --name appserver --link dbserver:ms centos /bin/bash
+set |grep MS

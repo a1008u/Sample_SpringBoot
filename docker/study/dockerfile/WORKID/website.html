@@ -1,0 +1,921 @@
+<!doctype html>
+<html>
+	<head>
+		<script src="js/jquery-1.8.0.js"></script>
+		<script src="js/jquery.roundabout.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<link href="video-js.css" rel="stylesheet"/>
+		<script src="js/video.js"></script>
+		<script src="js/jquery.cookie.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="javascript.js"></script>
+		<title>Packt Video player</title>
+	</head>
+	<body>
+		<img class="logo" src="images/logo.png"/>
+		<div class="banner">
+			<ul id ="nav">
+				<li><div class="icon orange" style="background-position: 24px -56px;" data-horiz="24px"></div><a href="#" id="main-menu" class="navig">Main menu </a></li>
+
+				<li><div id="credits-icon" class="icon" style="background-position: 0px 0px;" data-horiz="0px"></div><a href="credits.html" id="credits" class="navig">Credits </a></li>
+
+				<li><div class="icon" style="background-position: 54px 0px;" data-horiz="54px"></div><a href="overview.html" id="course" class="navig"> Course Overview </a></li>
+				<!--<li><div class="icon" style="background-position: 54px 0px;" data-horiz="54px"></div><a href="Videos/Packt.m3u" id="playlist" class="navig"> Playlist </a></li>-->
+			</ul>
+		</div>
+		<div class="gradient">
+			<img src="images/gradient.png" style="width: 100%; background-repeat: repeat-x;">
+		</div>
+		<div id="wrapper">
+			
+		<div class="intro">
+			<div class="inner">
+			<h1>Spring Boot- Getting Started</h1>
+			
+		</div>
+		</div>
+		<div class="right">
+			<div id="main_next" class="next"></div>
+		</div>
+		<div class="left">
+			<div id="main_prev" class="prev"></div>
+		</div>
+		<div class="right-bottom">
+			<div id="button-next" class="next-bottom"></div>
+		</div>
+		<div class="left-bottom">
+			<div id="button-prev" class="prev-bottom"></div>
+		</div>
+		<div class="back">
+		</div>
+		<div>
+		<div id="content-main">
+			<ul class="move">
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>Section 1: Bootstrap…</h1>
+					<p> In this section, we'll create a small project. We'll also have a short overview of the Spring context. Finally, we'll look at Spring support for unit and integration tests.
+						<ul>
+							<li> The Course Overview </li>
+							<li> Creating a small project </li>
+							<li> The Spring context </li>
+							<li> Spring testing </li>
+						</ul>
+					</p>
+					<div id="#content-1" class="btn btn-primary browse">Browse Videos</div>
+
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>Section 2: WebMVC – a First Glance</h1>
+					<p> In this section, we'll start by adding the web starter dependency and a simple controller to see it in action. Then, we are going to add some interactivity and start to process input from query parameters, the request body, and the request path. Testing is important, so we write a few tests for our new controllers to see how Spring supports us here.
+						<ul>
+							<li> Adding WebMVC dependencies </li>
+							<li> Adding interactivity </li>
+							<li> Adding interactivity – II </li>
+              				<li> Spring MVC testing </li>
+							<li> Spring WebMVC testing – II </li>
+						</ul>
+					</p>
+					<div class="btn btn-primary browse" id="#content-2">Browse Videos</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>Section 3: Creating an API</h1>
+					<p> This section starts by adding a Bookmark controller with our first add method. Then, we are going to add the Spring HATEOAS dependency and create a service document for our service. After that we are starting to create the code to fetch a bookmark from our service. <br><br>
+We'll also get a list of all bookmarks. Now that we have many ways to get bookmarks we also want to update a bookmark — and to complete the CRUD acronym we should be able to delete a bookmark too.
+
+						<ul>
+							<li> Adding a bookmark </li>
+							<li> Adding HATEOAS </li>
+							<li> Fetching a bookmark </li>
+							<li> Getting all bookmarks </li>
+							<li> Update a bookmark </li>
+							<li> Deleting a bookmark </li>
+							<li> Closing, ResponseStatus, and ResourceAssembler </li>
+						</ul>
+					</p>
+					<div class="btn btn-primary browse" id="#content-3">Browse Videos</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>Section 4: Storing Data in a Database</h1>
+					<p> We'll start this section by adding the dependencies and enable JPA in our application, which we put to work by annotating our model and creating the DAO. JPA is able to update the schema when the entities change, but this does not migrate data. That is what you use Flyway or Liquibase for. So we use Flyway which is supported perfectly in Spring Boot. We also have a look at transactions and how to utilize this in tests.
+						<ul>
+							<li> Adding JPA dependencies </li>
+							<li> JPA entity and DAO </li>
+							<li> Adding Flyway for schema migration </li>
+              				<li> Switching to JdbcTemplate </li>
+							<li> Switching to JdbcTemplate – II </li>
+							<li> Transactions </li>
+						</ul>
+					</p>
+					<div class="btn btn-primary browse" id="#content-4">Browse Videos</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>Section 5: Creating an HTML-based Interface with Thymeleaf</h1>
+					<p> We'll start this section by adding the dependencies and a hello world page. Then, we are going to add the details view to see how we bind values to our page. We'll add an overview which will demonstrate the list handling. To show you a simple form we'll add a delete confirmation view and after that we explore the form. Further we'll handle the update form to be able to edit all fields of the bookmark.
+						<ul>
+							<li> Adding Thymeleaf </li>
+							<li> Adding some more fields to the Bookmark class </li>
+							<li> Adding bookmark details page </li>
+              				<li> Bookmark list </li>
+							<li> Deleting a bookmark </li>
+							<li> Adding a bookmark edit form </li>
+              				
+						</ul>
+					</p>
+					<div class="btn btn-primary browse" id="#content-5">Browse Videos</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>Section 6: Validating input</h1>
+					<p> In this section as well we'll start by adding the dependencies. Then, we are going to add some validation rules to our model. After that we start to enable the validation in our REST API and then the HTML interface. In both interfaces we are having a look at how the error messages are handled in a native way.
+						<ul>
+							<li> Adding validation dependencies </li>
+							<li> Enabling validation on the model </li>
+							<li> Activating validation in the REST API </li>
+              				<li> Adding an add form </li>
+							<li> Adding validation to the HTML UI </li>
+						</ul>
+					</p>
+					<div class="btn btn-primary browse" id="#content-6">Browse Videos</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>Section 7: Securing the App</h1>
+					<p> In this section, we'll start by adding the dependencies. Then we are going to add a login form so we can authenticate. After that we configure the roles and add authorization configuration. To be more user-friendly we only want to show the user what he or she is allowed to see.
+						<ul>
+							<li> Adding Spring Security dependencies </li>
+							<li> Adding the login form </li>
+							<li> Adding roles and authorization </li>
+              				<li> Adding Spring Security to the HTML UI </li>
+						</ul>
+					</p>
+					<div class="btn btn-primary browse" id="#content-7">Browse Videos</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>Section 8: Preparing the Application for the Release</h1>
+					<p> In this section, we'll look at creating Spring profiles. You'll learn how to read configuration files in a type-safe way and you get autocomplete in your IDE!
+						<ul>
+							<li> Spring profiles </li>
+							<li> Configuration property classes </li>
+							<li> Spring Boot Actuator </li>
+              				<li> Spring Boot Actuator - II </li>
+						</ul>
+					</p>
+					<div class="btn btn-primary browse" id="#content-8">Browse Videos</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>Section 9: Peeking under the Hood</h1>
+					<p> In the first part of this section, we explore ways to configure Spring in a more advanced way. Then we have a look at the Spring Expression Language, which you have seen already briefly. <br><br>
+The third part will show you which bean scopes Spring offers you out of the box and how they can help you. 
+<br><br>
+And in the last part I will show you some common configuration options which you might end up researching anyway to save you precious time.
+
+						<ul>
+							<li> Advanced Spring configuration </li>
+							<li> Spring expression language </li>
+							<li> Spring expression language – II </li>
+              				<li> Spring bean scopes </li>
+							<li> Spring bean scopes – II </li>
+							<li> Common configuration options </li>
+							<li> Common configuration options – II </li>
+						</ul>
+					</p>
+					<div class="btn btn-primary browse" id="#content-9">Browse Videos</div>
+				</li>
+			</ul>
+		</div>
+    <div class="chapter" id="content-1" style="position: relative; top: -500px; display: none;">
+			<ul class="move">
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>1.1 The Course Overview</h1>
+					<span>
+						This video gives an overview of the entire course.
+					</span>
+					<div id="video1_1" class="btn btn-small btn-primary watch" data-video="videos/video1_1.mp4" data-poster="images/videoImage.jpg">Watch Video</div>
+					<a href="videos/video1_1.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>1.2	Creating a small project</h1>
+					<span> We create the basic project setup and start the application
+						<ul>
+							<li> Use Spring initializr to create the basic setup </li>
+							<li> Check generated pom with its dependencies </li>
+							<li> Run the application </li>
+						</ul>
+						
+					</span>
+
+					<div id="video1_2" class="btn btn-small btn-primary watch" data-video="videos/video1_2.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video1_2.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					
+					<div class="last-hidden">Last Viewed</div>
+					
+				</li>
+				
+					<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>1.3	The Spring context	</h1>
+					<span> You need to know what the spring context is
+						<ul>
+							<li> Basic purpose of the context </li>
+							<li> Lifecycle of Spring beans </li>
+							<li> Define your own Spring beans </li>
+						</ul>
+          </span>
+					<div id="video1_3" class="btn btn-small btn-primary watch" data-video="videos/video1_3.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video1_3.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+				
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>1.4	Spring testing</h1>
+					<span> It's important to test your code, so you need to learn how to test with spring
+						<ul>
+							<li> Add basic test </li>
+							<li> Add autowired dependencies	 </li>
+							<li> Mock a bean in your test </li>
+							</ul>
+							<br>
+							After completing the section, you can come back here and take the section assessment by clicking on the "Take Assessment" button below.
+							
+          </span>
+					<div id="video1_4" class="btn btn-small btn-primary watch" data-video="videos/video1_4.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="text/Assessment_Section 1.pdf" class="btn btn-small btn-primary downloadText" target="_blank" >Download text</a>
+					<a href="videos/video1_4.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+
+			</ul>
+		</div>
+  	<div class="chapter" id="content-2" style="position: relative; top: -500px; display: none;">
+			<ul class="move">
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>2.1	Adding WebMVC dependencies</h1>
+					<span> We add the Spring WebMVC dependencies
+						<ul>
+							<li> Add dependencies </li>
+							<li> Create simple controller with a static response </li>
+							<li> Explore beans provided by WebMVC </li>
+						</ul>
+						
+					</span>
+					<div id="video2_1"class="btn btn-small btn-primary watch" data-video="videos/video2_1.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video2_1.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>2.2	Adding interactivity</h1>
+					<span> You need to process user input
+						<ul>
+							<li> Add controller methods </li>
+							<li> Add parameter class </li>
+						</ul>
+          </span>
+					<div id="video2_2" class="btn btn-small btn-primary watch" data-video="videos/video2_2.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video2_2.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>2.3	Adding interactivity – II</h1>
+					<span> You need to process user input
+						<ul>
+							<li> Add path parameters</li>
+							<li> Add Post mapping </li>
+						</ul>
+          </span>
+					<div id="video2_3" class="btn btn-small btn-primary watch" data-video="videos/video2_3.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video2_3.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden" >Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>2.4	Spring MVC testing</h1>
+					<span> WebMVC controllers need to be tested as well
+						<ul>
+							<li> Add tests using the MockMVC utility class to check that the time is updated </li>
+							<li> Add tests using parameters and body content matchers </li>
+							<li> Add tests using path parameters </li>
+						</ul>
+          </span>
+					<div id="video2_4" class="btn btn-small btn-primary watch" data-video="videos/video2_4.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video2_4.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>2.5 Spring WebMVC testing – II</h1>
+					<span> WebMVC controllers need to be tested as well
+						<ul>
+							<li> Add tests using the TestRestTemplate </li>
+							<li> Convert all MockMVC tests to TestRestTemplate tests </li>
+							<li> Convert all MockMVC tests to TestRestTemplate tests </li>
+						</ul>
+						<br><br>
+						After completing the section, you can come back here and take the section assessment by clicking on the "Take Assessment" button below.
+          </span>
+					<div id="video2_5" class="btn btn-small btn-primary watch" data-video="videos/video2_5.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="text/Assessment_Section 2.pdf" class="btn btn-small btn-primary downloadText" target="_blank" >Download text</a>
+					<a href="videos/video2_5.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li> 
+						
+			</ul>
+		</div>
+		<div class="chapter" id="content-3" style="position: relative; top: -500px; display: none;">
+			<ul class="move">
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>3.1	Adding a bookmark</h1>
+					<span> Add tests and code to create a bookmark in our application
+						<ul>
+							<li> Add basic test and controller  </li>
+							<li> Finalize test </li>
+							<li> Implement controller method </li>
+						</ul>
+          
+          </span>
+					<div id="video3_1"class="btn btn-small btn-primary watch" data-video="videos/video3_1.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video3_1.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>3.2	Adding HATEOAS</h1>
+					<span> A really RESTful application needs discoverability via links
+						<ul>
+							<li> Add spring-hateoas dependency </li>
+							<li> Test for existence of these links </li>
+							<li> Add links to controller </li>
+						</ul>
+          </span>
+					<div id="video3_2" class="btn btn-small btn-primary watch" data-video="videos/video3_2.mp4" data-poster="images/videoImage.jpg">Watch Video</div>
+					<a href="videos/video3_2.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>3.3	Fetching a bookmark</h1>
+					<span> You need to be able to fetch created bookmarks
+						<ul>
+							<li> Let the create return a link to the bookmark and update test </li>
+							<li> Add test for the GET request </li>
+							<li> Implement GET method in the controller </li>
+						</ul>
+          </span>
+					<div id="video3_3" class="btn btn-small btn-primary watch" data-video="videos/video3_3.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video3_3.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden" >Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>3.4	Getting all bookmarks</h1>
+					<span> You also need to get a list of all bookmarks
+						<ul>
+							<li> Refactor add-test, extract code to add bookmarks </li>
+							<li> Create findAll test </li>
+							<li> Implement the controller method </li>
+						</ul>
+          </span>
+					<div id="video3_4" class="btn btn-small btn-primary watch" data-video="videos/video3_4.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video3_4.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden" >Last Viewed</div>
+				</li>
+				
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>3.5	Update a bookmark</h1>
+					<span> Next is updating of a bookmark
+						<ul>
+							<li> Refactor GET test </li>
+							<li> Add update tests </li>
+							<li> Implement controller method and add ErrorAdvice </li>
+						</ul>
+          </span>
+					<div id="video3_5" class="btn btn-small btn-primary watch" data-video="videos/video3_5.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video3_5.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden" >Last Viewed</div>
+				</li>
+				
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>3.6	Deleting a bookmark</h1>
+					<span> Finally you need to be able to remove a bookmark
+						<ul>
+							<li> Add test for delete </li>
+							<li> Implement controller method </li>
+							<li> Handle duplicated delete calls </li>
+						</ul>
+          </span>
+					<div id="video3_6" class="btn btn-small btn-primary watch" data-video="videos/video3_6.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video3_6.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden" >Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>3.7	Closing, ResponseStatus, and ResourceAssembler</h1>
+					<span> Exception handling and efficient creation of HATEOAS links
+						<ul>
+							<li> Add custom exception and a test </li>
+							<li> Catch exception with in the ErrorAdvice class </li>
+							<li> Extract bookmark links creation to a ResourceAssembler </li>
+						</ul>
+						<br><br>
+						After completing the section, you can come back here and take the section assessment by clicking on the "Take Assessment" button below.
+          </span>
+					<div id="video3_6" class="btn btn-small btn-primary watch" data-video="videos/video3_6.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="text/Assessment_Section 3.pdf" class="btn btn-small btn-primary downloadText" target="_blank" >Download text</a>
+					<a href="videos/video3_6.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden" >Last Viewed</div>
+				</li>
+			</ul>
+		</div>
+		<div class="chapter" id="content-4" style="position: relative; top: -500px; display: none;">
+			<ul class="move">
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>4.1 Adding JPA dependencies</h1>
+					<span> Add dependencies for JPA
+						<ul>
+							<li> Add JPA dependencies </li>
+							<li> Add basic configuration to access a H2 DB </li>
+							<li> Try to start the application </li>
+						</ul>
+          </span>
+					<div id="video4_1"class="btn btn-small btn-primary watch" data-video="videos/video4_1.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video4_1.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>4.2	JPA entity and DAO</h1>
+					<span> Mapping and a DAO for the Bookmark class
+						<ul>
+							<li> Annotate and prepare the bookmark class  </li>
+							<li> Create a bookmark DAO </li>
+							<li> Enhance error advice to handle DB errors </li>
+						</ul>
+          </span>
+					<div id="video4_2" class="btn btn-small btn-primary watch" data-video="videos/video4_2.mp4" data-poster="images/videoImage.jpg">Watch Video</div>
+					<a href="videos/video4_2.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>4.3	Adding Flyway for schema migration</h1>
+					<span> You can't use JPA for schema migration in real applications
+						<ul>
+							<li> Add Flyway dependencies </li>
+							<li> Configure Flyway </li>
+							<li> Create the initial SQL file </li>
+						</ul>
+          </span>
+					<div id="video4_3" class="btn btn-small btn-primary watch" data-video="videos/video4_3.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video4_3.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden" >Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>4.4	Switching to JdbcTemplate</h1>
+					<span> As alternative to JPA you can also access the DB with the JdbcTemplate
+						<ul>
+							<li> Add dependency	 </li>
+							<li> Remove JPA configuration </li>
+							<li> Convert DAO to use JdbcTemplate </li>
+						</ul>
+          </span>
+					<div id="video4_4" class="btn btn-small btn-primary watch" data-video="videos/video4_4.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video4_4.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>4.5	Switching to JdbcTemplate – II</h1>
+					<span> As alternative to JPA you can also access the DB with the JdbcTemplate
+						<ul>
+							<li> Convert DAO to use JdbcTemplate </li>
+							<li> Adapt exception handling </li>
+							<li> Restore optimistic locking behavior </li>
+						</ul>
+          </span>
+					<div id="video4_5" class="btn btn-small btn-primary watch" data-video="videos/video4_5.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video4_5.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+			
+      	</li>		
+        
+        <li><img src="images/image.jpg" class="image-holder"/>
+					<h1>4.6	Transactions</h1>
+					<span> Transactions are important for data heavy applications
+						<ul>
+							<li> Explore test support and advantages using transactions </li>
+							<li> Add transaction support to the application </li>
+							<li> Explore advanced transaction features using the TransactionManager </li>
+						</ul>
+						<br><br>
+						After completing the section, you can come back here and take the section assessment by clicking on the "Take Assessment" button below.
+          </span>
+					<div id="video4_6" class="btn btn-small btn-primary watch" data-video="videos/video4_6.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="text/Assessment_Section 4.pdf" class="btn btn-small btn-primary downloadText" target="_blank" >Download text</a>
+					<a href="videos/video4_6.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+			
+			</li>		
+			</ul>
+		</div>
+		<div class="chapter" id="content-5" style="position: relative; top: -500px; display: none;">
+			
+			<ul class="move">
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>5.1	Adding Thymeleaf</h1>
+					<span> Thymeleaf is the default templating engine in spring boot
+						<ul>
+							<li> Add dependencies </li>
+							<li> Create simple controller with static template </li>
+							<li> Add some data to the template via a model </li>
+						</ul>
+          </span>
+					<div id="video5_1"class="btn btn-small btn-primary watch" data-video="videos/video5_1.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video5_1.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+			
+      	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>5.2	Adding some more fields to the Bookmark class</h1>
+					<span> Our bookmark only has one field besides the ID. Let's add more
+						<ul>
+							<li> Add fields </li>
+							<li> Modify controllers  </li>
+							<li> Add workarounds for Spring HATEOS object mapper problems </li>
+						</ul>
+          </span>
+					<div id="video5_2" class="btn btn-small btn-primary watch" data-video="videos/video5_2.mp4" data-poster="images/videoImage.jpg">Watch Video</div>
+					<a href="videos/video5_2.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+		
+    		<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>5.3	Adding bookmark details page</h1>
+					<span> Let's start with a bookmark details page
+						<ul>
+							<li> Add the controller method </li>
+							<li> Add bootstrap web jars </li>
+							<li> Create a template </li>
+						</ul>
+          </span>
+					<div id="video5_3" class="btn btn-small btn-primary watch" data-video="videos/video5_3.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video5_3.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden" >Last Viewed</div>
+				</li>
+			
+      
+      	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>5.4	Bookmark list</h1>
+					<span> Add a view with the list of all bookmarks
+						<ul>
+							<li> Add the controller method for the list view </li>
+							<li> Create a template </li>
+							<li> Add links to the details view  </li>
+						</ul>
+          </span>
+					<div id="video5_4" class="btn btn-small btn-primary watch" data-video="videos/video5_4.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video5_4.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+			
+      
+      	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>5.5	Deleting a bookmark</h1>
+					<span> Add the delete functionality
+						<ul>
+							<li> Add a delete form to the list view </li>
+							<li> Create controller method to handle the delete form </li>
+							<li> Add the delete form to details view </li>
+						</ul>
+          </span>
+					<div id="video5_5" class="btn btn-small btn-primary watch" data-video="videos/video5_5.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video5_5.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+				 	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>5.6	Adding a bookmark edit form</h1>
+					<span> Add the edit form
+						<ul>
+							<li> Create controller method </li>
+							<li> Add the Edit button to the details view </li>
+							<li> Create the  template </li>
+						</ul>
+						<br><br>
+						After completing the section, you can come back here and take the section assessment by clicking on the "Take Assessment" button below.
+          </span>
+					<div id="video5_5" class="btn btn-small btn-primary watch" data-video="videos/video5_5.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="text/Assessment_Section 5.pdf" class="btn btn-small btn-primary downloadText" target="_blank" >Download text</a>
+					<a href="videos/video5_5.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+			</ul>
+		</div>
+		<div class="chapter" id="content-6" style="position: relative; top: -500px; display: none;">
+			
+			<ul class="move">
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>6.1	Adding validation dependencies</h1>
+					<span> We need some dependencies for bean validation
+						<ul>
+							<li> Add dependencies </li>
+							<li> Create error message class </li>
+							<li> Add validation error handler to ErrorAdvice </li>
+						</ul>
+          </span>
+					<div id="video6_1"class="btn btn-small btn-primary watch" data-video="videos/video6_1.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video6_1.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+			
+      	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>6.2	Enabling validation on the model</h1>
+					<span> Validation rules need to be configured
+						<ul>
+							<li> Add validation annotations to the model</li>
+						</ul>
+          </span>
+					<div id="video6_2" class="btn btn-small btn-primary watch" data-video="videos/video6_2.mp4" data-poster="images/videoImage.jpg">Watch Video</div>
+					<a href="videos/video6_2.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+		
+    		<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>6.3	Activating validation in the REST API</h1>
+					<span> We want validation in the API
+						<ul>
+							<li> Activate validation in the controller </li>
+							<li> Update old tests </li>
+							<li> Create new tests for failing validations </li>
+						</ul>
+          </span>
+					<div id="video6_3" class="btn btn-small btn-primary watch" data-video="videos/video6_3.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video6_3.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden" >Last Viewed</div>
+				</li>
+			
+      
+      	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>6.4	Adding an add form</h1>
+					<span> We also need the add functionality in the html UI, which was still missing
+						<ul>
+							<li> Create an Add button  </li>
+							<li> Make the edit form capable to process "add" as well </li>
+							<li> Create a controller method </li>
+						</ul>
+          </span>
+					<div id="video6_4" class="btn btn-small btn-primary watch" data-video="videos/video6_4.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video6_4.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+			
+      
+      	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>6.5	Adding validation to the HTML UI</h1>
+					<span> The HTML UI also needs validation with visual feedback
+						<ul>
+							<li> Activate validation in the controller </li>
+							<li> Update controller methods to receive the binding result </li>
+							<li> Add error messages to the templates </li>
+						</ul>
+						<br><br>
+						After completing the section, you can come back here and take the section assessment by clicking on the "Take Assessment" button below.
+          </span>
+					<div id="video6_5" class="btn btn-small btn-primary watch" data-video="videos/video6_5.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="text/Assessment_Section 6.pdf" class="btn btn-small btn-primary downloadText" target="_blank" >Download text</a>
+					<a href="videos/video6_5.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+			</ul>
+		</div>
+		<div class="chapter" id="content-7" style="position: relative; top: -500px; display: none;">
+			
+			<ul class="move">
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>7.1	Adding Spring Security dependencies</h1>
+					<span> Add Spring Security dependencies
+						<ul>
+							<li> Add dependencies </li>
+							<li> Start the application to see the difference </li>
+							<li> Disable authorization for now with a new configuration class </li>
+						</ul>
+          </span>
+					<div id="video7_1"class="btn btn-small btn-primary watch" data-video="videos/video7_1.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video7_1.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+			
+      	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>7.2	Adding the login form</h1>
+					<span> Add login form
+						<ul>
+							<li> Configure spring security to use our custom login page </li>
+							<li> Configure a fixed set of users  </li>
+							<li> Add ViewController for the login page </li>
+						</ul>
+          </span>
+					<div id="video7_2" class="btn btn-small btn-primary watch" data-video="videos/video7_2.mp4" data-poster="images/videoImage.jpg">Watch Video</div>
+					<a href="videos/video7_2.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+		
+    		<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>7.3	Adding roles and authorization</h1>
+					<span> Configure authorization in our controllers and in the global config
+						<ul>
+							<li> Add authorization to SecurityConfig </li>
+							<li> Add authorization via annotation to the controller </li>
+						</ul>
+          </span>
+					<div id="video7_3" class="btn btn-small btn-primary watch" data-video="videos/video7_3.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video7_3.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden" >Last Viewed</div>
+				</li>
+			
+      
+      	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>7.4	Adding Spring Security to the HTML UI</h1>
+					<span> The UI also needs to be permission aware
+						<ul>
+							<li> Add Thymeleaf security namespace  </li>
+							<li> Show the current username </li>
+							<li> Hide actions when the user is not allowed to use them  </li>
+						</ul>
+						<br><br>
+						After completing the section, you can come back here and take the section assessment by clicking on the "Take Assessment" button below.
+						
+          </span>
+					<div id="video7_4" class="btn btn-small btn-primary watch" data-video="videos/video7_4.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="text/Assessment_Section 7.pdf" class="btn btn-small btn-primary downloadText" target="_blank" >Download text</a>
+					<a href="videos/video7_4.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+			</ul>
+		</div>
+		<div class="chapter" id="content-8" style="position: relative; top: -500px; display: none;">
+			
+			<ul class="move">
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>8.1	Spring profiles</h1>
+					<span> You need to be able to have dedicated configurations in different environments 
+						<ul>
+							<li> Add test property and show it during startup </li>
+							<li> Add multiple property files for the profiles </li>
+							<li> Start the app with different profiles, environment variables, and parameters </li>
+						</ul>
+          </span>
+					<div id="video8_1"class="btn btn-small btn-primary watch" data-video="videos/video8_1.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video8_1.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+			
+      	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>8.2	Configuration property classes</h1>
+					<span> To have strongly typed configuration options you can create Configuration classes
+						<ul>
+							<li> Add configuration processor dependency </li>
+							<li> Create configuration class  </li>
+							<li> Explore support for the new configuration in the config files </li>
+						</ul>
+          </span>
+					<div id="video8_2" class="btn btn-small btn-primary watch" data-video="videos/video8_2.mp4" data-poster="images/videoImage.jpg">Watch Video</div>
+					<a href="videos/video8_2.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+		
+    		<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>8.3	Spring Boot Actuator</h1>
+					<span> Spring offers a lot of monitoring and inspection out of the box
+						<ul>
+							<li> Add actuator dependency </li>
+							<li> Start the application </li>
+							<li> Check the actuator endpoints </li>
+						</ul>
+          </span>
+					<div id="video8_3" class="btn btn-small btn-primary watch" data-video="videos/video8_3.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video8_3.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden" >Last Viewed</div>
+				</li>
+			
+      
+      	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>8.4	Spring Boot Actuator - II</h1>
+					<span> Spring offers a lot of monitoring and inspection out of the box
+						<ul>
+							<li> Check the remaining actuator endpoints </li>
+						</ul>
+						<br><br>
+						After completing the section, you can come back here and take the section assessment by clicking on the "Take Assessment" button below.
+          </span>
+					<div id="video8_4" class="btn btn-small btn-primary watch" data-video="videos/video8_4.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="text/Assessment_Section 8.pdf" class="btn btn-small btn-primary downloadText" target="_blank" >Download text</a>
+					<a href="videos/video8_4.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+			</ul>
+		</div>
+		<div class="chapter" id="content-9" style="position: relative; top: -500px; display: none;">
+			
+			<ul class="move">
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>9.1	Advanced Spring configuration</h1>
+					<span> Spring offers more ways to utilize profiles and configuration options to modify the context
+						<ul>
+							<li> Add multiple implementations of an interface </li>
+							<li> Use profile to select implementation </li>
+							<li> Use other conditionals to select implementations </li>
+						</ul>
+          </span>
+					<div id="video9_1"class="btn btn-small btn-primary watch" data-video="videos/video9_1.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video9_1.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+			
+      	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>9.2	Spring expression language</h1>
+					<span> Spring offers a flexible mechanism to read properties or call beans to retrieve data at startup time
+						<ul>
+							<li> Add test bean and add it to startup </li>
+							<li>Add properties that use different features of the SpEL  </li>
+						</ul>
+          </span>
+					<div id="video9_2" class="btn btn-small btn-primary watch" data-video="videos/video9_2.mp4" data-poster="images/videoImage.jpg">Watch Video</div>
+					<a href="videos/video9_2.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+		
+    		<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>9.3	Spring expression language – II</h1>
+					<span> Spring offers a flexible mechanism to read properties or call beans to retrieve data at startup time
+						<ul>
+							<li> Add test bean and add it to startup </li>
+							<li> Add properties that use different features of the SpEL </li>
+						</ul>
+          </span>
+					<div id="video9_3" class="btn btn-small btn-primary watch" data-video="videos/video9_3.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video9_3.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden" >Last Viewed</div>
+				</li>
+			
+      
+      	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>9.4	Spring bean scopes</h1>
+					<span> Spring beans are singletons by default, but there are more ways spring can create instances of your beans
+						<ul>
+							<li> Prepare the application </li>
+							<li> Play around with different scopes </li>
+						</ul>
+          </span>
+					<div id="video9_4" class="btn btn-small btn-primary watch" data-video="videos/video9_4.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video9_4.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+			
+      
+      	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>9.5	Spring bean scopes – II</h1>
+					<span> Spring beans are singletons by default, but there are more ways spring can create instances of your beans
+						<ul>
+							<li> Explore different session scopes </li>
+							<li> Explore the application scope </li>
+							<li> Explore the WebSocket's scope </li>
+						</ul>
+          </span>
+					<div id="video9_5" class="btn btn-small btn-primary watch" data-video="videos/video9_5.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video9_5.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+				 	<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>9.6	Common configuration options</h1>
+					<span> Spring is very configurable by default. It's good to know the important settings
+						<ul>
+							<li> Explore WebConfigurerAdapter </li>
+							<li> Explore configuration options </li>
+						</ul>
+          </span>
+					<div id="video9_6" class="btn btn-small btn-primary watch" data-video="videos/video9_6.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="videos/video9_6.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+				<li><img src="images/image.jpg" class="image-holder"/>
+					<h1>9.7	Common configuration options – II</h1>
+					<span> Spring is very configurable by default. It's good to know the important settings
+						<ul>
+							<li> Explore configuration options </li>
+							<li> Create yams-based configuration file </li>
+						</ul>
+						<br><br>
+						After completing the section, you can come back here and take the section assessment by clicking on the "Take Assessment" button below.
+          </span>
+					<div id="video9_6" class="btn btn-small btn-primary watch" data-video="videos/video9_6.mp4" data-poster="images/videoImage.jpg" >Watch Video</div>
+					<a href="text/Assessment_Section 9.pdf" class="btn btn-small btn-primary downloadText" target="_blank" >Download text</a>
+					<a href="videos/video9_6.mp4" class="btn btn-small btn-primary download" target="_blank">Download</a>
+					<div class="last-hidden">Last Viewed</div>
+				</li>
+			</ul>
+		</div>
+		</div>
+		<div id="video-wrapper">
+			<div id="video-player" class="video">
+			</div>
+			<a href="#" id="largerqt">View Larger</a>
+			<h1></h1>
+			<span></span>
+			<a href="#" class="watch-next-video btn btn-primary  navigation" style="left: 550px;" data-next="" data-video="" data-prev="">Next</a>
+			<a href="#" class="watch-prev-video btn btn-primary  navigation" style="left: 420px;"  data-prev="" data-video="" data-poster="">Prev</a>
+			<div class="btn back-video "><strong>Close</strong>
+			</div>
+		</div>
+		</div>
+		<div class="quicktime-full">
+			<div class="full-player">
+			</div>
+		</div>
+	</body>
+</html>

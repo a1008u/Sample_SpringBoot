@@ -221,7 +221,7 @@ docker run -d --name web-container -p 80:80 --volumes-from log-container web-ima
 docker start -ia log-container
 
 ###  -------------------------------------------------------------------------------------
-## 【Dockerイメージの自動生成/公開】
+## 【Dockerイメージの自動生成/公開】GITHUBの1リポジトリ単位でDockerイメージを作成する
 # Automated Buildの流れ
 # 
 

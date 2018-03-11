@@ -1,0 +1,41 @@
+# プライベートリポジトリの作成 ---------------------------------------------------------------
+# プライベートリポジトリの作成
+docker search registry
+docker pull registry:2.0
+docker images registry
+docker run -d -p 5000:5000 registry:2.0
+docker ps --format "{{.ID}}\t {{.Image}}\t{{.Ports}}"
+
+# プライベートリポジトリに格納するイメージ作成
+###------------------
+# STEP:0 Centos(ベースイメージ)
+FROM centos:centos7
+
+# MAINTAINERの記載
+MAINTAINER testuser
+
+# httpdのインストール
+RUN ["yum", "-y", "install", "httpd"]
+
+# httpdの実行
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+###------------------
+
+docker build -t web-image .
+
+# プライベートリポジトリにイメージを格納する設定
+# プライベートネットワーク内のDockerレジストリにアップロードするためにタグ付けする
+# docker tag [ローカルのイメージ名][DockerレジストリのIPアドレスまたはホスト名:ポート番号]/[イメージ名]
+# web-imageという名前のイメージを、localhostの5000番ポートで動作するレジストリに「httpd」とい名前でアップロードする
+docker tag web-image localhost:5000/httpd
+
+# プライベートリポジトリへの格納
+docker push localhost:5000/httpd
+
+docker rmi web-image
+docker rmi localhost:5000/httpd
+docker images
+
+# イメージのDL
+docker pull localhost:5000/httpd
+docker images
