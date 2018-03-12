@@ -13,11 +13,214 @@ set |grep PG
 ping $PG_PORT_5432_TCP_ADDR
 cat /etc/hosts
 
-## 【Docker Composeのインストール】
-## 【構成ファイル(docker-compose.yml)の構文】
-## 【Docker Composeコマンド】
-## 【Docker Composeを使ったWordPressシステムの構築】
-
+# mysqlの場合
 docker run -d --name dbserver -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
 docker run -it --name appserver --link dbserver:ms centos /bin/bash
 set |grep MS
+
+## 【Docker Composeのインストール】
+## 【構成ファイル(docker-compose.yml)の構文】
+# システム内で稼働する複数のサーバ群の構成をまとめて定義する
+# 複数のコンテナの設定内容をまとめて1つのファイルに記述する
+# docercompose.yml -----------------------------------
+webserver:
+	image: httpd:latest
+	ports:
+		- "8000:80"
+apserver:
+	build:
+# ----------------------------------------------------
+
+# ベースイメージの指定（image/build）
+# docercompose.yml -----------------------------------
+# イメージタグなしで最新版をDL
+webserver: #イメージ名
+	image: ubuntu #イメージベース
+# ----------------------------------------------------
+
+# docercompose.yml -----------------------------------
+webserver:
+	image: asashiho/dokcersample:1.0
+# ----------------------------------------------------
+
+# イメージの構成をDockerfileに記述して、それを自動でビルドしてベースイメージに指定
+# docercompose.yml -----------------------------------
+webserver:
+	build : . # 同階層に存在するdockerfileを利用する
+# ----------------------------------------------------
+# dockerfile -----------------------------------------
+FROM ubuntu
+# ----------------------------------------------------
+
+# 実行
+docker-compose up
+
+# コンテナ内で動かすコマンドの指定（command）
+# dockerfile -----------------------------------------
+command: /bin/bash
+# ---------------------------------------------------- 
+
+# コンテナ間でリンク連携（links/external_links）
+# dockerfile -----------------------------------------
+links: # 生成されたコンテナの/etc/hostsに自動的に記載される
+	- dbserver
+	- dbserver:mysql
+# ---------------------------------------------------- 
+
+# external_links（同一のdocker-compose.ymlに定義のない、外部の別コンテナとLink機能を使って連携させる）
+external_links:
+	- redis
+	- project_db:mysql
+# ---------------------------------------------------- 
+
+# コンテナ間の通信（ports/expose）
+# ホストマシンのポート番号:コンテナのポート番号
+# dockerfile -----------------------------------------
+ports:
+	- "3000"
+	- "8000:8000"
+	- "49100:22"
+	- "172.0.0.1:8001:8001"
+# ---------------------------------------------------- 
+	
+# expose(ホストマシンへポートを公開せず、リンク機能を使って連携するコンテにのみポートを公開する)
+# dockerfile -----------------------------------------
+expose:
+	- "3000"
+	- "8000"
+# ---------------------------------------------------- 
+
+# コンテナのデータ管理（volumes/volumes_from）
+# コンテナにボリュームをマウントさせるvolumesを指定
+# dockerfile -----------------------------------------
+volumes:
+	- /var/lib/mysql # マウント
+	- cache/:/tmp/cache # ホスト側でマウントするパスを指定するには「ホストのディレクトリパス:コンテナのディレクトリパス」
+# ---------------------------------------------------- 
+
+# ボリュームの読み取り専用の指定
+# dockerfile -----------------------------------------
+volumes:
+	- /config:/etc/configs/:ro
+# ---------------------------------------------------- 
+	
+# 全てのボリュームのマウント指定
+# dockerfile -----------------------------------------
+volumes_from:
+	- log
+# ----------------------------------------------------
+
+# コンテナの環境変数指定（environment）
+# dockerfile -----------------------------------------
+# 配列形式での指定
+environment:
+	- HOGE=fuga
+	- FOO
+
+# ハッシュ形式での指定
+environment:
+	HOGE:fuga
+	FOO:
+# ----------------------------------------------------
+
+# 環境変数を別途ファイルに設定の上、docker-compose.ymlで読み込む
+# envfile --------------------------------------------
+HOGE=foo
+FOO=bar
+# ----------------------------------------------------
+# dockerfile -----------------------------------------
+env_file: envfile
+# ----------------------------------------------------
+
+# 環境変数ファイルの複数読み込み
+# dockerfile -----------------------------------------
+env_file:
+	- ./envfile1
+	- ./app/envfile2
+	- /tmp/envfile3
+# ----------------------------------------------------
+
+# コンテナの情報設定（container_name/labels）
+# コンテナ名の指定
+# dockerfile -----------------------------------------
+container_name: web-container
+
+labels:
+	- "com.example.description=Accounting webapp"
+	- "com.example.department=Finance"
+
+labels:
+	com.example.description:"Accounting webapp"
+	com.example.department:"Finance"
+# ----------------------------------------------------
+
+## 【Docker Composeコマンド】
+
+docker-compose -f ./sample/docker-compose.yml up
+docker-compose stop dbsever
+
+# 複数コンテナ生成（up）
+# docker-compose up [オプション][サービス名]
+# dockerfile -----------------------------------------
+serverA:
+	image: httpd
+serverB:
+	image:mysql
+# ----------------------------------------------------
+
+# バックグラウンドで実行（ctrl + cで停止）
+docker-compose up -d
+
+# 生成するコンテナ数の指定（scale） 
+# docker-compose scale[サービス名=数]
+# serverAを10個起動　severBを20個起動
+docker-compose scale serverA=10 serverB=20
+
+# 複数コンテナの確認(ps/logs)
+# docker-compose ps [オプション][サービス名]
+docker-compose ps
+docker-compose ps -q
+docker-compose logs
+
+# コンテナでのコマンド実行（run）
+docker-compose run serverA /bin/bash
+
+# 複数のコンテンの起動/停止/再起動（start/stop/restart）
+docker-compose start
+docker-compose stop
+docker-compose restart
+docker-compose restart serverA
+
+# 複数コンテナの強制停止/削除（kill/rm）
+# シグナルを送信（Ctrl+Cと同じ意味のSIGINT）
+docker-compose kill -s SIGINT
+docker-compose rm
+
+## 【Docker Composeを使ったWordPressシステムの構築】
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
