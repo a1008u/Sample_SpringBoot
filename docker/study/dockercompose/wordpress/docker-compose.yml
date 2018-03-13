@@ -1,0 +1,15 @@
+webserver:
+    image: wordpress
+    ports: 
+        - "80:80"
+    # コンテナのリンク指定
+    links:
+        - "dbserver:mysql"
+
+dbserver:
+    image: mysql
+    # データ保存先の指定
+    volumes_from:
+        - dataonly
+    environment:
+        MYSQL_ROOT_PASSWORD: password

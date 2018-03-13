@@ -1,0 +1,139 @@
+###  -------------------------------------------------------------------------------------
+## 【Docker Machine】
+# Docker Machineはホストマシン/クラウド/仮想マシン上に Docker Engine をインストールするツールであり、
+# docker-machine コマンドを使ってホストを管理します。
+
+# ちなみに、Docker for Macは、以下が詰まっている
+# Docker Client
+# Docker Machine
+# Docker Compose (Mac only)
+# Docker Kitematic
+# VirtualBox
+
+# 実行環境の作成（create）
+# docker-machine --driver ドライバ名 作成するDockerマシン名
+
+# 実行環境の一覧表示（ls/status）
+# docker-machine ls [オプション]
+docker-machine ls --filter driver=virtualbox --filter state=Running
+docker-machine status host1
+
+# 実行環境へのSSH接続（ssh）
+# docker-machine ssh マシン名
+docker-machine ssh host1
+
+# 環境変数の確認（env）
+docker-machine env --shell cmd host1
+docker-machine env --shell=powershell host1 | Invoke-Expression
+
+# 実行環境の起動/停止/再起動（start/stop/restart）
+# defaultという名前の実行環境を操作する
+docker-machine start default
+docker-machine stop default
+docker-machine restart default
+
+# 実行環境からのファイルダウンロード（scp）
+# host1というDocker実行環境のなかの/etc/passwd
+docker-machine scp host1:/etc/passwd .
+
+# 実行環境の削除（rm/kill）
+# 動作中の実行環境を削除する（-fオプションを利用する）
+docker-machine rm -f host1
+# 実行中のマシンを強制的に停止させる（stopコマンドで停止できない時に利用）
+docker-machine kill host1
+
+# 実行環境の情報確認（ip/inspect）
+docker-machine ip host1
+
+# メモリやCPUなどの構成を確認するコマンド（JSON配列の形式で表示）
+# docker-machine inspect [オプション] マシン名
+
+docker-machine inspect --format='{{.Driver.IPAddress}}:{{.Driver.SSHUser}}' host1
+
+# Docker MachineによるDocker実行環境構築
+# 例えば仮想環境とAWSなど
+# 仮想環境（virtualbox）-----------------------------
+docker-machine create --driver virtualbox hosts
+docker-machine ls
+docker-machine ssh host1
+# -------------------------------------------------
+
+# AWS ---------------------------------------------
+docker-machine create \
+-- driver amazone2 \
+--amazone2-access-key ABCD \ 
+--amazone2-secret-key xyz \
+--amazone2-region ap-northeast-1 \
+--amazone2-vpc-id vpc-1234 \
+host2
+# -------------------------------------------------
+# AWSのアカウント管理サービスである「Identity and Access Management(IAM)」でEC2に対してアクセス権を持ったユーザを作成
+# そのユーザのアクセスキーとシークレットキーを設定する
+# AWSでアクセスキーとシークレットキーを作成
+# --amazone2-access-key ABCD \ 
+# --amazone2-secret-key xyz  \
+
+
+###  -------------------------------------------------------------------------------------
+## 【Docker Swarm】
+# Docker Swarmによるクラスタ管理
+
+# 1.クラスタ環境を構築するためのトークンを作成する
+docker run swarm create
+
+# 2.トークンの作成後、クラスタ全体を管理する「master」という名前のDocker実行環境を作成
+docker-machine create \
+	-d virtualbox\
+	--swarm\
+	--swarm-master\
+	--swarm-discovery token://7a74612ea1dbf5c21f5d36f23cf9df4 \ # クラスタトークンのID
+	master
+
+# 3.masterノードが構築後、クラスタのメンバである「node01」「node02」の2つのDocker実行環境を作成
+docker-machine create \
+	-d virtualbox \
+	--swarm \
+	--swarm-discovery token://7a74612ea1dbf5c21f5d36f23cf9df4 \ 
+	node01
+
+docker-machine create \
+	-d virtualbox \
+	--swarm \
+	--swarm-discovery token://7a74612ea1dbf5c21f5d36f23cf9df4 \ 
+	node02
+	
+# 4.[master, node01, node02]が構築されていることを確認する
+docker-machine ls
+
+# 5.クラスタ環境でのコンテナ動作確認
+# 構築したクラスタ環境上で、Dockerコンテナを実行し動作確認を行う。(Docker Quickstart Terminalのコンソールを起動)
+eval "$(docker-machine env --shell bash --swarm master)"
+set | grep DOCKER
+docker info
+
+docker run hello-world
+docker run hello-world
+docker run hello-world
+docker run hello-world
+docker run hello-world
+
+docker ps -a
+
+docker-machine stop node02
+
+docker ps -a
+
+docker logs #CONTAINER IDを指定
+
+###  -------------------------------------------------------------------------------------
+## 【SaaSによるコンテナ監視】
+
+# 
+# 
+# 
+# 
+
+
+
+
+
