@@ -1,0 +1,171 @@
+group 'gradle'
+//version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.2.21'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
+    }
+}
+
+apply plugin: 'war'
+// apply plugin: 'java'
+// apply plugin: 'kotlin'
+// apply plugin: 'application'
+apply plugin: 'docker'
+
+// ビルドの依存関係をtxtORhtml形式で出力す（単体の場合）
+// apply plugin: 'project-report'
+
+// マルチプロジェクトの際に、全プロジェクトに共通で利用できる
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'application'
+    apply plugin: 'kotlin'
+    mainClassName = '${javaMain}'
+    mainClassName = 'sample.gradle.GradleMainKt'
+    apply plugin: 'project-report'
+}
+
+// ルートではなく、サブプロジェクトのみに適用させたい場合に設定
+//subprojects {
+//    apply plugin: 'war'
+//}
+
+// 各プロジェクトごとに設定を記載する（多分build.gradleをプロジェクトごとに作成した方がいい）
+//project(':hoge') {
+//    mainClassName = 'sample.gradle.Hoge'
+//}
+//project(':fuga') {
+//    mainClassName = 'sample.gradle.Fuga'
+//}
+
+// gradleからアプリケーションを実行させる（applicationプラグインを利用する）
+// mainClassName = 'sample.gradle.GradleMain'
+
+// 実行用のスクリプトの名前変更
+startScripts {
+    applicationName = 'testScript'
+}
+
+// zipに固める（名前指定）
+distZip {
+    baseName = 'HelloGradle'
+}
+
+// tarに固める（名前指定）
+distTar {
+    baseName = 'HelloGradle'
+}
+
+// ソース以外の任意のファイルをアプリケーションに含める(installDist)
+// distributionで作成するディレクトリ名を指定
+distsDirName = 'distNamemk'
+
+// JDKのバージョンを指定
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://maven.seasar.org/maven2"
+    }
+}
+
+//war {
+//    archiveName = 'hello.war'
+//}
+
+// マルチプロジェクトの場合にプロジェクトごとに依存関係を１つのhtmlにしてくれる
+htmlDependencyReport {
+    projects = project.allprojects
+}
+
+
+dependencies {
+    // ローカルに存在するjarを指定する方法
+    // compile files('lib/commons-lang3-3.1.jar')
+
+    // Seasarが提供しているMavenリポジトリから取得
+    compile 'net.arnx.jsonic:jsonic:1.2.0'
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
+
+    // warを作成できるようになる
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+
+    testCompile 'com.googlecode.jmockit:jmockit:1.4'
+    testCompile 'org.hamcrest:hamcrest-library:1.3'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+compileJava {
+    options.encoding = 'utf-8'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "${jvmTarget}"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "${jvmTarget}"
+}
+
+sourceSets {
+    main.kotlin.srcDirs += 'src/main/sample/gradle'
+    main.java.srcDirs += 'src/main/sample/gradle'
+}
+
+
+// taskはプラグインで設定しているtaskより前で実行される
+// gradle.propertiesを使用した例
+task testSample {
+    println "test=${test}"
+    println "jvmTarget=${jvmTarget}"
+}
+
+task wrap(dependsOn: testSample){
+    println "wrap1 test=${test} wrap1"
+}
+
+task wrap2(dependsOn: testSample){
+    println "wrap2 jvmTarget=${jvmTarget} wrap2"
+}
+
+task wrap3(dependsOn: [wrap,wrap2]){
+    println "wrap3 wrap3"
+}
+
+task wrapCompileJava(dependsOn: compileJava){
+    println "Let's compile Java"
+}
+
+task buildDocker(type: Docker, dependsOn: build) {
+    push = true
+    applicationName = jar.baseName
+    //registry = "${System.getenv()/shinsukeabe}"
+    baseImage 'java:8'
+    volume "/tmp"
+    addFile "${applicationName}.jar"
+    runCommand "bash -c 'touch /${applicationName}.jar'"
+    entryPoint(["java","-jar","/${applicationName}.jar"])
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'sample.gradle.GradleMain'
+    }
+    from configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
+}

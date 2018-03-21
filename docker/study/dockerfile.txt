@@ -237,6 +237,8 @@ docker start -ia log-container
 # Dockerイメージの確認
 # 
 
+docker build -t restapi-mysql ./
+docker-compose up
 
 
 

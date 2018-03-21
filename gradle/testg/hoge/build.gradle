@@ -1,0 +1,17 @@
+mainClassName = 'sample.gradle.Hoge'
+mainClassName = 'sample.gradle.HogeKt'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "${jvmTarget}"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "${jvmTarget}"
+}
