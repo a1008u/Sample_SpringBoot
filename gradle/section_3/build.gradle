@@ -1,0 +1,41 @@
+plugins {
+  id 'io.spring.dependency-management' version '1.0.0.RELEASE' apply false
+}
+
+// サブプロジェクト共有の設定を行う 
+subprojects {
+  apply plugin: 'java'
+  apply plugin: 'io.spring.dependency-management'
+
+  // 設定
+  configurations {
+  	// 環境別にテストを行うように設定
+    integTestCompile.extendsFrom testCompile
+    integTestRuntime.extendsFrom testRuntime
+    // all*.exclude group: 'org.hamcrest' // org.hamcrest を除外する[例①]
+    // integTestCompile.exclude module: 'hamcrest-core' // org.hamcrest を除外する[例②]
+
+    all {
+      // resolutionStrategy.force 'junit:junit:4.12-beta-3'
+    }
+  }
+
+  dependencies {
+    compile 'org.slf4j:slf4j-api'
+    integTestCompile ('junit:junit') {
+      // exclude module: 'hamcrest-core'
+    }
+  }
+
+  dependencyManagement {
+    imports {
+        mavenBom 'io.spring.platform:platform-bom:Brussels-SR1'
+    }
+  }
+
+  repositories {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+  }
+}

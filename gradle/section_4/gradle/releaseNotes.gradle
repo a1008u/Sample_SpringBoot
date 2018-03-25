@@ -1,0 +1,43 @@
+ext.destDir = new File(buildDir, 'releaseNotes')
+ext.releaseNotesTemplate = file('releaseNotes.tmpl.txt')
+
+// copyTaskタスク（buildディレクトリにreleaseNotesを作成し、relewaseNotes.txt格納
+// 格納時、中身はchanges.txtをベースにeachLineを用いて値を設定しする。
+// そして、filterを利用してreleaseNotes.txtに記載）
+tasks.create(name: 'copyTask', type: org.gradle.api.tasks.Copy) {
+    from releaseNotesTemplate
+    into destDir
+
+    doFirst {
+        if (!destDir.exists()) {
+            destDir.mkdir()
+        }
+    }
+    rename { String fileName ->
+        fileName.replace('.tmpl', '')
+    }
+
+    ext.changesFile = file('changes.txt')
+    inputs.file changesFile
+    
+    ext.bugs = []
+    ext.features = []
+    changesFile.eachLine { String line ->
+        String bugSymbol = '#bug:'
+        String featureSymbol = '#feature:'
+        if (line.contains(bugSymbol)) {
+            bugs << line.replace(bugSymbol, '')
+        } else if (line.contains(featureSymbol)) {
+            features << line.replace(featureSymbol, '')
+        }
+    }
+
+    filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: [bugs: bugs.join("\n"), features: features.join("\n")])
+}
+
+// releaseNotesタスク
+// 更新チェックを実施してファイルをコピーする
+tasks.create('releaseNotes') {
+    inputs.file copyTask // 対象のファイルを示す「changes.txt」
+    outputs.dir destDir
+}

@@ -1,0 +1,13 @@
+apply plugin: 'jetty'
+
+dependencies {
+  compile project(':module-service')
+}
+
+publishing {
+  publications {
+      mavenJava(MavenPublication) {
+          from components.web
+      }
+  }
+}

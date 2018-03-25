@@ -1,0 +1,30 @@
+// jacocoを利用したcoverageTest
+apply plugin: 'jacoco'
+
+// JacocoReportタスクを実行できるようにする
+jacoco {
+  toolVersion = '0.7.9'
+}
+
+check.dependsOn jacocoTestReport
+
+// jacocoIntegrationTestReportタスク　
+task jacocoIntegrationTestReport(type: JacocoReport) {
+    dependsOn integTest
+    sourceSets sourceSets.main
+    executionData integTest
+
+    reports {
+        xml {
+            enabled true
+            destination "$buildDir/reports/jacoco/integTest/jacocoIntegTestReport.xml"
+        }
+        csv.enabled false
+        html {
+            destination "$buildDir/reports/jacoco/integTest/html"
+        }
+    }
+}
+
+check.dependsOn jacocoIntegrationTestReport
+jacocoIntegrationTestReport.mustRunAfter jacocoTestReport

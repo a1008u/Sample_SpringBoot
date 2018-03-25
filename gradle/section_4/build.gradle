@@ -1,0 +1,67 @@
+plugins {
+  id 'io.spring.dependency-management' version '1.0.0.RELEASE' apply false
+}
+
+subprojects {
+  apply plugin: 'java'
+  apply plugin: 'io.spring.dependency-management'
+
+  configurations {
+    integTestCompile.extendsFrom testCompile
+    integTestRuntime.extendsFrom testRuntime
+  }
+
+  dependencies {
+    compile 'org.slf4j:slf4j-api'
+    integTestCompile ('junit:junit') {}
+  }
+
+  dependencyManagement {
+    imports {
+        mavenBom 'io.spring.platform:platform-bom:Brussels-SR1'
+    }
+  }
+
+  repositories {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+  }
+}
+
+task firstTask {
+  doFirst {
+    println 'First task, First action'
+  }
+}
+
+task secondTask {
+  doFirst {
+    println 'Second task, First action'
+  }
+}
+
+// firstTask後にsecondTaskを実行できる
+secondTask.dependsOn firstTask
+
+// 今回はhelpタスクを利用時に、依存するタスクを紐づる式に実行させる ------------------
+// 別のタスクを実行した際に、firstTaskも一緒に実行するとsecondTaskも実行される
+// secondTask.mustRunAfter firstTask
+
+// 別のタスクを実行した際に、firstTaskも一緒に実行するとsecondTaskも実行される
+// secondTask.shouldRunAfter firstTask
+help.dependsOn firstTask
+help.dependsOn secondTask
+// --------------------------------------------------------------------------
+
+
+apply from: project.file("${rootProject.projectDir}/gradle/releaseNotes.gradle")
+
+// ルール追加
+tasks.addRule('Say Hello') { String taskName ->
+  if (taskName.startsWith('say')) {
+    task(taskName) {
+      doLast { println taskName.replace('say', '')}
+    }
+  }
+}

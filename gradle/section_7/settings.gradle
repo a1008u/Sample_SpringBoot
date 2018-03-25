@@ -1,0 +1,3 @@
+include ':module-api',
+  'module-service',
+  'module-web'

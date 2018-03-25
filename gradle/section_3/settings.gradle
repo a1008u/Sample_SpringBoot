@@ -1,0 +1,1 @@
+include ':module-api','module-service'

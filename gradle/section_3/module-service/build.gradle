@@ -1,0 +1,4 @@
+dependencies {
+  // サブプロジェクトのクラスを利用できるようにする
+  compile project(':module-api')
+}

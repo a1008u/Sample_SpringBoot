@@ -1,0 +1,29 @@
+plugins {
+  id 'io.spring.dependency-management' version '1.0.0.RELEASE' apply false
+}
+
+subprojects {
+  apply plugin: 'java'
+  apply plugin: 'io.spring.dependency-management'
+  apply from: project.file("${rootProject.projectDir}/gradle/integrationTests.gradle")
+  apply from: project.file("${rootProject.projectDir}/gradle/coverage.gradle")
+
+  dependencies {
+    compile 'org.slf4j:slf4j-api'
+    testCompile 'junit:junit'
+  }
+
+  dependencyManagement {
+    imports {
+        mavenBom 'io.spring.platform:platform-bom:Brussels-SR1'
+    }
+  }
+
+  repositories {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+  }
+}
+
+apply from: project.file("${rootProject.projectDir}/gradle/releaseNotes.gradle")

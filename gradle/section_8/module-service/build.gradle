@@ -1,0 +1,11 @@
+dependencies {
+  compile project(':module-api')
+}
+
+publishing {
+  publications {
+      mavenJava(MavenPublication) {
+          from components.java
+      }
+  }
+}

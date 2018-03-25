@@ -1,0 +1,20 @@
+apply plugin: 'maven-publish'
+
+publishing {
+    repositories {
+        maven {
+            url "http://localhost:8081/artifactory/example-repo-local/"
+            credentials {
+                username 'admin'
+                password 'password'
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            groupId "com.packt.gradle.${rootProject.name}"
+            version = uploadVersion
+        }
+    }
+}

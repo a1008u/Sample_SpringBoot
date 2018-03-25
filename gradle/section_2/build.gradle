@@ -1,0 +1,17 @@
+apply plugin: 'java'
+
+// gradle-wrapper設定
+task wrapper (type: Wrapper) {
+  gradleVersion = '3.4.1'
+  distributionType = Wrapper.DistributionType.ALL // 初期はBIN
+}
+
+// gradle build -x pTR processTestResourcesを実施しない
+
+// gradle/wrapper配下のjarとpropertiesを設定することで、下記のgradleスクリプトが生成される
+// 基本は「gradle wrapper」を実行することで自動的に作成できるが、
+// 「gradle-wrapper設定」で設定を指定することで、gradleの実行環境を厳密に管理できる
+
+// gradle実行用のスクリプト
+// gradlew : Linux用のシェルスクリプト
+// gradlew.bat : windows用のバッチファイル
