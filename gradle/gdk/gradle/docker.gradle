@@ -1,0 +1,21 @@
+
+task buildDocker(type: Docker, dependsOn: build) {
+
+    // dockerfile --------------------------------------
+    // push = true
+    applicationName = jar.baseName
+    // registry = "${System.getenv()/username}"
+    baseImage 'java:8'
+    volume "/tmp"
+    addFile "${applicationName}.jar"
+    runCommand "bash -c 'touch /${applicationName}.jar'"
+    entryPoint(["java","-jar","/${applicationName}.jar"])
+
+    // jarのコピー--------------------------------------
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}

@@ -1,0 +1,23 @@
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = '0.8.1'
+}
+
+task jacocoTestReportCustom(type: JacocoReport) {
+    reports {
+        xml.enabled = true
+        csv.enabled = true
+        html.enabled = true
+    }
+    classDirectories = fileTree(
+            dir: './build/kotlin-classes/main/sample/gradle',
+            excludes: ['GradleMain*.class',
+                       '**/R$*.class',
+                       '**/BuildConfig.class',
+            ])
+    sourceDirectories = files('src/main/kotlin')
+    executionData = files('build/jacoco/test.exec')
+}
+
+check.dependsOn jacocoTestReportCustom
