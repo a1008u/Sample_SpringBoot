@@ -1,0 +1,38 @@
+version: '2.1'
+
+services:
+  # mysql
+  mysql-standalone:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    volumes:
+      # databaseの永続的なストレージを設定
+      # ${volumesに定義したkey}:{マウントパス}
+      # 下記で作成した、mysql-dataに「/var/lib/mysql」をマウントさせる
+      - mysql-data:/var/lib/mysql　
+      - /Users/uemotoakira/Desktop/mys/sql/:/docker-entrypoint-initdb.d \
+    environment:
+      - MYSQL_ROOT_PASSWORD=root #root のパスワード設定
+      - MYSQL_DATABASE=test #database の作成
+      - MYSQL_USER=sa #新規ユーザの作成
+      - MYSQL_PASSWORD=password #新規ユーザのパスワード設定
+
+  # app
+  spring-boot-jpa-docker-webapp:
+    image: restapi-mysql
+    depends_on:
+      - mysql-standalone #連携するシステムを指定
+    ports:
+      - "8086:8086"
+    environment:
+      - DATABASE_HOST=mysql-standalone
+      - DATABASE_USER=sa
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=test
+      - DATABASE_PORT=3306
+
+# volumeにlocal（DRIVER）を作成して、volume Nameを「mysql-data」とする。
+volumes:
+  mysql-data:
+    driver: local

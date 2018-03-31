@@ -1,0 +1,12 @@
+version: '2'
+services:
+    app:
+        # app用のDockerfileのパスを記載
+        build: .
+        image: springboot-in-kotlin:0.0.1
+        # ポートを公開（expose）します。
+        # ホストとポートを指定（ホスト:コンテナ）するか、コンテナのポートのみ指定します（ホスト側のポートはランダムに選ばれます）。
+        ports:
+            - "8086:8080"
+        volumes:
+            - .:/app
