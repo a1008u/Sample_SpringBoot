@@ -40,5 +40,6 @@ brew cask install spotify
 echo " ------------ END ------------"
 
 echo " ----- Install font ----------"
-brew cask install font-fira-code 
+brew tap caskroom/fonts && brew cask install font-fira-code
+brew cask install caskroom/fonts/font-hack-nerd-font
 echo " ------------ END ------------"
