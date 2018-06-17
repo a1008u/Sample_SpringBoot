@@ -35,6 +35,9 @@ brew cask install postman
 
 # オプション
 brew cask install docker
+brew cask install virtualbox
+brew cask install vagrant
+brew cask install funter
 brew cask install spotify
 
 echo " ------------ END ------------"
