@@ -45,45 +45,36 @@ echo " ------------ END ------------"
 # ターミナルの変更(zshに変更 オプション)
 # ---------------------------------------
 
-# Install zsh
-# 
+
+# echo " ----------- rbenv ------------"
+brew install rbenv
+# echo " ------------ END ------------"
+
 # echo " ------ fontforge ------"
-# brew install fontforge
+brew install fontforge
 # echo " ------------ END ------------"
-# 
-# 
-# Install zsh
-# 
+
 # echo " ------------ zsh ------------"
-# brew install zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting colordiff
-# which -a zsh
-# echo $pass | sudo -S -- sh -c 'echo '/usr/local/bin/zsh' >> /etc/shells'
-# chsh -s /usr/local/bin/zsh
+brew install zsh zsh-autosuggestions zsh-completions zsh-syntax-highlighting colordiff
+which -a zsh
+echo $pass | sudo -S -- sh -c 'echo '/usr/local/bin/zsh' >> /etc/shells'
+chsh -s /usr/local/bin/zsh
 # echo " ------------ END ------------"
-# 
-# 
-# Install vim
-# 
+
 # echo " ------------ Vim ------------"
-# brew install vim --with-override-system-vi
+brew install vim --with-override-system-vi
 # echo " ------------ END ------------"
-# 
-# 
-# Powerline
-# 
+
 # echo " --------- Powerline ---------"
-# Font is 14pt Iconsolata for Powerline with Solarized Dark iterm2 colors.
-# git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k
-# git clone https://github.com/powerline/fonts.git ~/fonts
-# ~/fonts/install.sh
+Font is 14pt Iconsolata for Powerline with Solarized Dark iterm2 colors.
+git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k
+git clone https://github.com/powerline/fonts.git ~/fonts
+~/fonts/install.sh
 # echo " ------------ END ------------"
-# 
-# 
-# Install wget
-# 
+
 # echo " ----------- wget ------------"
-# brew install wget
-# wget --version
+brew install wget
+wget --version
 # echo " ------------ END ------------"
 
 # echo " ----------- colorls ------------"
