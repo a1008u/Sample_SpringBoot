@@ -43,8 +43,9 @@ public class ImageService {
 	 * @return
 	 */
 	public Flux<Image> findAllImages() {
-		return imageRepository.findAll()
-			.log("findAll");
+		return imageRepository
+						.findAll()
+						.log("findAll");
 	}
 
 	/**
@@ -59,7 +60,8 @@ public class ImageService {
 	}
 
 	/**
-	 *
+	 * Mono.when():::2つ以上のタスクが完了する必要があり、順序が重要でない場合に利用
+	 * then():::すべてのファイルが処理されたときに通知され、フロー全体が終了します
 	 * @param files
 	 * @return
 	 */
@@ -68,30 +70,30 @@ public class ImageService {
 						.log("createImage-files")
 						.flatMap(file -> {
 
-								Mono<Image> saveDatabaseImage =
-												imageRepository
-																.save(new Image(UUID.randomUUID().toString(), file.filename()))
-																.log("createImage-save");
+							Mono<Image> saveDatabaseImage =
+											imageRepository
+												.save(new Image(UUID.randomUUID().toString(), file.filename()))
+												.log("createImage-save");
 
-								Mono<Void> copyFile =
-														Mono
-																.just(Paths.get(UPLOAD_ROOT, file.filename()).toFile())
-																.log("createImage-picktarget")
-																.map(destFile -> {
-																				try {
-																						destFile.createNewFile();
-																						return destFile;
-																				} catch (IOException e) {
-																						throw new RuntimeException(e);
-																				}
-																		})
-																.log("createImage-newfile")
-																.flatMap(file::transferTo)
-																.log("createImage-copy");
+							Mono<Void> copyFile =
+													Mono
+														.just(Paths.get(UPLOAD_ROOT, file.filename()).toFile())
+														.log("createImage-picktarget")
+														.map(destFile -> {
+																try {
+																	destFile.createNewFile();
+																	return destFile;
+																} catch (IOException e) {
+																	throw new RuntimeException(e);
+																}
+															})
+														.log("createImage-newfile")
+														.flatMap(file::transferTo)
+														.log("createImage-copy");
 
-						return Mono
-										.when(saveDatabaseImage, copyFile)
-										.log("createImage-when");
+							return Mono
+											.when(saveDatabaseImage, copyFile)
+											.log("createImage-when");
 						})
 						.log("createImage-flatMap")
 						.then()
