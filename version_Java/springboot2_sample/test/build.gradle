@@ -9,11 +9,9 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2")
 	}
 }
 
-apply plugin: 'org.sonarqube'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -23,8 +21,8 @@ jar {
 	baseName = 'learning-spring-boot'
 	version = '0.0.1-SNAPSHOT'
 }
-
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
@@ -34,19 +32,15 @@ repositories {
 }
 
 dependencies {
-	// tag::netty[]　 nettyからtomcatを利用へ
-	compile('org.springframework.boot:spring-boot-starter-webflux') {
-		exclude group: 'org.springframework.boot',
-				module: 'spring-boot-starter-reactor-netty'
-	}
-	compile('org.springframework.boot:spring-boot-starter-tomcat')
-	// end::netty[]
-
-	compile group: 'org.sonarsource.scanner.gradle', name: 'sonarqube-gradle-plugin', version: '2.6.2'
-
-	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+	compile('org.springframework.boot:spring-boot-starter-webflux')
 	compile('org.synchronoss.cloud:nio-multipart-parser')
+	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
+	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+	// ReactorベースのAPIをテストする予定であるため、Project Reactorが提供するユーティリティのライブラリを利用
+	testCompile("io.projectreactor:reactor-test")
+
+	// mongoを組み込みのDBでテストする
+	testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
 }
-
-
