@@ -12,6 +12,7 @@ buildscript {
 	}
 }
 
+apply plugin: 'jacoco'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -36,6 +37,11 @@ dependencies {
 	compile('org.synchronoss.cloud:nio-multipart-parser')
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
 	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+
+	// e2eテスト用
+	compile("org.seleniumhq.selenium:htmlunit-driver")
+	compile("org.seleniumhq.selenium:selenium-java")
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
 	// ReactorベースのAPIをテストする予定であるため、Project Reactorが提供するユーティリティのライブラリを利用
@@ -43,4 +49,18 @@ dependencies {
 
 	// mongoを組み込みのDBでテストする
 	testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
+
 }
+
+jacoco {
+	toolVersion = '0.8.1'
+}
+
+jacocoTestReport {
+	reports {
+		html.enabled = true
+		xml.enabled = true
+		csv.enabled = false
+	}
+}
+
