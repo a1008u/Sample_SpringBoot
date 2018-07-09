@@ -9,14 +9,17 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2")
 	}
 }
 
-//plugins {
-//	// 実行中のバージョンを知るために設定
-//	id "com.gorylenko.gradle-git-properties" version "1.5.1"
-//}
+plugins {
+	// 実行中のバージョンを知るために設定
+	id "com.gorylenko.gradle-git-properties" version "1.5.1"
+}
 
+apply plugin: 'org.sonarqube'
+apply plugin: 'jacoco'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -27,9 +30,9 @@ jar {
 	version = '0.0.1-SNAPSHOT'
 }
 
-//springBoot {
-//	buildInfo()
-//}
+springBoot {
+	buildInfo()
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -62,3 +65,17 @@ dependencies {
 	testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
 	testCompile("org.seleniumhq.selenium:selenium-java")
 }
+
+jacoco {
+	toolVersion = '0.8.1'
+}
+
+jacocoTestReport {
+	reports {
+		html.enabled = true
+		xml.enabled = true
+		csv.enabled = false
+	}
+}
+
+

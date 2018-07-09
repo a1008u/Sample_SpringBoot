@@ -67,7 +67,6 @@ public class WebDriverAutoConfigurationTests {
 		assertThat(ClassUtils.isAssignable(TakesScreenshot.class, driver.getClass())).isTrue();
 		assertThat(ClassUtils.isAssignable(FirefoxDriver.class, driver.getClass())).isTrue();
 	}
-	// end::3[]
 
 	@Test
 	public void testWithMockedSafari() {

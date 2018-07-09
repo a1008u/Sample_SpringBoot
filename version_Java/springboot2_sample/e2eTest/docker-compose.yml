@@ -7,7 +7,7 @@ networks:
 services:
   mongodb:
     image: mongo:latest
-    container_name: mongodb
+    container_name: spring-mongodb
     environment:
       -  'MONGODB_USER=user'
       -  'MONGODB_PASS=password!'
@@ -32,14 +32,15 @@ services:
   app:
     # app用のDockerfileのパスを記載
     build: .
-    image: springboot:0.0.1
+    image: springboot2:0.0.1
     # ポートを公開（expose）します。
     # ホストとポートを指定（ホスト:コンテナ）するか、コンテナのポートのみ指定します（ホスト側のポートはランダムに選ばれます）。
     ports:
-        - "8086:8080"
-    volumes:
-        - .:/app
+      - "8086:8080"
+    links:
+      - mongodb #連携するシステムを指定
 
 volumes:
   mongodb-data: {}
+
 

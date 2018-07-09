@@ -25,7 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class EmbeddedImageRepositoryTests {
 
 	@Autowired
-    ImageRepository repository;
+	ImageRepository repository;
 
 	@Autowired
 	MongoOperations operations;
@@ -40,7 +40,9 @@ public class EmbeddedImageRepositoryTests {
 		operations.insert(new Image("2", "learning-spring-boot-2nd-edition-cover.jpg"));
 		operations.insert(new Image("3", "bazinga.png"));
 
-		operations.findAll(Image.class).forEach(image -> { System.out.println(image.toString()); });
+		operations
+			.findAll(Image.class)
+			.forEach(image -> { System.out.println(image.toString()); });
 	}
 
 	@Test
