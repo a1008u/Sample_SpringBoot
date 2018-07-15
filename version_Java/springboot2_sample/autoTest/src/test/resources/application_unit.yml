@@ -1,0 +1,6 @@
+spring:
+  profiles.active: unit
+
+  datasource:
+    url: jdbc:log4jdbc:h2:mem:cardbtest;DB_CLOSE_ON_EXIT=FALSE;MODE=MySql
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
