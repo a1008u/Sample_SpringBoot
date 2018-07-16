@@ -1,6 +1,6 @@
-package com.example.autoTest.repository;
+package com.example.autoTest.vehicle.repository;
 
-import com.example.autoTest.domain.Owner;
+import com.example.autoTest.vehicle.domain.Owner;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

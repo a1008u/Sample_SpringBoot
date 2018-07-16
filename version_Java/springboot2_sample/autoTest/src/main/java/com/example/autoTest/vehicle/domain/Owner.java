@@ -1,8 +1,9 @@
-package com.example.autoTest.domain;
+package com.example.autoTest.vehicle.domain;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Table(name = "owner")
 @Entity
 public class Owner {
   @Id

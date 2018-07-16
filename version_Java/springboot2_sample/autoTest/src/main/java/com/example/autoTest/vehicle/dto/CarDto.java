@@ -1,39 +1,39 @@
-package com.example.autoTest.domain;
+package com.example.autoTest.vehicle.dto;
 
-import javax.persistence.*;
+import com.example.autoTest.vehicle.bean.OwnerBean;
 
-@Table(name = "car")
-@Entity
-public class Car {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+public class CarDto {
   private long id;
   private String brand, model, color, registerNumber;
   private int year, price;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "owner")
-  private Owner owner;
+  private OwnerDto ownerdto;
 
-  public Car() {
-  }
 
-  public Car(String brand
+  public CarDto(long id
+          , String brand
           , String model
           , String color
-          ,String registerNumber
+          , String registerNumber
           , int year
           , int price
-          , Owner owner) {
-
-    super();
+          , OwnerBean ownerBean) {
+    this.id = id;
     this.brand = brand;
     this.model = model;
     this.color = color;
     this.registerNumber = registerNumber;
     this.year = year;
     this.price = price;
-    this.owner = owner;
+    this.ownerdto = new OwnerDto(ownerBean.getOwnerid(),ownerBean.getFirstname(),ownerBean.getLastname());
+  }
+
+  public OwnerDto getOwnerdto() {
+    return ownerdto;
+  }
+
+  public void setOwnerdto(OwnerDto ownerdto) {
+    this.ownerdto = ownerdto;
   }
 
   public long getId() {
@@ -92,11 +92,4 @@ public class Car {
     this.price = price;
   }
 
-  public Owner getOwner() {
-    return owner;
-  }
-
-  public void setOwner(Owner owner) {
-    this.owner = owner;
-  }
 }

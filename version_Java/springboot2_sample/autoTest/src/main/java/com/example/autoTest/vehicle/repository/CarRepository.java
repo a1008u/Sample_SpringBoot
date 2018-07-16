@@ -1,6 +1,6 @@
-package com.example.autoTest.repository;
+package com.example.autoTest.vehicle.repository;
 
-import com.example.autoTest.domain.Car;
+import com.example.autoTest.vehicle.domain.Car;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

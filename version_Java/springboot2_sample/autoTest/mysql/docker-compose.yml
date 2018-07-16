@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+ db_data:
+    image: busybox
+    volumes:
+        - /var/lib/mysql
+      
+ mysql-standalone:
+    image: mysql:latest
+    ports:
+        - "3306:3306"
+    volumes:
+        # 初期データを追加させる
+        - ./mysql/init:/docker-entrypoint-initdb.d
+        - ./mysql/conf:/etc/mysql/conf.d/my.cnf
+    volumes_from:
+        # busyboxでデータの永続化を行う
+        - db_data
+    environment:
+        - MYSQL_ROOT_PASSWORD=root # rootのパスワード設定
+        - MYSQL_DATABASE=test      # database の作成
+        - MYSQL_USER=sa            # 新規ユーザの作成
+        - MYSQL_PASSWORD=password  # 新規ユーザのパスワード設定
