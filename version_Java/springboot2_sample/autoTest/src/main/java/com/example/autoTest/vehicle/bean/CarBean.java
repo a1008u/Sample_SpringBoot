@@ -19,7 +19,7 @@ public class CarBean {
           , String registerNumber
           , int year
           , int price
-          , Owner owner) {
+          , OwnerBean ownerbean) {
     this.id = id;
     this.brand = brand;
     this.model = model;
@@ -27,7 +27,10 @@ public class CarBean {
     this.registerNumber = registerNumber;
     this.year = year;
     this.price = price;
-    this.ownerbean = new OwnerBean(owner.getOwnerid(),owner.getFirstname(),owner.getLastname());
+    this.ownerbean = new OwnerBean(
+            ownerbean.getOwnerid()
+            , ownerbean.getFirstname()
+            , ownerbean.getLastname());
   }
 
   public long getId() {

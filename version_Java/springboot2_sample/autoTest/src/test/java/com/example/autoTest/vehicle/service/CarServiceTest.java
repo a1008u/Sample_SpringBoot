@@ -2,6 +2,7 @@ package com.example.autoTest.vehicle.service;
 
 import com.example.autoTest.vehicle.bean.CarBean;
 
+import com.example.autoTest.vehicle.bean.OwnerBean;
 import com.example.autoTest.vehicle.domain.Car;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -28,6 +29,38 @@ public class CarServiceTest {
 
   @Autowired
   private CarService carService;
+
+  @Test
+  @DisplayName("😁")
+  public void createの確認() {
+
+    CarBean sampleCarBean = new CarBean(
+            1
+            ,"brandTest"
+            , "modelTest"
+            , "colorTest"
+            , "1234Test"
+            , 2222
+            , 3333
+            , new OwnerBean(1,"test", "sample"));
+
+    // exe
+    carService.create(sampleCarBean);
+
+    List<CarBean> carList = carService.findByBrand(sampleCarBean);
+    carList.forEach(carBean -> {
+      assertAll("car",
+        () -> assertEquals("test", carBean.getOwnerbean().getFirstname())
+        , () -> assertEquals("sample", carBean.getOwnerbean().getLastname())
+        , () -> assertEquals("brandTest", carBean.getBrand())
+        , () -> assertEquals("colorTest", carBean.getColor())
+        , () -> assertEquals("modelTest", carBean.getModel())
+        , () -> assertEquals("1234Test", carBean.getRegisterNumber())
+        , () -> assertEquals(2222, carBean.getYear())
+        , () -> assertEquals(3333, carBean.getPrice())
+      );
+    });
+  }
 
   @Test
   @DisplayName("😁")

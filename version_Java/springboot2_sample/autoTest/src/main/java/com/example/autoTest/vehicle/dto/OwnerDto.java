@@ -4,6 +4,10 @@ public class OwnerDto {
   private long ownerid;
   private String firstname, lastname;
 
+  public OwnerDto(){
+    super();
+  }
+
   public OwnerDto(long ownerid, String firstname, String lastname) {
     this.ownerid = ownerid;
     this.firstname = firstname;

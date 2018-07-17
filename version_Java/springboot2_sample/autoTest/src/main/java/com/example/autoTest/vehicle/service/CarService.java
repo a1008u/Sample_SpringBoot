@@ -1,7 +1,9 @@
 package com.example.autoTest.vehicle.service;
 
 import com.example.autoTest.vehicle.bean.CarBean;
+import com.example.autoTest.vehicle.bean.OwnerBean;
 import com.example.autoTest.vehicle.domain.Car;
+import com.example.autoTest.vehicle.domain.Owner;
 import com.example.autoTest.vehicle.repository.CarRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,37 @@ public class CarService {
 
   public CarService(CarRepository carRepository) {
     this.carRepository = carRepository;
+  }
+
+  // Crud -----------------------------------------------
+  public CarBean create(CarBean carBean) {
+
+    Car car = new Car(
+            carBean.getBrand()
+            , carBean.getModel()
+            , carBean.getColor()
+            , carBean.getRegisterNumber()
+            , carBean.getYear()
+            , carBean.getPrice()
+            , new Owner(
+                    carBean.getOwnerbean().getFirstname()
+                    , carBean.getOwnerbean().getLastname())
+    );
+
+    Car registCar = carRepository.save(car);
+
+    return new CarBean(
+            registCar.getId()
+            , registCar.getBrand()
+            , registCar.getModel()
+            , registCar.getColor()
+            , registCar.getRegisterNumber()
+            , registCar.getYear()
+            , registCar.getPrice()
+            , new OwnerBean(registCar.getOwner().getOwnerid()
+            , registCar.getOwner().getFirstname()
+            , registCar.getOwner().getLastname())
+    );
   }
 
   // cRud -----------------------------------------------
@@ -101,7 +134,10 @@ public class CarService {
       , car.getRegisterNumber()
       , car.getYear()
       , car.getPrice()
-      , car.getOwner());
+      , new OwnerBean(
+              car.getOwner().getOwnerid()
+            , car.getOwner().getFirstname()
+            , car.getOwner().getLastname()));
     carBeanList.add(tmpcarBean);
   }
 }

@@ -9,6 +9,9 @@ public class CarDto {
 
   private OwnerDto ownerdto;
 
+  public CarDto(){
+    super();
+  }
 
   public CarDto(long id
           , String brand
@@ -17,7 +20,7 @@ public class CarDto {
           , String registerNumber
           , int year
           , int price
-          , OwnerBean ownerBean) {
+          , OwnerDto ownerDto) {
     this.id = id;
     this.brand = brand;
     this.model = model;
@@ -25,15 +28,7 @@ public class CarDto {
     this.registerNumber = registerNumber;
     this.year = year;
     this.price = price;
-    this.ownerdto = new OwnerDto(ownerBean.getOwnerid(),ownerBean.getFirstname(),ownerBean.getLastname());
-  }
-
-  public OwnerDto getOwnerdto() {
-    return ownerdto;
-  }
-
-  public void setOwnerdto(OwnerDto ownerdto) {
-    this.ownerdto = ownerdto;
+    this.ownerdto = ownerDto;
   }
 
   public long getId() {
@@ -92,4 +87,11 @@ public class CarDto {
     this.price = price;
   }
 
+  public OwnerDto getOwnerdto() {
+    return ownerdto;
+  }
+
+  public void setOwnerdto(OwnerDto ownerdto) {
+    this.ownerdto = ownerdto;
+  }
 }
