@@ -42,7 +42,8 @@ public class CarController {
             , new OwnerBean(
                     carDto.getOwnerdto().getOwnerid()
                     , carDto.getOwnerdto().getFirstname()
-                    , carDto.getOwnerdto().getLastname())
+                    , carDto.getOwnerdto().getLastname()
+    ,null)
     );
     CarBean createCarBean = carService.create(carBean);
     CarDto carDto1 = new CarDto(
@@ -55,7 +56,7 @@ public class CarController {
             , createCarBean.getPrice()
             , new OwnerDto(createCarBean.getOwnerbean().getOwnerid()
             , createCarBean.getOwnerbean().getFirstname()
-            , createCarBean.getOwnerbean().getLastname())
+            , createCarBean.getOwnerbean().getLastname(), null)
     );
     URI location = uriBuilder.path("/findall").buildAndExpand().toUri();
     return ResponseEntity.created(location).body(carDto1);
@@ -78,7 +79,7 @@ public class CarController {
           , new OwnerDto(
                   carBean.getOwnerbean().getOwnerid()
                 , carBean.getOwnerbean().getFirstname()
-                , carBean.getOwnerbean().getLastname()));
+                , carBean.getOwnerbean().getLastname(), null));
         carDtoList.add(carDto);
       });
 

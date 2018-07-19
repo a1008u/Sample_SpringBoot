@@ -1,7 +1,5 @@
 package com.example.autoTest.vehicle.bean;
 
-import com.example.autoTest.vehicle.domain.Owner;
-
 public class CarBean {
 
   private long id;
@@ -27,10 +25,7 @@ public class CarBean {
     this.registerNumber = registerNumber;
     this.year = year;
     this.price = price;
-    this.ownerbean = new OwnerBean(
-            ownerbean.getOwnerid()
-            , ownerbean.getFirstname()
-            , ownerbean.getLastname());
+    this.ownerbean = ownerbean;
   }
 
   public long getId() {

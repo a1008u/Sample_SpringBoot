@@ -1,17 +1,21 @@
 package com.example.autoTest.vehicle.dto;
 
+import java.util.List;
+
 public class OwnerDto {
   private long ownerid;
   private String firstname, lastname;
+  List<CarDto> carDtoList;
 
   public OwnerDto(){
     super();
   }
 
-  public OwnerDto(long ownerid, String firstname, String lastname) {
+  public OwnerDto(long ownerid, String firstname, String lastname, List<CarDto> carDtoList) {
     this.ownerid = ownerid;
     this.firstname = firstname;
     this.lastname = lastname;
+    this.carDtoList = carDtoList;
   }
 
   public long getOwnerid() {
@@ -36,5 +40,13 @@ public class OwnerDto {
 
   public void setLastname(String lastname) {
     this.lastname = lastname;
+  }
+
+  public List<CarDto> getCarDtoList() {
+    return carDtoList;
+  }
+
+  public void setCarDtoList(List<CarDto> carDtoList) {
+    this.carDtoList = carDtoList;
   }
 }

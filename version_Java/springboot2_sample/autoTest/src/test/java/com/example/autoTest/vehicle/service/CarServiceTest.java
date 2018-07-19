@@ -15,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -29,6 +30,8 @@ public class CarServiceTest {
 
   @Autowired
   private CarService carService;
+  @Autowired
+  private OwnerService ownerService;
 
   @Test
   @DisplayName("😁")
@@ -42,7 +45,7 @@ public class CarServiceTest {
             , "1234Test"
             , 2222
             , 3333
-            , new OwnerBean(1,"test", "sample"));
+            , new OwnerBean(1,"test", "sample",null));
 
     // exe
     carService.create(sampleCarBean);
@@ -60,6 +63,48 @@ public class CarServiceTest {
         , () -> assertEquals(3333, carBean.getPrice())
       );
     });
+  }
+
+  @Test
+  @DisplayName("😁")
+  public void createの確認2() {
+
+    List<CarBean> carBeanList = new ArrayList<>();
+    CarBean sampleCarBean = new CarBean(
+            1
+            ,"brandTest"
+            , "modelTest"
+            , "colorTest"
+            , "1234Test"
+            , 2222
+            , 3333
+            , null);
+    carBeanList.add(sampleCarBean);
+    OwnerBean sampleOwnerBean = new OwnerBean(
+            1
+            ,"test"
+            , "sample"
+            , carBeanList);
+    sampleCarBean.setOwnerbean(sampleOwnerBean);
+
+    // exe
+    OwnerBean ownerBean = ownerService.create(sampleOwnerBean);
+
+    assertEquals("test", ownerBean.getFirstname());
+    assertEquals("sample", ownerBean.getLastname());
+    ownerBean
+      .getCarBeanList()
+      .forEach(carBean -> {
+      assertAll("car"
+        , () -> assertEquals("brandTest", carBean.getBrand())
+        , () -> assertEquals("colorTest", carBean.getColor())
+        , () -> assertEquals("modelTest", carBean.getModel())
+        , () -> assertEquals("1234Test", carBean.getRegisterNumber())
+        , () -> assertEquals(2222, carBean.getYear())
+        , () -> assertEquals(3333, carBean.getPrice())
+      );
+    });
+
   }
 
   @Test

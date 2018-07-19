@@ -33,7 +33,8 @@ public class CarService {
             , carBean.getPrice()
             , new Owner(
                     carBean.getOwnerbean().getFirstname()
-                    , carBean.getOwnerbean().getLastname())
+                    , carBean.getOwnerbean().getLastname()
+                    , null)
     );
 
     Car registCar = carRepository.save(car);
@@ -48,7 +49,8 @@ public class CarService {
             , registCar.getPrice()
             , new OwnerBean(registCar.getOwner().getOwnerid()
             , registCar.getOwner().getFirstname()
-            , registCar.getOwner().getLastname())
+            , registCar.getOwner().getLastname()
+            , null)
     );
   }
 
@@ -137,7 +139,8 @@ public class CarService {
       , new OwnerBean(
               car.getOwner().getOwnerid()
             , car.getOwner().getFirstname()
-            , car.getOwner().getLastname()));
+            , car.getOwner().getLastname()
+            , null));
     carBeanList.add(tmpcarBean);
   }
 }

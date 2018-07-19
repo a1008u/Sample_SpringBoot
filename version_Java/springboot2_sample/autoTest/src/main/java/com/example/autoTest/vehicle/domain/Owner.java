@@ -11,15 +11,16 @@ public class Owner {
   private long ownerid;
   private String firstname, lastname;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy="owner")
+  @OneToMany(mappedBy="owner", fetch = FetchType.LAZY)
   private List<Car> cars;
 
   public Owner() {}
 
-  public Owner(String firstname, String lastname) {
+  public Owner(String firstname, String lastname, List<Car> cars) {
     super();
     this.firstname = firstname;
     this.lastname = lastname;
+    this.cars = cars;
   }
 
   public long getOwnerid() {
@@ -43,7 +44,6 @@ public class Owner {
   public List<Car> getCars() {
     return cars;
   }
-
   public void setCars(List<Car> cars) {
     this.cars = cars;
   }
