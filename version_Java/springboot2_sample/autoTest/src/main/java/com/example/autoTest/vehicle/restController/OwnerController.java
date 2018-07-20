@@ -42,7 +42,6 @@ public class OwnerController {
       carBeanList.add(carBean);
     });
 
-
    OwnerBean ownerBean = new OwnerBean(
            ownerDto.getOwnerid()
            , ownerDto.getFirstname()
@@ -68,7 +67,6 @@ public class OwnerController {
       );
       carDtoList.add(carDto1);
     });
-
 
     OwnerDto ownerDto1 = new OwnerDto(
             ownerBean1.getOwnerid()

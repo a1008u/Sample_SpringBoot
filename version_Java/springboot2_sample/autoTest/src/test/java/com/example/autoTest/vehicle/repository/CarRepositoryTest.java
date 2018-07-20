@@ -39,6 +39,7 @@ public class CarRepositoryTest {
 
     carList.forEach(car -> {
       assertAll("car",
+
         () -> assertEquals("firsttest", car.getOwner().getFirstname())
         , () -> assertEquals("lasttest", car.getOwner().getLastname())
         , () -> assertEquals("testbrand", car.getBrand())
