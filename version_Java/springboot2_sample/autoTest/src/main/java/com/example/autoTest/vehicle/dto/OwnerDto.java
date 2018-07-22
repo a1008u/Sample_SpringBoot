@@ -18,6 +18,12 @@ public class OwnerDto {
     this.carDtoList = carDtoList;
   }
 
+  public OwnerDto(long ownerid, String firstname, String lastname) {
+    this.ownerid = ownerid;
+    this.firstname = firstname;
+    this.lastname = lastname;
+  }
+
   public long getOwnerid() {
     return ownerid;
   }

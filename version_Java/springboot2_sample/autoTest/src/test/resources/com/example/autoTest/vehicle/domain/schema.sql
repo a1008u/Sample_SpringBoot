@@ -1,5 +1,5 @@
 CREATE TABLE car (
-    id   INTEGER      NOT NULL AUTO_INCREMENT,
+    id   INTEGER NOT NULL AUTO_INCREMENT,
     brand VARCHAR(128)
     , model VARCHAR(128)
     , color VARCHAR(128)

@@ -17,3 +17,10 @@ test自動化などの実験として利用する。
 - gradle
 - angular/react
 - aws
+
+## sonar
+http://localhost:9000/ 
+
+### sonar設定
+    - 
+    - 

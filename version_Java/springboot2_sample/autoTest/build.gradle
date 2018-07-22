@@ -15,6 +15,23 @@ buildscript {
 	}
 }
 
+// https://stackoverflow.com/questions/45174989/building-with-intellij-2017-2-out-directory-duplicates-files-in-build-director
+allprojects {
+	apply plugin: 'idea'
+	idea {
+		module {
+			outputDir file('build/classes/main')
+			testOutputDir file('build/classes/test')
+		}
+	}
+	if(project.convention.findPlugin(JavaPluginConvention)) {
+		// Change the output directory for the main and test source sets back to the old path
+		sourceSets.main.output.classesDir = new File(buildDir, "classes/main")
+		sourceSets.test.output.classesDir = new File(buildDir, "classes/test")
+	}
+}
+
+
 apply plugin: 'org.sonarqube'
 apply plugin: 'jacoco'
 apply plugin: 'java'
@@ -24,8 +41,14 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'org.junit.platform.gradle.plugin'
 
 group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = 1.8
+
+// JavaクラスとSQLファイルの出力先ディレクトリを同じにする
+processResources.destinationDir = compileJava.destinationDir
+// コンパイルより前にSQLファイルを出力先ディレクトリにコピーするために依存関係を逆転する
+compileJava.dependsOn processResources
+
 
 repositories {
 	mavenCentral()
@@ -36,20 +59,26 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 
+	// DB
 	runtime('org.springframework.boot:spring-boot-devtools')
 	runtime group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
 	// runtime group: 'com.h2database', name: 'h2', version: '1.4.197'
 
-	
+	// doma2
+	compile group: 'org.seasar.doma.boot', name: 'doma-spring-boot-starter', version: '1.1.1'
+
+	// swagger
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.8.0'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.8.0'
 	compile group: 'io.springfox', name: 'springfox-core', version: '2.8.0'
-	
 
+
+	testCompile('org.springframework.boot:spring-boot-starter-jdbc')
 	testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
@@ -94,6 +123,14 @@ jacocoTestReport {
 		html.enabled = true
 		xml.enabled = true
 		csv.enabled = false
+	}
+}
+
+sonarqube {
+	properties {
+		property "sonar.host.url", "http://localhost:9000/"
+		property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+		property "sonar.sourceEncoding", "UTF-8"
 	}
 }
 

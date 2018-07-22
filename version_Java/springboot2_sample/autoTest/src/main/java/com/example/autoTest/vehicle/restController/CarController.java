@@ -69,7 +69,8 @@ public class CarController {
     carService
       .findAll()
       .forEach(carBean -> {
-        CarDto carDto = new CarDto(carBean.getId()
+        CarDto carDto = new CarDto(
+                carBean.getId()
           , carBean.getBrand()
           , carBean.getModel()
           , carBean.getColor()
