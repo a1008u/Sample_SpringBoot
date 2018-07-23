@@ -24,3 +24,6 @@ http://localhost:9000/
 ### sonar設定
     - 
     - 
+
+docker exec -it mysql_mysql-standalone_1 bash
+mysql -u root -p

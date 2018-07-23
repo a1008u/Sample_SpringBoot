@@ -2,6 +2,7 @@ package com.example.autoTest.doma_vehicle.restController;
 
 import com.example.autoTest.doma_vehicle.bean.DomaCarBean;
 
+import com.example.autoTest.doma_vehicle.bean.DomaCarOwnerBean;
 import com.example.autoTest.doma_vehicle.dto.DomaCarOwnerDto;
 import com.example.autoTest.doma_vehicle.service.DomaCarService;
 import com.example.autoTest.vehicle.dto.CarDto;
@@ -32,26 +33,26 @@ public class DomaCarController {
 
     List<DomaCarOwnerDto> carDtoList = new ArrayList<>();
     domaCarService
-            .selectAll()
-            .forEach(domaCarBean -> {
-              DomaCarOwnerDto domaCarOwnerDto = new DomaCarOwnerDto(
-                domaCarBean.getId()
-                , domaCarBean.getBrand()
-                , domaCarBean.getModel()
-                , domaCarBean.getColor()
-                , domaCarBean.getRegisterNumber()
-                , domaCarBean.getYear()
-                , domaCarBean.getPrice()
-                , domaCarBean.getOwnerId()
-                , new OwnerDto(
-                domaCarBean.getDomaOwnerBean().getOwnerid()
-                , domaCarBean.getDomaOwnerBean().getFirstname()
-                , domaCarBean.getDomaOwnerBean().getLastname()
-              )
+      .selectAll()
+      .forEach(domaCarBean -> {
+        DomaCarOwnerDto domaCarOwnerDto = new DomaCarOwnerDto(
+          domaCarBean.getId()
+          , domaCarBean.getBrand()
+          , domaCarBean.getModel()
+          , domaCarBean.getColor()
+          , domaCarBean.getRegisterNumber()
+          , domaCarBean.getYear()
+          , domaCarBean.getPrice()
+          , domaCarBean.getOwnerId()
+          , new OwnerDto(
+          domaCarBean.getDomaOwnerBean().getOwnerid()
+          , domaCarBean.getDomaOwnerBean().getFirstname()
+          , domaCarBean.getDomaOwnerBean().getLastname()
+        )
 
-              );
-              carDtoList.add(domaCarOwnerDto);
-            });
+        );
+        carDtoList.add(domaCarOwnerDto);
+      });
     return carDtoList;
   }
 
@@ -74,6 +75,32 @@ public class DomaCarController {
       carDtoList.add(carDto);
     });
     return carDtoList;
+  }
+
+  @GetMapping("/doma/car/findAllStream")
+  public List<DomaCarOwnerDto> selectAllStream() {
+
+    List<DomaCarOwnerDto> domaCarOwnerDtoList = new ArrayList<>();
+    domaCarService
+      .selectAllStream()
+      .map(domaCarOwnerBean -> new DomaCarOwnerDto(
+        domaCarOwnerBean.getId()
+        , domaCarOwnerBean.getBrand()
+        , domaCarOwnerBean.getModel()
+        , domaCarOwnerBean.getColor()
+        , domaCarOwnerBean.getRegisterNumber()
+        , domaCarOwnerBean.getYear()
+        , domaCarOwnerBean.getPrice()
+        , domaCarOwnerBean.getOwnerId()
+        , new OwnerDto(
+          domaCarOwnerBean.getDomaOwnerBean().getOwnerid()
+          , domaCarOwnerBean.getDomaOwnerBean().getFirstname()
+          , domaCarOwnerBean.getDomaOwnerBean().getLastname()
+          )
+        )
+      )
+      .forEach(domaCarOwnerDto -> domaCarOwnerDtoList.add(domaCarOwnerDto));
+    return domaCarOwnerDtoList;
   }
 
   /**

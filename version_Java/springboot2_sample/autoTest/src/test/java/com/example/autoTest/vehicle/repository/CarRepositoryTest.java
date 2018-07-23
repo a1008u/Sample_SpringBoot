@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -138,7 +140,7 @@ public class CarRepositoryTest {
 
     carList.forEach(car -> {
       assertAll("car",
-              () -> assertEquals("firsttest", car.getOwner().getFirstname())
+              () -> assertThat("firsttest", is(car.getOwner().getFirstname()))
               , () -> assertEquals("lasttest", car.getOwner().getLastname())
               , () -> assertEquals("testbrand", car.getBrand())
               , () -> assertEquals("testcolor", car.getColor())

@@ -19,6 +19,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.beans.SamePropertyValuesAs.samePropertyValuesAs;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.condition.OS.MAC;
@@ -40,18 +43,20 @@ public class OwnerDaoTest {
   public void selectAllOnlyOwnerの確認() {
     List<Owner> actualOwnerList = ownerDao.selectAllOnlyOwner();
 
-    assertEquals(actualOwnerList.size(), 2);
+    assertEquals(actualOwnerList.size(), 1);
     IntStream
       .range(0, actualOwnerList.size())
       .forEach(i -> {
         if (i == 0) {
           Owner except1owner = new Owner(0, "firsttest", "lasttest", 0);
           assertAll("except1owner"
-            , () -> assertEquals(actualOwnerList.get(i).getCarId(), except1owner.getCarId())
-            , () -> assertEquals(actualOwnerList.get(i).getFirstname(), except1owner.getFirstname())
-            , () -> assertEquals(actualOwnerList.get(i).getFirstname(), except1owner.getFirstname())
-            , () -> assertEquals(actualOwnerList.get(i).getLastname(), except1owner.getLastname())
-            , () -> assertEquals(actualOwnerList.get(i).getOwnerid(), except1owner.getOwnerid())
+            , () -> assertThat(actualOwnerList.get(i), is(samePropertyValuesAs(except1owner)))
+
+//            , () -> assertEquals(actualOwnerList.get(i).getCarId(), except1owner.getCarId())
+//            , () -> assertEquals(actualOwnerList.get(i).getFirstname(), except1owner.getFirstname())
+//            , () -> assertEquals(actualOwnerList.get(i).getFirstname(), except1owner.getFirstname())
+//            , () -> assertEquals(actualOwnerList.get(i).getLastname(), except1owner.getLastname())
+//            , () -> assertEquals(actualOwnerList.get(i).getOwnerid(), except1owner.getOwnerid())
           );
 
         }

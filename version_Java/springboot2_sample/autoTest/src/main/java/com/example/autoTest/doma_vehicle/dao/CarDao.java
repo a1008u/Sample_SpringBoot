@@ -10,6 +10,7 @@ import org.seasar.doma.jdbc.Result;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @ConfigAutowireable
 @Dao
@@ -20,6 +21,9 @@ public interface CarDao {
 
   @Select
   List<Car> selectAllOnlyCar();
+
+  @Select
+  Stream<OwnerCar> selectAllStream();
 
   @Insert
   @Transactional

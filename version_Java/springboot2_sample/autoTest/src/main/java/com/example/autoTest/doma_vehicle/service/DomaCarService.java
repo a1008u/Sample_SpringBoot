@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -51,8 +54,6 @@ public class DomaCarService {
     return domaCarOwnerBeanList;
   }
 
-
-
   public List<DomaCarBean> selectAllOnlyCar() {
     List<DomaCarBean> domaCarBeanList = new ArrayList<>();
     carDao
@@ -72,6 +73,35 @@ public class DomaCarService {
             });
     return domaCarBeanList;
   }
+
+  public Stream<DomaCarOwnerBean> selectAllStream() {
+
+    List<DomaCarOwnerBean> domaOwnerCarBeanList = new ArrayList<>();
+    carDao
+      .selectAllStream()
+      .map(ownerCar -> {
+        DomaCarOwnerBean domaCarOwnerBean = new DomaCarOwnerBean(
+          ownerCar.getId()
+          , ownerCar.getBrand()
+          , ownerCar.getColor()
+          , ownerCar.getColor()
+          , ownerCar.getRegisterNumber()
+          , ownerCar.getYear()
+          , ownerCar.getPrice()
+          , ownerCar.getOwnerId()
+          , new DomaOwnerBean(
+              ownerCar.getOwnerid()
+              , ownerCar.getFirstname()
+              , ownerCar.getLastname()
+              , ownerCar.getCarId()
+          )
+        );
+        return domaCarOwnerBean;
+      }).forEach(domaCarOwnerBean -> domaOwnerCarBeanList.add(domaCarOwnerBean));
+    return domaOwnerCarBeanList.stream();
+
+  }
+
 
   // Crud -------------------------------------------------------
   public DomaCarBean save(DomaCarBean domaCarBean) {
