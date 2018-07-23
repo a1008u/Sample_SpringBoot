@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 public class Owner {
   @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   private long ownerid;
   private String firstname, lastname;
 

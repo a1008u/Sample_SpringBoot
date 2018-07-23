@@ -35,7 +35,7 @@ public class DomaOwnerServiceTest {
   DomaOwnerService domaOwnerService;
 
   @Test
-  @Sql({ "data.sql"})
+  @Sql({ "selectAllOnlyOwner.sql"})
   public void selectAllOnlyOwnerの確認() {
 
     List<DomaOwnerBean> actualDomaOwnerBeanList = domaOwnerService.selectAllOnlyOwner();

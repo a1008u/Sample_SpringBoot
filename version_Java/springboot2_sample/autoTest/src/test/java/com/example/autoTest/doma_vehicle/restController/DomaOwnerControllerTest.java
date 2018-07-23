@@ -1,4 +1,4 @@
-package com.example.autoTest.vehicle.restController;
+package com.example.autoTest.doma_vehicle.restController;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,30 +24,27 @@ import static org.hamcrest.Matchers.is;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("unit")
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@Sql({"drop_schema.sql", "schema.sql","CarControllerTest.sql"})
-public class CarControllerTest {
+@Sql({"schema.sql","DomaOwnerControllerTest.sql"})
+public class DomaOwnerControllerTest {
 
-    @Autowired
-    private TestRestTemplate testRestTemplate;
+  @Autowired
+  private TestRestTemplate testRestTemplate;
 
-    @LocalServerPort
-    private int port;
+  @LocalServerPort
+  private int port;
 
-    @Test
-    public void findAll() {
+  @Test
+  public void selectAllの確認() {
 
-        String url = "http://localhost:" + port + "/findall";
-        List<Map<String, Object>> carDtoList = testRestTemplate.getForObject(url, ArrayList.class);
+    String url = "http://localhost:" + port + "/doma/owner/findall";
+    List<Map<String, Object>> carDtoList = testRestTemplate.getForObject(url, ArrayList.class);
 
-        String url2 = "http://localhost:" + port + "/doma/owner/findall";
-        List<Map<String, Object>> carDtoList2 = testRestTemplate.getForObject(url, ArrayList.class);
+    System.out.println(carDtoList.toArray());
 
-        System.out.println(carDtoList.toArray());
-
-        carDtoList
-                .forEach(carMap -> {
-                    assertThat("testbrand",is(carMap.get("brand")));
-                });
-    }
+    carDtoList
+      .forEach(carMap -> {
+        assertThat("firsttest",is(carMap.get("firstname")));
+      });
+  }
 
 }

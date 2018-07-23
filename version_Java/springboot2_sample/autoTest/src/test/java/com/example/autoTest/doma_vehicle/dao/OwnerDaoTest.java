@@ -48,7 +48,7 @@ public class OwnerDaoTest {
       .range(0, actualOwnerList.size())
       .forEach(i -> {
         if (i == 0) {
-          Owner except1owner = new Owner(0, "firsttest", "lasttest", 0);
+          Owner except1owner = new Owner(2, "firsttest", "lasttest", 2);
           assertAll("except1owner"
             , () -> assertThat(actualOwnerList.get(i), is(samePropertyValuesAs(except1owner)))
 
@@ -75,7 +75,7 @@ public class OwnerDaoTest {
   @Test
   public void selectAllの確認() {
     List<OwnerCar> actualOwnerCarList = ownerDao.selectAll();
-    assertEquals(2, actualOwnerCarList.size());
+    assertEquals(1, actualOwnerCarList.size());
   }
 
   @Test
