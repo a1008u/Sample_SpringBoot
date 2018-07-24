@@ -99,9 +99,7 @@ public class DomaCarService {
         return domaCarOwnerBean;
       }).forEach(domaCarOwnerBean -> domaOwnerCarBeanList.add(domaCarOwnerBean));
     return domaOwnerCarBeanList.stream();
-
   }
-
 
   // Crud -------------------------------------------------------
   public DomaCarBean save(DomaCarBean domaCarBean) {

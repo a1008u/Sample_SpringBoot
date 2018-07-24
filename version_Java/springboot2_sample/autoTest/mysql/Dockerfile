@@ -1,7 +1,13 @@
 FROM mysql:5.7
 
-COPY ./world.sql /docker-entrypoint-initdb.d/world.sql
-ADD ./my.cnf /etc/mysql/conf.d/my.cnf # 文字コード設定のためconf追加
+COPY ./mysql/init/world.sql /docker-entrypoint-initdb.d/world.sql
+# 文字コード設定のためconf追加
+ADD ./mysql/conf/my.cnf /etc/mysql/conf.d/my.cnf
+
+
+# COPY ./mysql/init/world.sql /docker-entrypoint-initdb.d/world.sql
+# 文字コード設定のためconf追加
+# ADD ./mysql/conf/my.cnf /etc/mysql/conf.d/my.cnf
 
 # CMD ["mysqld"]
 

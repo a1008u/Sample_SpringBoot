@@ -19,11 +19,26 @@ test自動化などの実験として利用する。
 - aws
 
 ## sonar
-http://localhost:9000/ 
+http://localhost:9000/ ${uid}
 
 ### sonar設定
     - 
     - 
 
 docker exec -it mysql_mysql-standalone_1 bash
+docker exec -it autotest_mysql-standalone_1 bash
 mysql -u root -p
+show databases;
+show tables;
+
+
+docker run -p 8080:7878 spring --link  mysql_mysql-standalone_1:mysql -it spring /bin/bash
+docker build -t spring .
+docker rmi spring
+
+docker stop autotest_mysql-standalone_1
+docker stop autotest_db_data_1
+docker rm autotest_mysql-standalone_1
+docker rm autotest_db_data_1
+
+

@@ -1,6 +1,29 @@
 version: '2'
+
 services:
-  app:
+ db_data:
+    image: busybox
+    volumes:
+        - /var/lib/mysql
+
+ mysql-standalone:
+    build: ./mysql
+    image: mysql:latest
+    ports:
+        - "3306:3306"
+    # volumes:
+        # 初期データを追加させる
+         # - ./mysql/mysql/init:/docker-entrypoint-initdb.d
+         # - ./mysql/mysql/conf:/etc/mysql/conf.d/my.cnf
+    volumes_from:
+        # busyboxでデータの永続化を行う
+        - db_data
+    environment:
+        - MYSQL_ROOT_PASSWORD=root # rootのパスワード設定
+        - MYSQL_DATABASE=test      # database の作成
+        - MYSQL_USER=sa            # 新規ユーザの作成
+        - MYSQL_PASSWORD=password  # 新規ユーザのパスワード設定
+ app:
     # app用のDockerfileのパスを記載
     build: .
     image: springboot-part2:0.0.1
@@ -12,6 +35,7 @@ services:
         - .:/app
     environment:
         JAR_TARGET: autoTest-0.0.1.jar
-    links:
-        - 'mysql-standalone:mysql'
+    depends_on:
+        - mysql-standalone
+
 
