@@ -1,9 +1,5 @@
 package com.example.sample_6_restapi_mysql.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 
@@ -17,9 +13,6 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "customers")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Customer {
     @Id // 主キー
     @GeneratedValue // 主キーがDBで自動昨晩されることを示す
@@ -30,4 +23,42 @@ public class Customer {
 
     @Column(nullable = false) // カラムを示す
     private String lastName;
+
+    public Customer() {
+    }
+
+    public Customer(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Customer(Integer id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

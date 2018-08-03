@@ -35,11 +35,6 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
 
 		<!-- SQLログを取得するための設定
 		設定ファイルとして、log4Jdbc.log4j2.properties と logback.xmlが必要

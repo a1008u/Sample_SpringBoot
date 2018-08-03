@@ -25,7 +25,7 @@ http://localhost:9000/ ${uid}
     - 
     - 
 
-docker exec -it mysql_mysql-standalone_1 bash
+
 docker exec -it autotest_mysql-standalone_1 bash
 mysql -u root -p
 show databases;
@@ -42,3 +42,17 @@ docker rm autotest_mysql-standalone_1
 docker rm autotest_db_data_1
 
 
+docker exec -it mysql_mysql-standalone_1 bash
+mysql -u root -p
+show databases;
+show tables;
+docker stop mysql_mysql-standalone_1
+docker rm mysql_mysql-standalone_1
+docker stop mysql_db_data_1
+docker rm mysql_db_data_1
+docker images
+docker rmi mysql
+docker-compose down
+
+
+docker-compose up --build

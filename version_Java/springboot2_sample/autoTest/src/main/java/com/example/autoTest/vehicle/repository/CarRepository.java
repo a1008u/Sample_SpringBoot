@@ -11,6 +11,7 @@ import java.util.List;
 public interface CarRepository extends CrudRepository <Car, Long> {
 
   // Fetch cars by brand
+  // select * from car where brand = "brand"
   List<Car> findByBrand(String brand);
 
   // Fetch cars by color
@@ -23,6 +24,7 @@ public interface CarRepository extends CrudRepository <Car, Long> {
   List<Car> findByBrandAndModel(String brand, String model);
 
   // Fetch cars by brand or color
+
   List<Car> findByBrandOrColor(String brand, String color);
 
   // Fetch cars by brand and sort by year

@@ -44,9 +44,9 @@ public class CustomerRestController {
     CustomerService customerService;
 
     /**
-     * コンソール上で表示：curl http://localhost:8080/api/customers
-     * ブラウザ上で表示：http://localhost:8080/api/customers
-     * swagger上で表示：localhost:8080/swagger-ui.html
+     * コンソール上で表示：curl http://localhost:8086/api/customers
+     * ブラウザ上で表示：http://localhost:8086/api/customers
+     * swagger上で表示：localhost:8086/swagger-ui.html
      * @return　List<Customer>　シリアライズされて、HTTPレスポンスのボディに設定される（JavaオブジェクトはJSON形式でシリアライズ）
      */
     @GetMapping
@@ -56,11 +56,11 @@ public class CustomerRestController {
     }
 
     /**
-     * コンソール上で表示：curl http://localhost:8080/api/customers/page
-     * コンソール上で表示：curl http://localhost:8080/api/customers/page?page=0&size=3
-     * コンソール上で表示：curl http://localhost:8080/api/customers/page?page=1&size=3
-     * ブラウザ上で表示：http://localhost:8080/api/customers/page
-     * swagger上で表示：localhost:8080/swagger-ui.html
+     * コンソール上で表示：curl http://localhost:8086/api/customers/page
+     * コンソール上で表示：curl http://localhost:8086/api/customers/page?page=0&size=3
+     * コンソール上で表示：curl http://localhost:8086/api/customers/page?page=1&size=3
+     * ブラウザ上で表示：http://localhost:8086/api/customers/page
+     * swagger上で表示：localhost:8086/swagger-ui.html
      *
      * @param pageable
      * @return
@@ -77,9 +77,9 @@ public class CustomerRestController {
 
     /**
      * ＊＊idには任意の数字を指定してくだい
-     * コンソール上で表示：curl http://localhost:8080/api/customers/id
-     * ブラウザ上で表示：http://localhost:8080/api/customers/id
-     * swagger上で表示：localhost:8080/swagger-ui.html
+     * コンソール上で表示：curl http://localhost:8086/api/customers/id
+     * ブラウザ上で表示：http://localhost:8086/api/customers/id
+     * swagger上で表示：localhost:8086/swagger-ui.html
      *
      * @param id
      * @return　Customer
@@ -97,14 +97,14 @@ public class CustomerRestController {
 
     /**
      * POSTでアクセスすると、実行される
-     * ブラウザ上で表示：http://localhost:8080/api/customers/id TODO 修正
-     * swagger上で表示：localhost:8080/swagger-ui.html
+     * ブラウザ上で表示：http://localhost:8086/api/customers/id TODO 修正
+     * swagger上で表示：localhost:8086/swagger-ui.html
      *
      * @param customer
      * @param uriBuilder
      * @return
      */
-    // コンソール上で表示：curl -X POST --header "Content-Type: application/json" --header "Accept: */*" -d "{\"firstName\": \"test\",\"lastName\": \"string\" }" "http://localhost:8080/api/customers"
+    // コンソール上で表示：curl -X POST --header "Content-Type: application/json" --header "Accept: */*" -d "{\"firstName\": \"test\",\"lastName\": \"string\" }" "http://localhost:8086/api/customers"
     @PostMapping
     ResponseEntity<Customer> postCustomers(@RequestBody Customer customer
                                            , UriComponentsBuilder uriBuilder) {
@@ -117,9 +117,9 @@ public class CustomerRestController {
     }
 
     /**
-     * コンソール上で表示：curl http://localhost:8080/api/customers/1 -i -xpost -H "Content-Type: application/json" -d "{\"firstName\":\"Nobio\",\"lastName\":\"\Nobi\"}"
-     * ブラウザ上で表示：http://localhost:8080/api/customers TODO 修正
-     * swagger上で表示：localhost:8080/swagger-ui.html
+     * コンソール上で表示：curl http://localhost:8086/api/customers/1 -i -xpost -H "Content-Type: application/json" -d "{\"firstName\":\"Nobio\",\"lastName\":\"\Nobi\"}"
+     * ブラウザ上で表示：http://localhost:8086/api/customers TODO 修正
+     * swagger上で表示：localhost:8086/swagger-ui.html
      *
      * @param id
      * @param customer
@@ -134,9 +134,9 @@ public class CustomerRestController {
     }
 
     /**
-     * コンソール上で表示：curl http://localhost:8080/api/customers/1 -i -XDELETE
-     * ブラウザ上で表示：http://localhost:8080/api/customers TODO 修正
-     * swagger上で表示：localhost:8080/swagger-ui.html
+     * コンソール上で表示：curl http://localhost:8086/api/customers/1 -i -XDELETE
+     * ブラウザ上で表示：http://localhost:8086/api/customers TODO 修正
+     * swagger上で表示：localhost:8086/swagger-ui.html
      *
      * @ResponseStatus(HttpStatus.NO_CONTENT) 204 No Contentを返す
      * @param id

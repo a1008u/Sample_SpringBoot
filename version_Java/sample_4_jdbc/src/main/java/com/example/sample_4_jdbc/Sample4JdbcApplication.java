@@ -29,23 +29,33 @@ public class Sample4JdbcApplication implements CommandLineRunner {
 		String sql = "SELECT id, first_name, last_name FROM customers WHERE id = :id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", 1);
 		Customer result = jdbcTemplate.queryForObject(sql
-														, param
-														, (rs, rowNum) -> new Customer(rs.getInt("id")
-																						, rs.getString("first_name")
-																						, rs.getString("last_name"))
+			, param
+			, (rs, rowNum) -> new Customer(rs.getInt("id")
+											, rs.getString("first_name")
+											, rs.getString("last_name"))
 		);
 
-		System.out.println("result = " + result);
+		System.out.println("result(id) = " + result.getId());
+        System.out.println("result(firstname) = " + result.getFirstName());
+        System.out.println("result(lastname) = " + result.getLastName());
 
-		System.out.println("---------------------------------");
+		System.out.println("====================================");
 
 		// データ追加（idは自動生成するため、ここではnullableを可とする。）
 		Customer created = customerRepository.save(new Customer(null, "Hidetoshi", "Dekisugi"));
 		System.out.println(created + " is created!");
 
 		// データ表示
-		customerRepository.findAll()
-				          .forEach(System.out::println);
+		customerRepository
+            .findAll()
+            .forEach(customer -> {
+                System.out.println("--------------------------------------");
+                System.out.println("customer(id) = " + customer.getId());
+                System.out.println("customer(firstname)) = " + customer.getFirstName());
+                System.out.println("customer(lastname) = " + customer.getLastName());
+                System.out.println("--------------------------------------");
+        });
+
 	}
 
 	public static void main(String[] args)  {

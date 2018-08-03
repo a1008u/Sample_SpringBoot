@@ -41,13 +41,27 @@ public class Sample4JpaApplication implements CommandLineRunner {
 
 		// データ表示(JPAで自動生成される)
 		System.out.println("データ表示(JPAで自動生成される)-------------------------");
-		customerRepository.findAll()
-						  .forEach(System.out::println);
+		customerRepository
+			.findAll()
+			.forEach(customer -> {
+			  System.out.println("findAll--------------------------------------");
+			  System.out.println("customer(id) = " + customer.getId());
+			  System.out.println("customer(firstname)) = " + customer.getFirstName());
+			  System.out.println("customer(lastname) = " + customer.getLastName());
+			  System.out.println("--------------------------------------findAll");
+			});
 
 		// データ表示(＠Queryを用いて生成する)
 		System.out.println("データ表示(＠Queryを用いて生成する)-------------------------");
-		customerRepository.findAllOrderByName()
-				          .forEach(System.out::println);
+		customerRepository
+			.findAllOrderByName()
+			.forEach(customer -> {
+				System.out.println("findAllOrderByName--------------------------------------");
+				System.out.println("customer(id) = " + customer.getId());
+				System.out.println("customer(firstname)) = " + customer.getFirstName());
+				System.out.println("customer(lastname) = " + customer.getLastName());
+				System.out.println("--------------------------------------findAllOrderByName");
+			});
 
 		// ページング処理(JPA利用)
 		System.out.println(" ページング処理(JPA利用)-------------------------");
