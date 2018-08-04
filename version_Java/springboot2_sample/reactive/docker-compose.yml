@@ -12,3 +12,9 @@ services:
         - .:/app
     environment:
         JAR_TARGET: part2.jar
+    command: bash -c
+        'cd /app &&
+        source "/usr/local/sdkman/bin/sdkman-init.sh" &&
+        gradle build &&
+        java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app/build/libs/app.jar'
+
