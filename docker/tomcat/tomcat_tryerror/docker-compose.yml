@@ -1,0 +1,10 @@
+version: "2"
+services:
+  tomcat:
+    container_name: tomcat_try
+    build: .
+    image: tomcat:latest
+    ports:
+      - "8080:8080"
+    command: bash -c
+            'catalina.sh run'

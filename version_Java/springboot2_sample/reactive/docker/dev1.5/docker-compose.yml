@@ -8,13 +8,11 @@ services:
       # ホストとポートを指定（ホスト:コンテナ）するか、コンテナのポートのみ指定します（ホスト側のポートはランダムに選ばれます）。
     ports:
         - "8086:8080"
-    volumes:
-        - .:/app
+        - "8000:8000"
     environment:
         JAR_TARGET: part2.jar
     command: bash -c
-        'cd /app &&
+        'cd /usr/src/app &&
         source "/usr/local/sdkman/bin/sdkman-init.sh" &&
-        gradle build &&
-        java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app/build/libs/app.jar'
+        java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000 -jar /app/build/libs/app.jar'
 

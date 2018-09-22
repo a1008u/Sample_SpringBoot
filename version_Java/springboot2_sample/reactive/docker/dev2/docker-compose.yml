@@ -1,0 +1,14 @@
+version: "2"
+services:
+  tomcat:
+    build: .
+    image: tomcat:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../..:/app
+    command: bash -c
+            'cd /app &&
+             source "/usr/local/sdkman/bin/sdkman-init.sh" &&
+             gradle build &&
+             catalina.sh run'

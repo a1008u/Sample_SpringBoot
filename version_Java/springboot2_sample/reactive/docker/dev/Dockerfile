@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:8-jdk-alpine as build-stage
 
 # bashを取得
 RUN apk add --no-cache bash curl zip unzip

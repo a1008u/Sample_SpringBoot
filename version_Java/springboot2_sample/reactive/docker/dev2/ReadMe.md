@@ -1,0 +1,4 @@
+## TomcatをDockerで起動させる
+
+1.Dockerfile作成時にSDKMANでMavenを取得する
+2.docker-commposeでビルドとセットアップをする
